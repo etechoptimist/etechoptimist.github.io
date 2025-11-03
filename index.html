@@ -8,25 +8,19 @@
   <!-- ============================= -->
   <!-- ✅ SEO + OPEN GRAPH + SCHEMA -->
   <!-- ============================= -->
-
-  <!-- Canonical & Description -->
   <link rel="canonical" href="https://etechoptimist.github.io/" />
   <meta name="description" content="I'm a Machine Learning Scientist and Agentic Engineer who loves turning complex challenges into smart, working solutions. My experience is rooted in FinTech and gaming technology, where I develop systems combining traditional ML with LLMs for real-world innovation." />
   <meta name="author" content="Eduardo Toledo" />
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index,follow" />
 
-  <!-- Open Graph (LinkedIn, Facebook) -->
   <meta property="og:type" content="profile" />
   <meta property="og:title" content="Eduardo Toledo – Machine Learning Scientist | Agentic Engineer" />
   <meta property="og:description" content="Machine Learning Scientist and Agentic Engineer specializing in FinTech AI and Agentic Automation." />
   <meta property="og:url" content="https://etechoptimist.github.io/" />
   <meta property="og:image" content="https://avatars.githubusercontent.com/u/57686793?v=4" />
-  <meta property="profile:first_name" content="Eduardo" />
-  <meta property="profile:last_name" content="Toledo" />
-  <meta property="profile:username" content="etechoptimist" />
+  <meta property="og:image:alt" content="Eduardo Toledo – Machine Learning Scientist and Agentic Engineer" />
 
-  <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Eduardo Toledo – Machine Learning Scientist | Agentic Engineer" />
   <meta name="twitter:description" content="Machine Learning Scientist and Agentic Engineer focusing on FinTech AI and Agentic Automation." />
@@ -60,30 +54,117 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 
   <!-- ============================= -->
-  <!-- ✅ BASIC STYLING -->
+  <!-- ✅ STYLING -->
   <!-- ============================= -->
   <style>
-    body { font-family: system-ui, sans-serif; margin: 50px auto; max-width: 720px; line-height: 1.6; color: #333; }
-    h1 { font-size: 1.8em; margin-bottom: 0.4em; }
-    a { color: #0070f3; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    footer { margin-top: 3em; font-size: 0.9em; color: #777; }
+    body {
+      font-family: "Inter", system-ui, sans-serif;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .card {
+      text-align: center;
+      background: #fff;
+      padding: 3rem 2rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+      max-width: 640px;
+      width: 90%;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      margin-bottom: 1rem;
+      border: 3px solid #0070f3;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin: 0.2em 0;
+      color: #111;
+    }
+
+    .subtitle {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #444;
+      line-height: 1.6;
+    }
+
+    .links {
+      margin-top: 1.4rem;
+    }
+
+    .links a {
+      color: #0070f3;
+      text-decoration: none;
+      margin: 0 0.4rem;
+      font-weight: 500;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 2rem 1.2rem;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Eduardo Toledo</h1>
-  <p><strong>Machine Learning Scientist | Agentic Engineer | FinTech & RegTech AI Innovator</strong></p>
-  <p>I'm a Machine Learning Scientist and Agentic Engineer who loves turning complex challenges into smart, working solutions. My experience is rooted in FinTech and gaming technology, where I develop systems combining traditional ML with LLMs for real-world innovation.</p>
+  <div class="card">
+    <img src="https://avatars.githubusercontent.com/u/57686793?v=4" alt="Eduardo Toledo portrait" class="avatar">
 
-  <p>🔗 
-    <a href="https://www.linkedin.com/in/etechoptimist/">LinkedIn</a> · 
-    <a href="https://github.com/etechoptimist">GitHub</a> · 
-    <a href="https://medium.com/@etechoptimist">Medium</a> .
-    <a href="mailto:eduardo.toledo@bixaistudio.com">Email</a> ·
-  </p>
+    <h1>Eduardo Toledo</h1>
+    <div class="subtitle">
+      Machine Learning Scientist | Agentic Engineer | FinTech & RegTech AI Innovator
+    </div>
 
-  <footer>
-    © 2025 Eduardo Toledo — Built with GitHub Pages · <a href="https://etechoptimist.github.io">etechoptimist.github.io</a>
-  </footer>
+    <p>
+      I'm a Machine Learning Scientist and Agentic Engineer who loves turning complex challenges into smart, working solutions.
+      My experience is rooted in FinTech and gaming technology, where I develop systems combining traditional ML with LLMs
+      for real-world innovation.
+    </p>
+
+    <div class="links">
+      <a href="https://www.linkedin.com/in/etechoptimist/">LinkedIn</a> ·
+      <a href="https://github.com/etechoptimist">GitHub</a> ·
+      <a href="https://medium.com/@etechoptimist">Medium</a> ·
+      <a href="mailto:eduardo.toledo@bixaistudio.com">Email</a> .
+    </div>
+
+    <footer>
+      © 2025 Eduardo Toledo — Built with GitHub Pages ·
+      <a href="https://etechoptimist.github.io">etechoptimist.github.io</a>
+    </footer>
+  </div>
 </body>
 </html>
