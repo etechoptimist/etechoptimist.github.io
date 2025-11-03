@@ -1,0 +1,53 @@
+# ===============================
+#  Site Configuration for GitHub Pages
+#  Author: Eduardo Toledo (etechoptimist)
+#  Purpose: Portfolio & SEO Metadata
+# ===============================
+
+# ---- Site Metadata ----
+title: "Eduardo Toledo – Machine Learning Scientist | Agentic Engineer"
+description: "Machine Learning Scientist and Agentic Engineer specializing in FinTech AI, anomaly detection, and agentic automation systems."
+url: "https://etechoptimist.github.io"   # Full site URL (no trailing slash)
+baseurl: ""                              # Leave blank if hosted at root
+
+# ---- Author Info ----
+author:
+  name: "Eduardo Toledo"
+  email: "eduardo.toledo@bixaistudio.com"
+  linkedin: "https://www.linkedin.com/in/etechoptimist/"
+  github: "https://github.com/etechoptimist"
+  medium: "https://medium.com/@etechoptimist"
+
+# ---- SEO Settings ----
+keywords: "Eduardo Toledo, Machine Learning Scientist, Agentic Engineer, FinTech AI, RegTech AI, LangGraph, LLM, MLflow, DVC, Anomaly Detection"
+language: "en"
+timezone: "America/Bogota"
+
+# ---- Jekyll Engine Options ----
+theme: null                # Disable default theme
+markdown: kramdown         # Default markdown processor (kept for compatibility)
+future: true               # Allow future-dated posts if you add a blog later
+
+# ---- Build Options ----
+exclude:
+  - README.md
+  - LICENSE
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - package.json
+  - package-lock.json
+  - .gitignore
+
+# ---- Plugins (Optional for future blog support) ----
+plugins:
+  - jekyll-seo-tag          # Adds <meta> and structured data tags automatically if you add Markdown posts later
+  - jekyll-sitemap          # Automatically generates sitemap.xml for better SEO crawling
+
+# ---- Output Settings ----
+permalink: pretty
+paginate_path: "/page:num"
+
+# ---- GitHub Pages Configuration ----
+github:
+  is_project_page: false    # true if this is a subproject (false for user.github.io root)
