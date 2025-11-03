@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Eduardo Toledo – Machine Learning Scientist | Agentic Engineer | FinTech & RegTech AI Innovator</title>
 
-  <!-- ============================= -->
-  <!-- ✅ SEO + OPEN GRAPH + SCHEMA -->
-  <!-- ============================= -->
+  <!-- SEO & Schema -->
   <link rel="canonical" href="https://etechoptimist.github.io/" />
-  <meta name="description" content="I'm a Machine Learning Scientist and Agentic Engineer who loves turning complex challenges into smart, working solutions. My experience is rooted in FinTech and gaming technology, where I develop systems combining traditional ML with LLMs for real-world innovation." />
+  <meta name="description" content="Machine Learning Scientist and Agentic Engineer with experience in FinTech, gaming technology, and AI-driven innovation." />
   <meta name="author" content="Eduardo Toledo" />
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index,follow" />
@@ -19,14 +17,13 @@
   <meta property="og:description" content="Machine Learning Scientist and Agentic Engineer specializing in FinTech AI and Agentic Automation." />
   <meta property="og:url" content="https://etechoptimist.github.io/" />
   <meta property="og:image" content="https://avatars.githubusercontent.com/u/57686793?v=4" />
-  <meta property="og:image:alt" content="Eduardo Toledo – Machine Learning Scientist and Agentic Engineer" />
+  <meta property="og:image:alt" content="Eduardo Toledo portrait" />
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Eduardo Toledo – Machine Learning Scientist | Agentic Engineer" />
   <meta name="twitter:description" content="Machine Learning Scientist and Agentic Engineer focusing on FinTech AI and Agentic Automation." />
   <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/57686793?v=4" />
 
-  <!-- ✅ Person Schema.org -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -36,10 +33,7 @@
     "url": "https://etechoptimist.github.io/",
     "image": "https://avatars.githubusercontent.com/u/57686793?v=4",
     "jobTitle": "Machine Learning Scientist and Agentic Engineer",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Passport Technology"
-    },
+    "worksFor": { "@type": "Organization", "name": "Passport Technology" },
     "sameAs": [
       "https://www.linkedin.com/in/etechoptimist/",
       "https://github.com/etechoptimist",
@@ -49,23 +43,47 @@
   }
   </script>
 
-  <!-- Favicons -->
-  <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
-  <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
-
-  <!-- ============================= -->
-  <!-- ✅ STYLING -->
-  <!-- ============================= -->
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: "Inter", system-ui, sans-serif;
       background-color: #fafafa;
       margin: 0;
-      padding: 0;
+      color: #333;
+    }
+
+    /* NAVBAR */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: white;
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
+      z-index: 1000;
       display: flex;
       justify-content: center;
-      align-items: center;
-      min-height: 100vh;
+      padding: 0.7rem 0;
+    }
+
+    nav a {
+      color: #0070f3;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: #0055cc;
+    }
+
+    section {
+      padding: 6rem 1.5rem 3rem;
+      max-width: 800px;
+      margin: auto;
     }
 
     .card {
@@ -74,8 +92,6 @@
       padding: 3rem 2rem;
       border-radius: 1.5rem;
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-      max-width: 640px;
-      width: 90%;
       transition: all 0.3s ease-in-out;
     }
 
@@ -92,27 +108,31 @@
       border: 3px solid #0070f3;
     }
 
-    h1 {
-      font-size: 1.8rem;
-      margin: 0.2em 0;
+    h1, h2 {
       color: #111;
     }
 
-    .subtitle {
-      font-weight: 600;
-      font-size: 1.05rem;
-      color: #333;
+    h1 {
+      font-size: 1.8rem;
+      margin: 0.3em 0;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      border-bottom: 2px solid #0070f3;
+      display: inline-block;
       margin-bottom: 1rem;
     }
 
     p {
-      font-size: 1rem;
-      color: #444;
       line-height: 1.6;
+      color: #444;
     }
 
-    .links {
-      margin-top: 1.4rem;
+    .subtitle {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 1rem;
     }
 
     .links a {
@@ -126,45 +146,116 @@
       text-decoration: underline;
     }
 
+    .edu-item, .cert-item {
+      margin-bottom: 1rem;
+    }
+
+    .edu-item strong, .cert-item strong {
+      color: #000;
+    }
+
     footer {
-      margin-top: 2.5rem;
+      text-align: center;
+      padding: 2rem;
       font-size: 0.9em;
       color: #777;
     }
 
-    @media (max-width: 480px) {
-      .card {
-        padding: 2rem 1.2rem;
+    @media (max-width: 600px) {
+      nav a {
+        margin: 0 0.6rem;
       }
     }
   </style>
 </head>
+
 <body>
-  <div class="card">
-    <img src="https://avatars.githubusercontent.com/u/57686793?v=4" alt="Eduardo Toledo portrait" class="avatar">
+  <!-- Navbar -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#studies">Studies</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#articles">Articles</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-    <h1>Eduardo Toledo</h1>
-    <div class="subtitle">
-      Machine Learning Scientist | Agentic Engineer | FinTech & RegTech AI Innovator
+  <!-- Home Section -->
+  <section id="home">
+    <div class="card">
+      <img src="https://avatars.githubusercontent.com/u/57686793?v=4" alt="Eduardo Toledo portrait" class="avatar">
+      <h1>Eduardo Toledo</h1>
+      <div class="subtitle">Machine Learning Scientist | Agentic Engineer | FinTech & RegTech AI Innovator</div>
+      <p>
+        I'm a Machine Learning Scientist and Agentic Engineer who loves turning complex challenges into smart, working solutions.
+        My experience is rooted in FinTech and gaming technology, where I develop systems combining traditional ML with LLMs
+        for real-world innovation.
+      </p>
+      <div class="links">
+        <a href="https://www.linkedin.com/in/etechoptimist/">LinkedIn</a> ·
+        <a href="https://github.com/etechoptimist">GitHub</a> ·
+        <a href="https://medium.com/@etechoptimist">Medium</a> ·
+        <a href="mailto:eduardo.toledo@bixaistudio.com">Email</a>
+      </div>
     </div>
+  </section>
 
+  <!-- Studies Section -->
+  <section id="studies">
+    <h2>Education</h2>
+    <div class="edu-item">
+      <strong>Jun 2024 – Universidad de Los Andes</strong><br>
+      Master's degree in Analytics Engineering
+    </div>
+    <div class="edu-item">
+      <strong>Jun 2014 – Escuela Colombiana de Ingeniería</strong><br>
+      Project Management Specialization
+    </div>
+    <div class="edu-item">
+      <strong>May 2004 – Pontificia Universidad Javeriana</strong><br>
+      Master’s in Econometric Sciences and Mathematical Economy
+    </div>
+    <div class="edu-item">
+      <strong>May 1995 – Universidad Nacional de Colombia</strong><br>
+      Software Engineer
+    </div>
+  </section>
+
+  <!-- Certifications Section -->
+  <section id="certifications">
+    <h2>Certifications</h2>
+    <div class="cert-item"><strong>Aug 2025</strong> – Agentic with LangGraph and LangChain (Udacity)</div>
+    <div class="cert-item"><strong>Jan 2025</strong> – GenAI Nanodegree Program (Udacity)</div>
+    <div class="cert-item"><strong>Oct 2024</strong> – GenAI for Software Development (Deeplearning.ai)</div>
+    <div class="cert-item"><strong>Oct 2023</strong> – AI for Good (Deeplearning.ai)</div>
+    <div class="cert-item"><strong>Sept 2023</strong> – Databricks Generative AI Fundamental (Databricks)</div>
+    <div class="cert-item"><strong>Aug 2023</strong> – Databricks Lakehouse Fundamental (Databricks)</div>
+    <div class="cert-item"><strong>May 2023</strong> – Microsoft Azure AI Fundamental (Microsoft)</div>
+    <div class="cert-item"><strong>Oct 2022</strong> – Microsoft Azure Data Fundamental (Microsoft)</div>
+    <div class="cert-item"><strong>Jun 2021</strong> – Applied Statistics and Probability (Universidad de Los Andes)</div>
+    <div class="cert-item"><strong>May 2021</strong> – Python Programming (Universidad de Los Andes)</div>
+    <div class="cert-item"><strong>Mar 2021</strong> – Deep Learning Specialization (Deeplearning.ai)</div>
+    <div class="cert-item"><strong>Aug 2020</strong> – Software Design and Architecture (University of Alberta)</div>
+    <div class="cert-item"><strong>Jul 2020</strong> – Machine Learning Specialization (Stanford Online)</div>
+  </section>
+
+  <!-- Articles Section -->
+  <section id="articles">
+    <h2>Articles</h2>
+    <p>Visit my <a href="https://medium.com/@etechoptimist" target="_blank">Medium profile</a> for my latest articles on AI, FinTech, and Agentic Automation.</p>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Contact</h2>
     <p>
-      I'm a Machine Learning Scientist and Agentic Engineer who loves turning complex challenges into smart, working solutions.
-      My experience is rooted in FinTech and gaming technology, where I develop systems combining traditional ML with LLMs
-      for real-world innovation.
+      📩 Email: <a href="mailto:eduardo.toledo@bixaistudio.com">eduardo.toledo@bixaistudio.com</a><br>
+      🔗 LinkedIn: <a href="https://www.linkedin.com/in/etechoptimist/">linkedin.com/in/etechoptimist</a><br>
+      💻 GitHub: <a href="https://github.com/etechoptimist">github.com/etechoptimist</a>
     </p>
+  </section>
 
-    <div class="links">
-      <a href="https://www.linkedin.com/in/etechoptimist/">LinkedIn</a> ·
-      <a href="https://github.com/etechoptimist">GitHub</a> ·
-      <a href="https://medium.com/@etechoptimist">Medium</a> ·
-      <a href="mailto:eduardo.toledo@bixaistudio.com">Email</a> .
-    </div>
-
-    <footer>
-      © 2025 Eduardo Toledo — Built with GitHub Pages ·
-      <a href="https://etechoptimist.github.io">etechoptimist.github.io</a>
-    </footer>
-  </div>
+  <footer>
+    © 2025 Eduardo Toledo — Built with GitHub Pages · <a href="https://etechoptimist.github.io">etechoptimist.github.io</a>
+  </footer>
 </body>
 </html>
