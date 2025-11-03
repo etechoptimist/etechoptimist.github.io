@@ -44,10 +44,7 @@
   </script>
 
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
+    html { scroll-behavior: smooth; }
     body {
       font-family: "Inter", system-ui, sans-serif;
       background-color: #fafafa;
@@ -76,9 +73,7 @@
       transition: color 0.2s;
     }
 
-    nav a:hover {
-      color: #0055cc;
-    }
+    nav a:hover { color: #0055cc; }
 
     section {
       padding: 6rem 1.5rem 3rem;
@@ -108,15 +103,8 @@
       border: 3px solid #0070f3;
     }
 
-    h1, h2 {
-      color: #111;
-    }
-
-    h1 {
-      font-size: 1.8rem;
-      margin: 0.3em 0;
-    }
-
+    h1, h2 { color: #111; }
+    h1 { font-size: 1.8rem; margin: 0.3em 0; }
     h2 {
       font-size: 1.4rem;
       border-bottom: 2px solid #0070f3;
@@ -124,10 +112,7 @@
       margin-bottom: 1rem;
     }
 
-    p {
-      line-height: 1.6;
-      color: #444;
-    }
+    p { line-height: 1.6; color: #444; }
 
     .subtitle {
       font-weight: 600;
@@ -142,16 +127,34 @@
       font-weight: 500;
     }
 
-    .links a:hover {
-      text-decoration: underline;
-    }
+    .links a:hover { text-decoration: underline; }
 
-    .edu-item, .cert-item {
+    .edu-item, .cert-item { margin-bottom: 1rem; }
+    .edu-item strong, .cert-item strong { color: #000; }
+
+    .article-card {
+      background: white;
+      border-radius: 1rem;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+      padding: 1.2rem 1.5rem;
       margin-bottom: 1rem;
+      transition: transform 0.2s;
     }
 
-    .edu-item strong, .cert-item strong {
-      color: #000;
+    .article-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .article-card a {
+      color: #0070f3;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .article-card small {
+      display: block;
+      color: #777;
+      margin-top: 0.3rem;
     }
 
     footer {
@@ -162,9 +165,7 @@
     }
 
     @media (max-width: 600px) {
-      nav a {
-        margin: 0 0.6rem;
-      }
+      nav a { margin: 0 0.6rem; }
     }
   </style>
 </head>
@@ -202,22 +203,10 @@
   <!-- Studies Section -->
   <section id="studies">
     <h2>Education</h2>
-    <div class="edu-item">
-      <strong>Jun 2024 – Universidad de Los Andes</strong><br>
-      Master's degree in Analytics Engineering
-    </div>
-    <div class="edu-item">
-      <strong>Jun 2014 – Escuela Colombiana de Ingeniería</strong><br>
-      Project Management Specialization
-    </div>
-    <div class="edu-item">
-      <strong>May 2004 – Pontificia Universidad Javeriana</strong><br>
-      Master’s in Econometric Sciences and Mathematical Economy
-    </div>
-    <div class="edu-item">
-      <strong>May 1995 – Universidad Nacional de Colombia</strong><br>
-      Software Engineer
-    </div>
+    <div class="edu-item"><strong>Jun 2024</strong> – Universidad de Los Andes<br>Master's degree in Analytics Engineering</div>
+    <div class="edu-item"><strong>Jun 2014</strong> – Escuela Colombiana de Ingeniería<br>Project Management Specialization</div>
+    <div class="edu-item"><strong>May 2004</strong> – Pontificia Universidad Javeriana<br>Master’s in Econometric Sciences and Mathematical Economy</div>
+    <div class="edu-item"><strong>May 1995</strong> – Universidad Nacional de Colombia<br>Software Engineer</div>
   </section>
 
   <!-- Certifications Section -->
@@ -240,8 +229,8 @@
 
   <!-- Articles Section -->
   <section id="articles">
-    <h2>Articles</h2>
-    <p>Visit my <a href="https://medium.com/@etechoptimist" target="_blank">Medium profile</a> for my latest articles on AI, FinTech, and Agentic Automation.</p>
+    <h2>Recent Articles</h2>
+    <div id="articles-list">Loading latest Medium posts...</div>
   </section>
 
   <!-- Contact Section -->
@@ -257,5 +246,32 @@
   <footer>
     © 2025 Eduardo Toledo — Built with GitHub Pages · <a href="https://etechoptimist.github.io">etechoptimist.github.io</a>
   </footer>
+
+  <!-- ✅ Dynamic Medium Feed -->
+  <script>
+    async function loadMediumArticles() {
+      try {
+        const rssUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@etechoptimist';
+        const res = await fetch(rssUrl);
+        const data = await res.json();
+        const container = document.getElementById('articles-list');
+        container.innerHTML = '';
+
+        data.items.slice(0, 3).forEach(article => {
+          const el = document.createElement('div');
+          el.classList.add('article-card');
+          el.innerHTML = `
+            <a href="${article.link}" target="_blank">${article.title}</a>
+            <small>${new Date(article.pubDate).toLocaleDateString()}</small>
+            <p>${article.description.replace(/<[^>]+>/g, '').substring(0, 180)}...</p>
+          `;
+          container.appendChild(el);
+        });
+      } catch (err) {
+        document.getElementById('articles-list').innerHTML = '⚠️ Unable to load Medium articles.';
+      }
+    }
+    loadMediumArticles();
+  </script>
 </body>
 </html>
