@@ -129,8 +129,21 @@
 
     .links a:hover { text-decoration: underline; }
 
-    .edu-item, .cert-item { margin-bottom: 1rem; }
-    .edu-item strong, .cert-item strong { color: #000; }
+    .edu-item, .cert-item, .project-item { margin-bottom: 1rem; }
+    .edu-item strong, .cert-item strong, .project-item strong { color: #000; }
+
+    .project-item {
+      background: white;
+      border-radius: 0.8rem;
+      padding: 1.2rem 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .project-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    }
 
     .article-card {
       background: white;
@@ -141,9 +154,7 @@
       transition: transform 0.2s;
     }
 
-    .article-card:hover {
-      transform: translateY(-3px);
-    }
+    .article-card:hover { transform: translateY(-3px); }
 
     .article-card a {
       color: #0070f3;
@@ -176,6 +187,7 @@
     <a href="#home">Home</a>
     <a href="#studies">Studies</a>
     <a href="#certifications">Certifications</a>
+    <a href="#projects">Projects</a>
     <a href="#articles">Articles</a>
     <a href="#contact">Contact</a>
   </nav>
@@ -189,12 +201,15 @@
       <p>
         I'm a Machine Learning Scientist and Agentic Engineer who loves turning complex challenges into smart, working solutions.
         My experience is rooted in FinTech and gaming technology, where I develop systems combining traditional ML with LLMs
-        for real-world innovation. </p> Lately, I’ve been exploring agentic systems and working on my personal hobby project — my “Digital Twin”, an LLM that represents me digitally and reflects my curiosity for AI creativity and self-replicating models.</p>
-        I’m active on Kaggle and Zindi, where I join challenges that sharpen my skills and help solve real-world problems through data.</p>
-        Kaggle: Solving ML challenges and sharing ideas.</p>
-        Zindi: Using data science to make social impact in Africa. </p>
+        for real-world innovation. Lately, I’ve been exploring agentic systems and working on my personal hobby project — my “Digital Twin”, an LLM that represents me digitally and reflects my curiosity for AI creativity and self-replicating models.
+      </p>
+      <p>
+        I’m active on Kaggle and Zindi, where I join challenges that sharpen my skills and help solve real-world problems through data.
+        <br><strong>Kaggle:</strong> Solving ML challenges and sharing ideas.
+        <br><strong>Zindi:</strong> Using data science to make social impact in Africa.
+      </p>
+      <p>
         I also contribute to open-source projects on GitHub and hold the Arctic Code Vault Badge, reminding me that good code can live far beyond its author.
-        </p>
         I’m passionate about using AI for transparency, fairness, and human impact — building technology that works with people, not against them.
       </p>
       <div class="links">
@@ -217,7 +232,7 @@
 
   <!-- Certifications Section -->
   <section id="certifications">
-    <h2>Certifications</h2>
+    <h2>Certifications</h>
     <div class="cert-item"><strong>Aug 2025</strong> – Agentic with LangGraph and LangChain (Udacity)</div>
     <div class="cert-item"><strong>Jan 2025</strong> – GenAI Nanodegree Program (Udacity)</div>
     <div class="cert-item"><strong>Oct 2024</strong> – GenAI for Software Development (Deeplearning.ai)</div>
@@ -231,6 +246,31 @@
     <div class="cert-item"><strong>Mar 2021</strong> – Deep Learning Specialization (Deeplearning.ai)</div>
     <div class="cert-item"><strong>Aug 2020</strong> – Software Design and Architecture (University of Alberta)</div>
     <div class="cert-item"><strong>Jul 2020</strong> – Machine Learning Specialization (Stanford Online)</div>
+  </section>
+
+  <!-- ✅ Projects Section -->
+  <section id="projects">
+    <h2>Projects / Contributions</h2>
+
+    <p><strong>Current Focus:</strong><br>
+      I’m developing an Anti-Money Laundering (AML) pipeline that detects suspicious transaction patterns using feature engineering, anomaly detection, and hybrid ML–LLM methods.
+      The system is built with MLflow and DVC and follows MLOps principles for continuous improvement and scalability.
+    </p>
+
+    <div class="project-item">
+      <strong>Dynamic Pricing for ATM Transactions</strong><br>
+      Designed a system using customer segmentation (KMeans) and demand modeling (XGBoost) to optimize transaction fees. The model finds the best fee per customer group, increasing revenue by 10–12% while keeping transaction volume stable.
+    </div>
+
+    <div class="project-item">
+      <strong>ATM Cash Demand Forecasting</strong><br>
+      Built a forecasting model with feature extraction and XGBoost to predict daily money demand for each ATM cassette ($1, $5, $20, $100). The model reduced cash-out incidents and improved ATM uptime by 15%, enabling smarter refill planning.
+    </div>
+
+    <div class="project-item">
+      <strong>Defect Detection from ATM Telemetry Logs</strong><br>
+      Developed a BERT-based anomaly detection model to identify software or hardware defects early from telemetry logs. The system runs in a microservice pipeline orchestrated by LangGraph, which triggers an LLM agent to perform root-cause analysis using our internal knowledge base. This increased early defect detection from 30% to 80%, improving maintenance response and uptime.
+    </div>
   </section>
 
   <!-- Articles Section -->
