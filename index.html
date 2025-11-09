@@ -68,19 +68,89 @@
     }
 
     /* NAVBAR */
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: white;
-      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.08);
-      z-index: 1000;
-      display: flex;
-      justify-content: center;
-      padding: 0.7rem 0;
-    }
+    
+    /* === NAVBAR === */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: white;
+  box-shadow: 0 1px 8px rgba(0,0,0,0.08);
+  z-index: 1000;
+}
 
-    nav a {
+.nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.7rem 1rem;
+}
+
+/* Logo text */
+.logo {
+  font-weight: 700;
+  color: #0070f3;
+  font-size: 1.1rem;
+}
+
+/* Links (desktop) */
+.nav-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.nav-links li a {
+  color: #0070f3;
+  text-decoration: none;
+  margin: 0 0.8rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links li a:hover { color: #0055cc; }
+
+/* Burger icon (hidden by default) */
+.menu-toggle {
+  display: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #0070f3;
+}
+
+/* === MOBILE STYLES === */
+@media (max-width: 768px) {
+  .menu-toggle { display: block; }
+
+  .nav-links {
+    position: absolute;
+    top: 58px; /* just below nav bar */
+    left: 0;
+    width: 100%;
+    background: #fff;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-out;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .nav-links.active {
+    max-height: 400px; /* adjust if you add more links */
+    transition: max-height 0.4s ease-in;
+  }
+}
+
+  nav a {
       color: #0070f3;
       text-decoration: none;
       margin: 0 1rem;
@@ -201,14 +271,20 @@
 </head>
 
 <body>
-  <!-- Navbar -->
+  <!-- ✅ Responsive Navbar -->
   <nav>
-    <a href="#home">Home</a>
-    <a href="#studies">Studies</a>
-    <a href="#certifications">Certifications</a>
-    <a href="#projects">Projects</a>
-    <a href="#articles">Articles</a>
-    <a href="#contact">Contact</a>
+    <div class="nav-container">
+      <div class="logo">Eduardo Toledo</div>
+      <div class="menu-toggle" id="mobile-menu">☰</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#studies">Studies</a></li>
+        <li><a href="#certifications">Certifications</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#articles">Articles</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
   </nav>
 
   <!-- ✅ Home -->
@@ -328,6 +404,20 @@
 
   <!-- ✅ Medium Feed -->
   <script>
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+  
+    // Optional: close menu when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('active');
+      });
+    });
+    
     async function loadMediumArticles() {
       try {
         const rssUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@etechoptimist';
@@ -349,7 +439,10 @@
         document.getElementById('articles-list').innerHTML = '⚠️ Unable to load Medium articles.';
       }
     }
+    
     loadMediumArticles();
+
+    
   </script>
 </body>
 </html>
