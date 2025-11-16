@@ -128,8 +128,54 @@
       color: #0070f3;
     }
 
+    /* Dropdown container */
+    .dropdown {
+      position: relative;
+    }
+    
+    /* Dropdown menu */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 220px;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      z-index: 999;
+      overflow: hidden;
+    }
+    
+    /* Dropdown links */
+    .dropdown-content a {
+      color: #0070f3;
+      padding: 10px 14px;
+      text-decoration: none;
+      display: block;
+      font-weight: 500;
+      border-bottom: 1px solid #f5f5f5;
+    }
+    
+    .dropdown-content a:last-child {
+      border-bottom: none;
+    }
+    
+    .dropdown-content a:hover {
+      background: #f1f6ff;
+      color: #0055cc;
+    }
+    
+    /* Hover to open (desktop) */
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+    
     /* === MOBILE STYLES === */
     @media (max-width: 768px) {
+      .dropdown-content {
+        position: relative;
+        width: 100%;
+        box-shadow: none;
+      }
       .menu-toggle { display: block; }
       .logo-img {
         height: 32px;
@@ -297,7 +343,13 @@
         <li><a href="#home">Home</a></li>
         <li><a href="#studies">Studies</a></li>
         <li><a href="#certifications">Certifications</a></li>
-        <li><a href="#projects">Projects</a></li>
+        <li class="dropdown">
+          <a href="#projects" class="dropbtn">Projects ▾</a>
+          <div class="dropdown-content">
+            <a href="#corporate-projects">Corporate Projects</a>
+            <a href="#consulting-projects">Consulting & AI Projects </a>
+          </div>
+        </li>
         <li><a href="#articles">Articles</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -367,6 +419,9 @@
   <!-- ✅ Projects -->
   <section id="projects">
     <h2>Projects / Contributions</h2>
+    <h3 id="corporate-projects" style="margin-top: 1.5rem; color:#0070f3;">
+      Corporate & Enterprise Projects
+    </h3>
     <p><strong>Current Focus:</strong><br>
       Developing an Anti-Money Laundering (AML) pipeline that detects suspicious transaction patterns using feature engineering, anomaly detection, and hybrid ML–LLM methods.
       The system is built with MLflow and DVC and follows MLOps principles for continuous improvement and scalability.
@@ -384,7 +439,9 @@
       Created a BERT-based anomaly detection model identifying software/hardware defects early. Integrated with LangGraph orchestration for LLM-based root-cause analysis, increasing detection from 30% to 80%.
     </div>
     <hr style="border: none; border-top: 1px solid #0070f3; margin: 3rem 0; width: 60%;">
-    <h3 style="margin-top:2.5rem; color:#0070f3;">Consulting & Applied AI Projects</h3>
+    <h3 id="consulting-projects" style="margin-top:2.5rem; color:#0070f3;">
+      Consulting & Applied AI Projects
+    </h3>
     <div class="project-item">
       <strong>Speech Analytics for Compliance Monitoring in Call Center</strong><br>
       Designed an AI-driven speech analytics system using an orchestrator–worker pattern built on LangGraph to analyze interactions between human agents and customers.  
