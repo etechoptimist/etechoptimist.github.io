@@ -1,5 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script>
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: "default",
+    securityLevel: "loose"
+  });
+</script>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -453,11 +461,75 @@
       Integrated with MLflow for full observability and prompt tracking, enabling model auditability and continuous optimization.
     </div>
     <div class="project-item">
-      <strong>Financial Coaching through Document Intelligence</strong><br>
-      Developed an agent-driven financial coaching and expense intelligence system powered by LangGraph and LLM reasoning. The solution uses a multi-agent workflow to parse invoices, extract semistructured financial information, and reason about spending patterns rather than simply classify text.
-      The pipeline uses Docling + LLMs for document understanding, and LangChain for semantic enrichment and category inference. Each invoice is processed into item-level structured data, where agents collaborate to validate, categorize, and provide actionable financial insights.
-      The platform integrates with AWS S3 for document storage, deploys containerized microservices through AWS ECR, and stores enriched records in MongoDB Atlas, enabling real-time analytics and financial behavior coaching.
+      <strong>Agent-Driven Financial Coaching & Expense Intelligence Platform</strong><br><br>
+    
+      Designed and implemented an agent-based financial coaching and expense intelligence system using
+      <strong>LangGraph</strong> with a <strong>Router Pattern</strong> and a <strong>React Agent</strong> for
+      dynamic decision-making and task delegation.
+    
+      <br><br>
+    
+      The platform processes invoices using <strong>Vision-Language Models (VLMs)</strong> and
+      <strong>Docling</strong> to extract semi-structured financial data from images and PDFs.
+      A LangGraph multi-agent workflow orchestrates document parsing, validation, item-level normalization,
+      and reasoning over spending behavior—moving beyond simple text classification toward
+      context-aware financial understanding.
+    
+      <br><br>
+    
+      The system runs fully serverless on <strong>AWS</strong>, with <strong>AWS Lambda</strong> handling
+      real-time and background workloads, <strong>SQS</strong> managing asynchronous expense classification
+      and coaching tasks, and <strong>S3</strong> storing raw financial documents.
+      Enriched, item-level financial records are persisted in <strong>MongoDB Atlas</strong>, where
+      <strong>Atlas Vector Search</strong> and vector embeddings enable semantic retrieval, spending
+      pattern analysis, and personalized financial coaching insights.
+    
+      <br><br>
+    
+      <strong>Public demo:</strong>
+      <a href="https://d115ijxlt2v22u.cloudfront.net/ target="_blank" rel="noopener noreferrer">
+        https://budgy.com
+      </a>
+    
+      <br><br>
+    
+      <details>
+        <summary><strong>Architecture Diagram (click to expand)</strong></summary>
+    
+        <pre class="mermaid">
+    flowchart TD
+        User[User / Web UI]
+        API[FastAPI / API Gateway]
+    
+        User --> API
+        API -->|Upload Invoice| S3[(AWS S3<br/>Raw Documents)]
+    
+        API -->|Trigger Processing| LambdaIngest[AWS Lambda<br/>Invoice Intake]
+    
+        LambdaIngest --> VLM[VLM + Docling<br/>Document Extraction]
+    
+        VLM --> LangGraph[LangGraph Orchestrator<br/>Router + React Agent]
+    
+        LangGraph -->|Async Tasks| SQS[AWS SQS Queue]
+    
+        SQS --> LambdaCoach[AWS Lambda<br/>Expense Classification & Coaching]
+    
+        LambdaCoach --> Mongo[(MongoDB Atlas<br/>Structured Records)]
+        Mongo --> Vector[Atlas Vector Search<br/>Embeddings]
+    
+        Vector --> LangGraph
+        LangGraph --> API
+        API --> User
+        </pre>
+      </details>
+    
+      <br>
+    
+      This architecture enables scalable and explainable financial intelligence by combining
+      <strong>agentic reasoning</strong>, <strong>vector search</strong>, and
+      <strong>event-driven cloud infrastructure</strong>.
     </div>
+
     <div class="project-item">
       <strong>AI4Good: Detecting Anomalies in Energy Consumption using Machine Learning</strong><br>
       Developed an ML-based system for a Latin American energy distribution company to detect abnormal consumption patterns and identify inefficiencies, potential technical issues, and non-technical losses. Used ETL, feature engineering, clustering, and unsupervised models (K-Means, Isolation Forest, LOF, One-Class SVM) to produce actionable insights. Delivered a scoring datamart, interactive dashboards, and a scalable analytics workflow.
@@ -506,7 +578,7 @@
         const data = await res.json();
         const container = document.getElementById('articles-list');
         container.innerHTML = '';
-        data.items.slice(0, 7).forEach(article => {
+        data.items.slice(0, 8).forEach(article => {
           const el = document.createElement('div');
           el.classList.add('article-card');
           el.innerHTML = `
