@@ -51,20 +51,25 @@ document.addEventListener("DOMContentLoaded", () => {
    * Loads partials/education.html into #education-container
    */
   async function injectEducationSection() {
-    const container = document.getElementById("education-container");
-    if (!container) return;
+  const container = document.getElementById("education-container");
+  if (!container) return;
 
-    try {
-      const res = await fetch("partials/education.html", { cache: "no-store" });
-      if (!res.ok) {
-        container.innerHTML = `⚠️ Unable to load education (${res.status}).`;
-        return;
-      }
-      container.innerHTML = await res.text();
-    } catch (e) {
-      container.innerHTML = "⚠️ Unable to load education.";
+  const url = "partials/education.html"; // keep relative (no leading slash)
+
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+
+    if (!res.ok) {
+      container.innerHTML = `⚠️ Unable to load education (${res.status}). Check: ${url}`;
+      return;
     }
+
+    container.innerHTML = await res.text();
+  } catch (e) {
+    container.innerHTML = `⚠️ Unable to load education (fetch error). Check: ${url}`;
   }
+}
+
 
   /**
    * ==========================================
