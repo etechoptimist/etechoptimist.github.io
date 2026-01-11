@@ -1,4 +1,12 @@
 // assets/js/main.js
+// Static-site friendly (no Jekyll). Loads partial HTML sections + Medium RSS.
+// Requires:
+//   /partials/articles-inner.html   (contains H2 + #articles-list)
+//   /partials/certifications.html   (contains full Certifications markup for insertion)
+//
+// In index.html you should have placeholders:
+//   <section id="articles">...</section>   (kept as a real section to preserve #articles anchor)
+//   <div id="certifications-container">Loading certifications...</div>
 
 document.addEventListener("DOMContentLoaded", () => {
   /**
@@ -14,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       navLinks.classList.toggle("active");
     });
 
-    // Close menu when a link is clicked (mobile UX)
+    // Close menu when a link is clicked
     document.querySelectorAll(".nav-links a").forEach((link) => {
       link.addEventListener("click", () => {
         navLinks.classList.remove("active");
@@ -24,52 +32,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * ==========================================
-   * 2) Articles section injection (no Jekyll)
+   * 2) Certifications partial injection
    * ==========================================
-   * This is for the case when GitHub Pages is NOT running Jekyll includes.
-   *
-   * You should create:
-   *   /partials/articles-inner.html
-   * with this content:
-   *   <h2>Recent Articles</h2>
-   *   <div id="articles-list">Loading latest Medium posts...</div>
-   *
-   * And in index.html keep:
-   *   <section id="articles"> ...fallback... </section>
-   *
-   * This loader will replace the inside of the section while keeping
-   * the same layout and IDs.
+   * Loads /partials/certifications.html into #certifications-container
+   */
+  async function injectCertificationsSection() {
+    const container = document.getElementById("certifications-container");
+    if (!container) return;
+
+    try {
+      const res = await fetch("/partials/certifications.html", { cache: "no-store" });
+      if (!res.ok) {
+        container.innerHTML = "⚠️ Unable to load certifications.";
+        return;
+      }
+      container.innerHTML = await res.text();
+    } catch (e) {
+      container.innerHTML = "⚠️ Unable to load certifications.";
+    }
+  }
+
+  /**
+   * ==========================================
+   * 3) Articles inner partial injection
+   * ==========================================
+   * Keeps <section id="articles"> in index.html so #articles anchor always works.
+   * Replaces the inner HTML of that section with /partials/articles-inner.html,
+   * but only if #articles-list is not already present.
    */
   async function injectArticlesSection() {
     const articlesSection = document.getElementById("articles");
     if (!articlesSection) return;
 
     try {
-      // Optional: if you want to skip injection when already present
-      // (example: if you later enable Jekyll and render full section)
+      // If the list already exists, don't overwrite.
       const alreadyHasList = !!document.getElementById("articles-list");
       if (alreadyHasList) return;
 
       const res = await fetch("/partials/articles-inner.html", { cache: "no-store" });
       if (!res.ok) return;
 
-      const html = await res.text();
-      articlesSection.innerHTML = html;
+      articlesSection.innerHTML = await res.text();
 
-      // If user loaded directly with #articles, ensure scroll after injection
+      // If user loaded directly with #articles, ensure scroll AFTER injection
       if (window.location.hash === "#articles") {
         articlesSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     } catch (e) {
-      // Keep existing fallback content if injection fails
+      // Keep fallback content if injection fails
     }
   }
 
   /**
    * =========================
-   * 3) Medium feed loader
+   * 4) Medium feed loader
    * =========================
-   * Keeps the same card layout and behavior you had before.
+   * Fills #articles-list with cards (same behavior as your original code).
    */
   async function loadMediumArticles() {
     const container = document.getElementById("articles-list");
@@ -85,7 +103,9 @@ document.addEventListener("DOMContentLoaded", () => {
       container.innerHTML = "";
 
       const items = Array.isArray(data.items) ? data.items : [];
-      items.slice(0, 8).forEach((article) => {
+      const top = items.slice(0, 8);
+
+      top.forEach((article) => {
         const el = document.createElement("div");
         el.classList.add("article-card");
 
@@ -106,13 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
         container.appendChild(el);
       });
 
-      // If feed is empty, show a friendly message
-      if (items.length === 0) {
+      if (top.length === 0) {
         container.innerHTML = "⚠️ No Medium posts found.";
       }
     } catch (e) {
-      const container = document.getElementById("articles-list");
-      if (container) container.innerHTML = "⚠️ Unable to load Medium articles.";
+      const container2 = document.getElementById("articles-list");
+      if (container2) container2.innerHTML = "⚠️ Unable to load Medium articles.";
     }
   }
 
@@ -120,10 +139,12 @@ document.addEventListener("DOMContentLoaded", () => {
    * =========================
    * Boot sequence
    * =========================
-   * 1) Inject articles partial (if needed)
-   * 2) Load Medium feed (needs #articles-list)
+   * 1) Inject certifications (independent)
+   * 2) Inject articles inner (creates #articles-list if missing)
+   * 3) Load Medium feed into #articles-list
    */
   (async () => {
+    await injectCertificationsSection();
     await injectArticlesSection();
     await loadMediumArticles();
   })();
