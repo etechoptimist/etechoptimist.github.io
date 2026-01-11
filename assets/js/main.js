@@ -37,21 +37,23 @@ document.addEventListener("DOMContentLoaded", () => {
    * Loads /partials/certifications.html into #certifications-container
    */
   async function injectCertificationsSection() {
-    const container = document.getElementById("certifications-container");
-    if (!container) return;
+  const container = document.getElementById("certifications-container");
+  if (!container) return;
 
-    try {
-      const res = await fetch("/partials/certifications.html", { cache: "no-store" });
-      if (!res.ok) {
-        container.innerHTML = "⚠️ Unable to load certifications.";
-        return;
-      }
-      container.innerHTML = await res.text();
-    } catch (e) {
-      container.innerHTML = "⚠️ Unable to load certifications.";
+  try {
+    const url = "/partials/certifications.html";
+    const res = await fetch(url, { cache: "no-store" });
+
+    if (!res.ok) {
+      container.innerHTML = `⚠️ Unable to load certifications (${res.status}). Check: ${url}`;
+      return;
     }
-  }
 
+    container.innerHTML = await res.text();
+  } catch (e) {
+    container.innerHTML = `⚠️ Unable to load certifications (fetch error).`;
+  }
+}
   /**
    * ==========================================
    * 3) Articles inner partial injection
