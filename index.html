@@ -303,45 +303,7 @@
   </footer>
 
   <!-- ✅ Medium Feed -->
-  <script>
-    const menuToggle = document.getElementById('mobile-menu');
-    const navLinks = document.querySelector('.nav-links');
-
-    menuToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
-  
-    // Optional: close menu when a link is clicked
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-      });
-    });
-    
-    async function loadMediumArticles() {
-      try {
-        const rssUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@etechoptimist';
-        const res = await fetch(rssUrl);
-        const data = await res.json();
-        const container = document.getElementById('articles-list');
-        container.innerHTML = '';
-        data.items.slice(0, 8).forEach(article => {
-          const el = document.createElement('div');
-          el.classList.add('article-card');
-          el.innerHTML = `
-            <a href="${article.link}" target="_blank">${article.title}</a>
-            <small>${new Date(article.pubDate).toLocaleDateString()}</small>
-            <p>${article.description.replace(/<[^>]+>/g, '').substring(0, 180)}...</p>
-          `;
-          container.appendChild(el);
-        });
-      } catch {
-        document.getElementById('articles-list').innerHTML = '⚠️ Unable to load Medium articles.';
-      }
-    }
-    
-    loadMediumArticles();
-  </script>
+  <script src="/assets/js/main.js" defer></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
