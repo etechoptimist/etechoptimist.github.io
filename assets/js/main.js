@@ -1,12 +1,26 @@
 // assets/js/main.js
 // Static-site friendly (no Jekyll). Loads partial HTML sections + Medium RSS.
-// Requires:
-//   /partials/articles-inner.html   (contains H2 + #articles-list)
-//   /partials/certifications.html   (contains full Certifications markup for insertion)
+// Requires these files to exist (and be reachable in the browser):
+//   partials/education.html
+//   partials/certifications.html
+//   partials/articles-inner.html
 //
 // In index.html you should have placeholders:
-//   <section id="articles">...</section>   (kept as a real section to preserve #articles anchor)
-//   <div id="certifications-container">Loading certifications...</div>
+//
+// Education:
+//   <section id="studies">
+//     <h2>Education</h2>
+//     <div id="education-container">Loading education...</div>
+//   </section>
+//
+// Certifications:
+//   <section id="certifications">
+//     <h2>Certifications</h2>
+//     <div id="certifications-container">Loading certifications...</div>
+//   </section>
+//
+// Articles (keep the real section so #articles anchor always exists):
+//   <section id="articles"> ...fallback... </section>
 
 document.addEventListener("DOMContentLoaded", () => {
   /**
@@ -32,34 +46,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * ==========================================
-   * 2) Certifications partial injection
+   * 2) Education partial injection
    * ==========================================
-   * Loads /partials/certifications.html into #certifications-container
+   * Loads partials/education.html into #education-container
    */
-  async function injectCertificationsSection() {
-  const container = document.getElementById("certifications-container");
-  if (!container) return;
+  async function injectEducationSection() {
+    const container = document.getElementById("education-container");
+    if (!container) return;
 
-  try {
-    const url = "/partials/certifications.html";
-    const res = await fetch(url, { cache: "no-store" });
-
-    if (!res.ok) {
-      container.innerHTML = `⚠️ Unable to load certifications (${res.status}). Check: ${url}`;
-      return;
+    try {
+      const res = await fetch("partials/education.html", { cache: "no-store" });
+      if (!res.ok) {
+        container.innerHTML = `⚠️ Unable to load education (${res.status}).`;
+        return;
+      }
+      container.innerHTML = await res.text();
+    } catch (e) {
+      container.innerHTML = "⚠️ Unable to load education.";
     }
-
-    container.innerHTML = await res.text();
-  } catch (e) {
-    container.innerHTML = `⚠️ Unable to load certifications (fetch error).`;
   }
-}
+
   /**
    * ==========================================
-   * 3) Articles inner partial injection
+   * 3) Certifications partial injection
+   * ==========================================
+   * Loads partials/certifications.html into #certifications-container
+   */
+  async function injectCertificationsSection() {
+    const container = document.getElementById("certifications-container");
+    if (!container) return;
+
+    try {
+      const res = await fetch("partials/certifications.html", { cache: "no-store" });
+      if (!res.ok) {
+        container.innerHTML = `⚠️ Unable to load certifications (${res.status}).`;
+        return;
+      }
+      container.innerHTML = await res.text();
+    } catch (e) {
+      container.innerHTML = "⚠️ Unable to load certifications.";
+    }
+  }
+
+  /**
+   * ==========================================
+   * 4) Articles inner partial injection
    * ==========================================
    * Keeps <section id="articles"> in index.html so #articles anchor always works.
-   * Replaces the inner HTML of that section with /partials/articles-inner.html,
+   * Replaces the inside of that section with partials/articles-inner.html,
    * but only if #articles-list is not already present.
    */
   async function injectArticlesSection() {
@@ -71,7 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const alreadyHasList = !!document.getElementById("articles-list");
       if (alreadyHasList) return;
 
-      const res = await fetch("/partials/articles-inner.html", { cache: "no-store" });
+      const res = await fetch("partials/articles-inner.html", { cache: "no-store" });
       if (!res.ok) return;
 
       articlesSection.innerHTML = await res.text();
@@ -87,7 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /**
    * =========================
-   * 4) Medium feed loader
+   * 5) Medium feed loader
    * =========================
    * Fills #articles-list with cards (same behavior as your original code).
    */
@@ -141,11 +175,13 @@ document.addEventListener("DOMContentLoaded", () => {
    * =========================
    * Boot sequence
    * =========================
-   * 1) Inject certifications (independent)
-   * 2) Inject articles inner (creates #articles-list if missing)
-   * 3) Load Medium feed into #articles-list
+   * 1) Inject education
+   * 2) Inject certifications
+   * 3) Inject articles inner (creates #articles-list if missing)
+   * 4) Load Medium feed into #articles-list
    */
   (async () => {
+    await injectEducationSection();
     await injectCertificationsSection();
     await injectArticlesSection();
     await loadMediumArticles();
