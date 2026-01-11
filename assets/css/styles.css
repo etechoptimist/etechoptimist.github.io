@@ -299,3 +299,17 @@ footer {
   font-size: 0.9rem;
 }
 
+/* Education (same visual style as Certifications) */
+.edu-item {
+  margin-bottom: 0.9rem; /* keep your spacing consistent */
+}
+
+.edu-title {
+  line-height: 1.5;
+}
+
+.edu-org {
+  font-size: 0.9rem;
+  color: #555;
+}
+
