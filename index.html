@@ -155,31 +155,32 @@
       <strong>Dynamic Pricing for ATM Transactions</strong><br>
       Designed a system using customer segmentation (KMeans) and demand modeling (XGBoost) to optimize transaction fees, increasing revenue by 10–12% while maintaining transaction volume.
     </div>
-    <div class="project-item">
-      <strong>ATM Cash Demand Forecasting & Safety Stock Optimization</strong><br>
-      Developed a forecasting system using XGBoost and N-BEATS to predict daily cash demand for each ATM cassette ($1, $5, $20, $100).  
-      The model generates accurate per-denomination forecasts and calculates safety stock levels to prevent depletion events, significantly reducing cash-out incidents and improving ATM uptime.
-    </div>
-    <div class="project-item">
-      <strong>Defect Detection from ATM Telemetry Logs</strong><br>
-      Created a BERT-based anomaly detection model identifying software/hardware defects early. Integrated with LangGraph orchestration for LLM-based root-cause analysis, increasing detection from 30% to 80%.
-    </div>
-    <hr style="border: none; border-top: 1px solid #0070f3; margin: 3rem 0; width: 60%;">
-    <h3 id="consulting-projects" style="margin-top:2.5rem; color:#0070f3;">
-      Consulting & Applied AI Projects
-    </h3>
-    <div class="project-item">
-      <strong>Speech Analytics for Compliance Monitoring in Call Center</strong><br>
-      Designed an AI-driven speech analytics system using an orchestrator–worker pattern built on LangGraph to analyze interactions between human agents and customers.  
-      The agent evaluates compliance adherence, sentiment neutrality, and conversational quality, generating real-time recommendations for call improvement.  
-      Integrated with MLflow for full observability and prompt tracking, enabling model auditability and continuous optimization.
-    </div>
 
-    <div class="project-item">
-      <h4 style="margin-top:0;">Agent-Driven Financial Coaching & Expense Intelligence Platform</h4>
+        <div class="project-item">
+          <strong>ATM Cash Demand Forecasting & Safety Stock Optimization</strong><br>
+          Developed a forecasting system using XGBoost and N-BEATS to predict daily cash demand for each ATM cassette ($1, $5, $20, $100).  
+          The model generates accurate per-denomination forecasts and calculates safety stock levels to prevent depletion events, significantly reducing cash-out incidents and improving ATM uptime.
+        </div>
+        <div class="project-item">
+          <strong>Defect Detection from ATM Telemetry Logs</strong><br>
+          Created a BERT-based anomaly detection model identifying software/hardware defects early. Integrated with LangGraph orchestration for LLM-based root-cause analysis, increasing detection from 30% to 80%.
+        </div>
+        <hr style="border: none; border-top: 1px solid #0070f3; margin: 3rem 0; width: 60%;">
+        <h3 id="consulting-projects" style="margin-top:2.5rem; color:#0070f3;">
+          Consulting & Applied AI Projects
+        </h3>
+        <div class="project-item">
+          <strong>Speech Analytics for Compliance Monitoring in Call Center</strong><br>
+          Designed an AI-driven speech analytics system using an orchestrator–worker pattern built on LangGraph to analyze interactions between human agents and customers.  
+          The agent evaluates compliance adherence, sentiment neutrality, and conversational quality, generating real-time recommendations for call improvement.  
+          Integrated with MLflow for full observability and prompt tracking, enabling model auditability and continuous optimization.
+        </div>
+    
+       <div class="project-item project-feature">
+      <h4 class="project-title">Agent-Driven Financial Coaching & Expense Intelligence Platform</h4>
     
       <!-- 3-line recruiter summary -->
-      <p style="margin:0 0 0.8rem 0;">
+      <p class="project-summary">
         Built a serverless, agent-based system using <strong>LangGraph</strong> to extract and understand
         expenses from invoices.<br>
         Uses <strong>Vision-Language Models (VLMs)</strong>, <strong>Atlas Vector Search</strong>, and
@@ -189,7 +190,8 @@
           https://budgy.com
         </a>
       </p>
-      <p style="font-size:0.9rem; color:#555; margin-bottom:1rem;">
+    
+      <p class="project-meta">
         Related topics:
         <a href="#projects">Agentic AI Projects</a> ·
         <a href="#articles">Technical Articles</a> ·
@@ -197,9 +199,9 @@
       </p>
     
       <!-- Key agents -->
-      <details>
+      <details class="project-details">
         <summary><strong>Key Agents</strong></summary>
-        <ul style="margin:0.8rem 0 0 1.2rem; line-height:1.6;">
+        <ul class="project-list">
           <li><strong>Document Ingestion Agent</strong> – Receives invoices and routes them for processing.</li>
           <li><strong>Extraction Agent</strong> – Uses VLMs and Docling to extract data from images and PDFs.</li>
           <li><strong>Normalization Agent</strong> – Cleans, validates, and standardizes item-level data.</li>
@@ -209,60 +211,59 @@
       </details>
     
       <!-- Architecture -->
-      <details style="margin-top:0.8rem;">
+      <details class="project-details">
         <summary><strong>Architecture Diagram</strong></summary>
-    
         <pre class="mermaid">
     flowchart TD
-        User[User / Web UI]
-        API[FastAPI / API Gateway]
+      User[User / Web UI]
+      API[FastAPI / API Gateway]
     
-        User --> API
-        API -->|Upload invoice| S3[(AWS S3<br/>Raw Documents)]
+      User --> API
+      API -->|Upload invoice| S3[(AWS S3<br/>Raw Documents)]
     
-        API -->|Trigger| LambdaIngest[AWS Lambda<br/>Invoice Intake]
+      API -->|Trigger| LambdaIngest[AWS Lambda<br/>Invoice Intake]
     
-        LambdaIngest --> VLM[VLM + Docling<br/>Data Extraction]
+      LambdaIngest --> VLM[VLM + Docling<br/>Data Extraction]
     
-        VLM --> LangGraph[LangGraph Orchestrator<br/>Router + React Agent]
+      VLM --> LangGraph[LangGraph Orchestrator<br/>Router + React Agent]
     
-        LangGraph -->|Async tasks| SQS[AWS SQS Queue]
+      LangGraph -->|Async tasks| SQS[AWS SQS Queue]
     
-        SQS --> LambdaCoach[AWS Lambda<br/>Expense Classification & Coaching]
+      SQS --> LambdaCoach[AWS Lambda<br/>Expense Classification & Coaching]
     
-        LambdaCoach --> Mongo[(MongoDB Atlas<br/>Structured Records)]
-        Mongo --> Vector[Atlas Vector Search<br/>Embeddings]
+      LambdaCoach --> Mongo[(MongoDB Atlas<br/>Structured Records)]
+      Mongo --> Vector[Atlas Vector Search<br/>Embeddings]
     
-        Vector --> LangGraph
-        LangGraph --> API
-        API --> User
+      Vector --> LangGraph
+      LangGraph --> API
+      API --> User
         </pre>
       </details>
     
-      <!-- B1 English description -->
-      <details style="margin-top:0.8rem;">
-        <summary><strong>Description </strong></summary>
-        <p style="margin:0.8rem 0 0 0;">
+      <!-- Description -->
+      <details class="project-details">
+        <summary><strong>Description</strong></summary>
+        <p class="project-text">
           Designed and built an agent-based financial coaching and expense intelligence system using
           <strong>LangGraph</strong>. The system uses a Router Pattern and a React Agent to decide
           which agent works on each task.
         </p>
-        <p style="margin:0.8rem 0 0 0;">
+        <p class="project-text">
           The platform processes invoices using Vision-Language Models (VLMs) and Docling to extract
           financial data from images and PDFs. Multiple agents handle parsing, validation, data cleaning,
           and reasoning about spending behavior.
         </p>
-        <p style="margin:0.8rem 0 0 0;">
+        <p class="project-text">
           The system runs fully serverless on AWS. AWS Lambda handles processing, SQS manages background
           jobs, and S3 stores raw files. Data is saved in MongoDB Atlas, where Atlas Vector Search enables
           semantic search and personalized financial coaching insights.
         </p>
       </details>
-      <p style="font-size:0.85rem; color:#666;">
+    
+      <p class="project-tech">
         <strong>Tech stack:</strong> LangGraph, LangChain, Vision-Language Models,
         Docling, AWS Lambda, SQS, S3, MongoDB Atlas, Atlas Vector Search
       </p>
-
     </div>
 
     <div class="project-item">
