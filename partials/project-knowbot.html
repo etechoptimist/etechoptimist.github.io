@@ -80,23 +80,37 @@ flowchart TD
   APIGW["API Gateway"]
   L["AWS Lambda (API)"]
   LG["LangGraph Orchestrator"]
-  KB["Bedrock Knowledge Base (Titan Embeddings v2)"]
+
+  EM["Amazon Titan Embeddings v2"]
+  KB["AWS Bedrock Knowledge Base"]
   OS["Amazon OpenSearch (Vector Index)"]
-  S3["Amazon S3 (Documents)"]
-  CRAWL["Crawler / Scraper"]
-  FAQ["Pre-chunked FAQ Pack"]
+  RR["Rerank (Heuristics / Scores)"]
+
+  FM["Claude (Amazon Bedrock)"]
   GR["Bedrock Guardrails"]
 
-  U --> APIGW --> L --> LG
-  LG --> KB
-  KB --> OS
-  LG --> GR
-  LG --> L --> APIGW --> U
+  CRAWL["Crawler / Scraper"]
+  FAQ["Pre-chunked FAQ Pack"]
+  S3["Amazon S3 (Documents)"]
 
+  %% Runtime query flow
+  U --> APIGW --> L --> LG
+  LG --> EM
+  EM --> KB
+  KB --> OS
+  OS --> KB
+  KB --> LG
+  LG --> RR
+  RR --> FM
+  FM --> GR
+  GR --> L --> APIGW --> U
+
+  %% Ingestion flow
   CRAWL --> S3
   FAQ --> S3
   S3 --> KB
 </pre>
+
   </details>
 
   <details class="project-details">
