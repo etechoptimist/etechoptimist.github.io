@@ -1,0 +1,128 @@
+<!-- partials/project-knowbot.html -->
+<div class="project-item project-feature">
+  <h4 class="project-title">KnowBot – UniLibre RAG Chatbot on AWS Bedrock Knowledge Base</h4>
+
+  <p class="project-summary">
+    Built a Retrieval-Augmented Generation (RAG) chatbot using <strong>AWS Bedrock Knowledge Base</strong> with
+    <strong>Guardrails</strong> to answer questions using official UniLibre content.
+  </p>
+
+  <p class="project-summary">
+    The solution scrapes the official UniLibre website and ingests both the crawled content and an additional
+    <strong>FAQ dataset</strong> that is <strong>pre-chunked</strong> to keep strong control over chunking strategy.
+  </p>
+
+  <p class="project-summary">
+    Uses <strong>Amazon Titan Embeddings v2</strong> to generate vector representations for semantic search and retrieval,
+    backed by <strong>Amazon OpenSearch</strong> as the vector database.
+  </p>
+
+  <p class="project-summary">
+    <strong>Public demo:</strong>
+    <a href="https://d33k680axta1aa.cloudfront.net/?v=2" target="_blank" rel="noopener noreferrer">
+      https://d33k680axta1aa.cloudfront.net
+    </a>
+  </p>
+
+  <p class="project-meta">
+    Related topics:
+    <a href="#projects">AI / Agentic Projects</a> ·
+    <a href="#articles">Technical Articles</a> ·
+    <a href="#certifications">Generative AI</a>
+  </p>
+
+  <details class="project-details">
+    <summary><strong>Key Components</strong></summary>
+    <ul class="project-list">
+      <li><strong>Ingestion Pipeline</strong> – Scrapes the official UniLibre site and prepares documents for ingestion.</li>
+      <li><strong>Pre-chunked FAQ Pack</strong> – Adds curated FAQs with controlled chunk boundaries and metadata.</li>
+      <li><strong>Embedding Model</strong> – Uses <strong>Amazon Titan Embeddings v2</strong> for document chunks and user queries.</li>
+      <li><strong>Bedrock Knowledge Base</strong> – Stores content and performs retrieval for each user question.</li>
+      <li><strong>Vector Database</strong> – Uses <strong>Amazon OpenSearch</strong> as the vector store for semantic retrieval.</li>
+      <li><strong>Reranking Strategy</strong> – Applies a lightweight rerank step in the orchestration layer to prioritize the best chunks.</li>
+      <li><strong>Guardrails</strong> – Applies safety and policy controls to improve reliability.</li>
+      <li><strong>LangGraph Flow</strong> – Orchestrates the “embed → retrieve → rerank → answer” workflow.</li>
+      <li><strong>API Layer</strong> – Lambda + API Gateway exposes a REST endpoint for the Web UI.</li>
+    </ul>
+  </details>
+
+  <details class="project-details">
+    <summary><strong>Query Flow (Embed → Retrieve → Rerank → Answer)</strong></summary>
+
+    <p class="project-text">
+      <strong>1) Embed:</strong> The user question is embedded using <strong>Amazon Titan Embeddings v2</strong>, producing a vector
+      representation that captures semantic meaning beyond keywords.
+    </p>
+
+    <p class="project-text">
+      <strong>2) Retrieve:</strong> The vector is used to query the <strong>AWS Bedrock Knowledge Base</strong>, which performs
+      semantic retrieval against the indexed content stored in <strong>Amazon OpenSearch</strong> (vector index). The system returns
+      the top candidate chunks (web content + FAQ chunks) with metadata.
+    </p>
+
+    <p class="project-text">
+      <strong>3) Rerank:</strong> The LangGraph workflow applies a lightweight reranking step to prioritize the most relevant chunks.
+      This step considers signals like similarity score, section priority (FAQ vs web), freshness, and basic heuristics (for example,
+      de-duplicating near-identical passages).
+    </p>
+
+    <p class="project-text">
+      <strong>4) Answer:</strong> The final selected context is provided to the LLM to generate a grounded answer. <strong>Bedrock Guardrails</strong>
+      are applied to reduce unsafe outputs, improve response consistency, and enforce content policies before returning the final response to the user.
+    </p>
+  </details>
+
+  <details class="project-details">
+    <summary><strong>Architecture Diagram</strong></summary>
+    <pre class="mermaid">
+flowchart TD
+  U[User / Web UI]
+  APIGW[API Gateway]
+  L[Lambda API]
+  LG[LangGraph Flow]
+  KB[AWS Bedrock Knowledge Base<br/>Titan Embeddings v2]
+  OS[(Amazon OpenSearch<br/>Vector Index)]
+  S3[(S3<br/>Documents)]
+  CRAWL[Crawler / Scraper]
+  FAQ[Pre-chunked FAQ Pack]
+  GR[Bedrock Guardrails]
+
+  U --> APIGW --> L --> LG
+  LG -->|Embed query (Titan v2)| KB
+  LG -->|Retrieve| KB
+  KB -->|Vector search| OS
+  LG -->|Guardrails check| GR
+  LG --> L --> APIGW --> U
+
+  CRAWL --> S3
+  FAQ --> S3
+  S3 --> KB
+    </pre>
+  </details>
+
+  <details class="project-details">
+    <summary><strong>Description</strong></summary>
+
+    <p class="project-text">
+      KnowBot is a self-serve RAG chatbot implemented on <strong>AWS Bedrock Knowledge Base</strong>. It uses
+      <strong>Amazon OpenSearch</strong> as the vector database and applies <strong>Bedrock Guardrails</strong>
+      for safer and more consistent responses.
+    </p>
+
+    <p class="project-text">
+      The retrieval layer relies on <strong>Amazon Titan Embeddings v2</strong> to embed both documents and user queries,
+      enabling accurate semantic matching during search. The system blends website content with a curated
+      <strong>pre-chunked FAQ dataset</strong> to keep more control over chunk boundaries, overlap, metadata, and retrieval behavior.
+    </p>
+
+    <p class="project-text">
+      The bot is exposed via <strong>Lambda + API Gateway</strong> and a Web UI. The end-to-end flow is orchestrated with
+      <strong>LangGraph</strong> to structure the steps like embedding, retrieval, reranking, generation, and policy checks.
+    </p>
+  </details>
+
+  <p class="project-tech">
+    <strong>Tech stack:</strong> AWS Bedrock Knowledge Base, Amazon Titan Embeddings v2, Bedrock Guardrails,
+    Amazon OpenSearch (Vector DB), LangGraph, AWS Lambda, API Gateway, S3, Web Scraper / Crawler, Pre-chunked FAQ ingestion
+  </p>
+</div>
