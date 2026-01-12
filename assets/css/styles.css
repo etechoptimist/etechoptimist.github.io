@@ -313,3 +313,9 @@ footer {
   color: #555;
 }
 
+.project-tech {
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.4;
+}
+
