@@ -1,0 +1,85 @@
+<div class="project-item project-feature">
+  <h4 class="project-title">Agent-Driven Financial Coaching & Expense Intelligence Platform</h4>
+
+  <p class="project-summary">
+    Built a serverless, agent-based system using <strong>LangGraph</strong> to extract and understand
+    expenses from invoices.<br>
+    Uses <strong>Vision-Language Models (VLMs)</strong>, <strong>Atlas Vector Search</strong>, and
+    <strong>event-driven AWS</strong> services to deliver personalized financial insights at scale.<br>
+    <strong>Public demo:</strong>
+    <a href="https://d115ijxlt2v22u.cloudfront.net/" target="_blank" rel="noopener noreferrer">
+      https://budgy.com
+    </a>
+  </p>
+
+  <p class="project-meta">
+    Related topics:
+    <a href="#projects">Agentic AI Projects</a> ·
+    <a href="#articles">Technical Articles</a> ·
+    <a href="#certifications">LangGraph Certification</a>
+  </p>
+
+  <details class="project-details">
+    <summary><strong>Key Agents</strong></summary>
+    <ul class="project-list">
+      <li><strong>Document Ingestion Agent</strong> – Receives invoices and routes them for processing.</li>
+      <li><strong>Extraction Agent</strong> – Uses VLMs and Docling to extract data from images and PDFs.</li>
+      <li><strong>Normalization Agent</strong> – Cleans, validates, and standardizes item-level data.</li>
+      <li><strong>Classification Agent</strong> – Categorizes expenses using LLM reasoning and vector search.</li>
+      <li><strong>Financial Coaching Agent</strong> – Finds spending patterns and produces insights.</li>
+    </ul>
+  </details>
+
+  <details class="project-details">
+    <summary><strong>Architecture Diagram</strong></summary>
+    <pre class="mermaid">
+flowchart TD
+  User[User / Web UI]
+  API[FastAPI / API Gateway]
+
+  User --> API
+  API -->|Upload invoice| S3[(AWS S3<br/>Raw Documents)]
+
+  API -->|Trigger| LambdaIngest[AWS Lambda<br/>Invoice Intake]
+
+  LambdaIngest --> VLM[VLM + Docling<br/>Data Extraction]
+
+  VLM --> LangGraph[LangGraph Orchestrator<br/>Router + React Agent]
+
+  LangGraph -->|Async tasks| SQS[AWS SQS Queue]
+
+  SQS --> LambdaCoach[AWS Lambda<br/>Expense Classification & Coaching]
+
+  LambdaCoach --> Mongo[(MongoDB Atlas<br/>Structured Records)]
+  Mongo --> Vector[Atlas Vector Search<br/>Embeddings]
+
+  Vector --> LangGraph
+  LangGraph --> API
+  API --> User
+    </pre>
+  </details>
+
+  <details class="project-details">
+    <summary><strong>Description</strong></summary>
+    <p class="project-text">
+      Designed and built an agent-based financial coaching and expense intelligence system using
+      <strong>LangGraph</strong>. The system uses a Router Pattern and a React Agent to decide
+      which agent works on each task.
+    </p>
+    <p class="project-text">
+      The platform processes invoices using Vision-Language Models (VLMs) and Docling to extract
+      financial data from images and PDFs. Multiple agents handle parsing, validation, data cleaning,
+      and reasoning about spending behavior.
+    </p>
+    <p class="project-text">
+      The system runs fully serverless on AWS. AWS Lambda handles processing, SQS manages background
+      jobs, and S3 stores raw files. Data is saved in MongoDB Atlas, where Atlas Vector Search enables
+      semantic search and personalized financial coaching insights.
+    </p>
+  </details>
+
+  <p class="project-tech">
+    <strong>Tech stack:</strong> Adaptative RAG,LangGraph, LangChain, Vision-Language Models,
+    Docling, AWS Lambda, SQS, S3, MongoDB Atlas, Atlas Vector Search
+  </p>
+</div>
