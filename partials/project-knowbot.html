@@ -76,28 +76,27 @@
     <summary><strong>Architecture Diagram</strong></summary>
     <pre class="mermaid">
 flowchart TD
-  U[User / Web UI]
-  APIGW[API Gateway]
-  L[Lambda API]
-  LG[LangGraph Flow]
-  KB[AWS Bedrock Knowledge Base<br/>Titan Embeddings v2]
-  OS[(Amazon OpenSearch<br/>Vector Index)]
-  S3[(S3<br/>Documents)]
-  CRAWL[Crawler / Scraper]
-  FAQ[Pre-chunked FAQ Pack]
-  GR[Bedrock Guardrails]
+  U["User (Web UI)"]
+  APIGW["API Gateway"]
+  L["AWS Lambda (API)"]
+  LG["LangGraph Orchestrator"]
+  KB["Bedrock Knowledge Base (Titan Embeddings v2)"]
+  OS["Amazon OpenSearch (Vector Index)"]
+  S3["Amazon S3 (Documents)"]
+  CRAWL["Crawler / Scraper"]
+  FAQ["Pre-chunked FAQ Pack"]
+  GR["Bedrock Guardrails"]
 
   U --> APIGW --> L --> LG
-  LG -->|Embed query (Titan v2)| KB
-  LG -->|Retrieve| KB
-  KB -->|Vector search| OS
-  LG -->|Guardrails check| GR
+  LG --> KB
+  KB --> OS
+  LG --> GR
   LG --> L --> APIGW --> U
 
   CRAWL --> S3
   FAQ --> S3
   S3 --> KB
-    </pre>
+</pre>
   </details>
 
   <details class="project-details">
