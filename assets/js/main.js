@@ -178,6 +178,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /**
    * ==========================================
+   * KnowBotProject
+   * ==========================================
+   */
+
+    async function injectKnowBotProject() {
+    const container = document.getElementById("project-knowbot-container");
+    if (!container) return;
+  
+    const url = "partials/project-knowbot.html";
+  
+    try {
+      const res = await fetch(url, { cache: "no-store" });
+      if (!res.ok) {
+        container.innerHTML = `⚠️ Unable to load KnowBot project (${res.status}).`;
+        return;
+      }
+      container.innerHTML = await res.text();
+  
+      // Mermaid re-render for injected diagram
+      if (window.mermaid) {
+        mermaid.init(undefined, container.querySelectorAll(".mermaid"));
+      }
+    } catch (e) {
+      container.innerHTML = "⚠️ Unable to load KnowBot project.";
+    }
+  }
+  
+  
+    /**
+   * ==========================================
    * Inject Budgy Project
    * ==========================================
    */
@@ -216,6 +246,7 @@ document.addEventListener("DOMContentLoaded", () => {
   (async () => {
     await injectEducationSection();
     await injectCertificationsSection();
+    await injectKnowBotProject();
     await injectFinancialCoachingProject();
     await injectArticlesSection();
     await loadMediumArticles();
