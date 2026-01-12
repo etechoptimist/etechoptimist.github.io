@@ -176,6 +176,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+    /**
+   * ==========================================
+   * Inject Budgy Project
+   * ==========================================
+   */
+
+  async function injectFinancialCoachingProject() {
+  const container = document.getElementById("project-financial-coaching-container");
+  if (!container) return;
+
+  try {
+    const res = await fetch("partials/project-financial-coaching.html", { cache: "no-store" });
+    if (!res.ok) {
+      container.innerHTML = "⚠️ Unable to load project.";
+      return;
+    }
+    container.innerHTML = await res.text();
+
+    // Re-render Mermaid diagrams after injection
+    if (window.mermaid) {
+      mermaid.init(undefined, container.querySelectorAll(".mermaid"));
+    }
+  } catch (e) {
+    container.innerHTML = "⚠️ Unable to load project.";
+  }
+}
+
+
   /**
    * =========================
    * Boot sequence
@@ -188,6 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
   (async () => {
     await injectEducationSection();
     await injectCertificationsSection();
+    await injectFinancialCoachingProject();
     await injectArticlesSection();
     await loadMediumArticles();
   })();
