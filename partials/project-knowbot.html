@@ -16,6 +16,11 @@
     Uses <strong>Amazon Titan Embeddings v2</strong> to generate vector representations for semantic search and retrieval,
     backed by <strong>Amazon OpenSearch</strong> as the vector database.
   </p>
+  
+  <p class="project-summary">
+    Uses <strong>Claude 3.5</strong> as the foundation model on <strong>Amazon Bedrock</strong> to generate
+    grounded, natural-language answers based on retrieved knowledge.
+  </p>
 
   <p class="project-summary">
     <strong>Public demo:</strong>
@@ -48,7 +53,7 @@
 
   <details class="project-details">
     <summary><strong>Query Flow (Embed → Retrieve → Rerank → Answer)</strong></summary>
-
+   
     <p class="project-text">
       <strong>1) Embed:</strong> The user question is embedded using <strong>Amazon Titan Embeddings v2</strong>, producing a vector
       representation that captures semantic meaning beyond keywords.
@@ -67,8 +72,9 @@
     </p>
 
     <p class="project-text">
-      <strong>4) Answer:</strong> The final selected context is provided to the LLM to generate a grounded answer. <strong>Bedrock Guardrails</strong>
-      are applied to reduce unsafe outputs, improve response consistency, and enforce content policies before returning the final response to the user.
+      Answer generation is performed using <strong>Claude 3.5</strong> as the foundation model on
+      <strong>Amazon Bedrock</strong>, combining retrieved context with controlled generation
+      and policy enforcement via Bedrock Guardrails.
     </p>
   </details>
 
@@ -86,7 +92,7 @@ flowchart TD
   OS["Amazon OpenSearch (Vector Index)"]
   RR["Rerank (Heuristics / Scores)"]
 
-  FM["Claude (Amazon Bedrock)"]
+  FM["Claude 3.5 (Amazon Bedrock)"]
   GR["Bedrock Guardrails"]
 
   CRAWL["Crawler / Scraper"]
@@ -135,7 +141,7 @@ flowchart TD
   </details>
 
   <p class="project-tech">
-    <strong>Tech stack:</strong> AWS Bedrock Knowledge Base, Amazon Titan Embeddings v2, Bedrock Guardrails,
+    <strong>Tech stack:</strong> AWS Bedrock Knowledge Base, Amazon Titan Embeddings v2, Bedrock Guardrails, Anthropic Claude Model,
     Amazon OpenSearch (Vector DB), LangGraph, AWS Lambda, API Gateway, S3, Web Scraper / Crawler, Pre-chunked FAQ ingestion
   </p>
 </div>
