@@ -1,42 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Homepage -->
   <url>
     <loc>https://etechoptimist.github.io/</loc>
-    <lastmod>2026-02-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Projects section -->
   <url>
-    <loc>https://etechoptimist.github.io/#ai-projects</loc>
-    <lastmod>2026-02-14</lastmod>
+    <loc>https://etechoptimist.github.io/#home</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://etechoptimist.github.io/#projects</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- Certifications -->
+  <url>
+    <loc>https://etechoptimist.github.io/#ai-projects</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://etechoptimist.github.io/#ml-projects</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
   <url>
     <loc>https://etechoptimist.github.io/#certifications</loc>
-    <lastmod>2026-02-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Articles -->
   <url>
-    <loc>https://etechoptimist.github.io/#articles</loc>
-    <lastmod>2026-02-14</lastmod>
-    <changefreq>monthly</changefreq>
+    <loc>https://etechoptimist.github.io/#studies</loc>
+    <changefreq>yearly</changefreq>
     <priority>0.7</priority>
   </url>
 
-  <!-- About -->
   <url>
-    <loc>https://etechoptimist.github.io/#about</loc>
-    <lastmod>2026-02-14</lastmod>
+    <loc>https://etechoptimist.github.io/#articles</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://etechoptimist.github.io/#contact</loc>
     <changefreq>yearly</changefreq>
     <priority>0.6</priority>
   </url>
