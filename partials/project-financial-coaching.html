@@ -1,28 +1,75 @@
-<div class="project-item project-feature">
-  <h4 class="project-title">Agent-Driven Financial Coaching & Expense Intelligence Platform</h4>
+<!-- partials/project-financial-coaching.html -->
+<div class="project-item project-feature project-detail">
 
-  <p class="project-summary">
-  Built a serverless, agent-based system using <strong>LangGraph</strong> to extract and understand expenses from invoices.
-  </p>
+  <!-- Header -->
+  <div class="project-top">
+    <div>
+      <h4 class="project-title">Agent-Driven Financial Coaching & Expense Intelligence Platform</h4>
+      <p class="project-one-liner">
+        Serverless agent system that extracts expenses from invoices and generates <strong>personalized financial insights</strong>
+        using <strong>LangGraph</strong>, VLMs, and vector search.
+      </p>
+    </div>
 
-  <p class="project-summary">
-    Uses <strong>Vision-Language Models (VLMs)</strong>, <strong>Atlas Vector Search</strong>, and
-    <strong>event-driven AWS</strong> services to deliver personalized financial insights at scale.
-  </p>
-  
-  <p class="project-summary">
-    <strong>Public demo:</strong>
-    <a href="https://d115ijxlt2v22u.cloudfront.net/" target="_blank" rel="noopener noreferrer">https://budgy.com</a>
-  </p>
-  
+    <div class="project-actions">
+      <a class="btn btn-primary"
+         href="https://d115ijxlt2v22u.cloudfront.net/"
+         target="_blank" rel="noopener noreferrer">
+        Public Demo
+      </a>
+      <a class="btn" href="#contact">Contact</a>
+    </div>
+  </div>
+
+  <!-- Quick highlights -->
+  <div class="project-highlights">
+    <div class="highlight">
+      <div class="highlight-k">Input</div>
+      <div class="highlight-v">Invoices (PDF / images)</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Core value</div>
+      <div class="highlight-v">Accurate extraction + smart categorization</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Scale</div>
+      <div class="highlight-v">Event-driven AWS + async jobs</div>
+    </div>
+  </div>
+
+  <!-- Keywords / chips -->
+  <div class="chip-row" aria-label="Project keywords">
+    <span class="chip">Agentic AI</span>
+    <span class="chip">LangGraph</span>
+    <span class="chip">VLM</span>
+    <span class="chip">Docling</span>
+    <span class="chip">Serverless</span>
+    <span class="chip">AWS Lambda</span>
+    <span class="chip">SQS</span>
+    <span class="chip">S3</span>
+    <span class="chip">MongoDB Atlas</span>
+    <span class="chip">Atlas Vector Search</span>
+  </div>
+
+  <!-- Summary (short + scannable) -->
+  <div class="project-summary-block">
+    <ul class="project-list compact">
+      <li><strong>Extraction:</strong> Uses <strong>VLMs + Docling</strong> to extract structured expense data from invoices.</li>
+      <li><strong>Normalization:</strong> Cleans, validates, and standardizes item-level data for analytics.</li>
+      <li><strong>Classification:</strong> Categorizes expenses using LLM reasoning + <strong>Atlas Vector Search</strong>.</li>
+      <li><strong>Coaching:</strong> Detects spending patterns and generates personalized recommendations.</li>
+      <li><strong>Architecture:</strong> Serverless pipeline with <strong>S3 + Lambda + SQS</strong> for scale and cost efficiency.</li>
+    </ul>
+  </div>
+
   <p class="project-meta">
     Related topics:
-    <a href="#projects">Agentic AI Projects</a> ·
+    <a href="#ai-projects">Agentic AI Projects</a> ·
     <a href="#articles">Technical Articles</a> ·
     <a href="#certifications">LangGraph Certification</a>
   </p>
 
-  <details class="project-details">
+  <details class="project-details" open>
     <summary><strong>Key Agents</strong></summary>
     <ul class="project-list">
       <li><strong>Document Ingestion Agent</strong> – Receives invoices and routes them for processing.</li>
@@ -65,24 +112,23 @@ flowchart TD
   <details class="project-details">
     <summary><strong>Description</strong></summary>
     <p class="project-text">
-      Designed and built an agent-based financial coaching and expense intelligence system using
-      <strong>LangGraph</strong>. The system uses a Router Pattern and a React Agent to decide
-      which agent works on each task.
+      Designed and built an agent-based financial coaching and expense intelligence platform using
+      <strong>LangGraph</strong>. A router + React agent pattern selects the correct agent per task.
     </p>
     <p class="project-text">
-      The platform processes invoices using Vision-Language Models (VLMs) and Docling to extract
-      financial data from images and PDFs. Multiple agents handle parsing, validation, data cleaning,
-      and reasoning about spending behavior.
+      The system processes invoices using <strong>Vision-Language Models (VLMs)</strong> and <strong>Docling</strong> to extract
+      structured information from images and PDFs. Agents handle parsing, validation, cleaning, and reasoning about spending behavior.
     </p>
     <p class="project-text">
-      The system runs fully serverless on AWS. AWS Lambda handles processing, SQS manages background
-      jobs, and S3 stores raw files. Data is saved in MongoDB Atlas, where Atlas Vector Search enables
-      semantic search and personalized financial coaching insights.
+      The platform runs serverless on AWS: <strong>S3</strong> stores raw documents, <strong>Lambda</strong> executes processing,
+      and <strong>SQS</strong> supports asynchronous workloads. Data is stored in <strong>MongoDB Atlas</strong>, and
+      <strong>Atlas Vector Search</strong> enables semantic retrieval to support personalized coaching insights.
     </p>
   </details>
 
   <p class="project-tech">
-    <strong>Tech stack:</strong> Adaptative RAG,LangGraph, LangChain, Vision-Language Models,
-    Docling, AWS Lambda, SQS, S3, MongoDB Atlas, Atlas Vector Search
+    <strong>Tech stack:</strong> Adaptive RAG, LangGraph, LangChain, Vision-Language Models, Docling,
+    AWS Lambda, SQS, S3, MongoDB Atlas, Atlas Vector Search, FastAPI
   </p>
+
 </div>
