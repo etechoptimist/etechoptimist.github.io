@@ -28,8 +28,8 @@
   --nav-height-offset:90px;
 
   /* Certifications alignment */
-  --cert-date-col: 92px;
-  --cert-date-col-mobile: 78px;
+  --cert-date-col:92px;
+  --cert-date-col-mobile:78px;
 }
 
 /* =========================
@@ -222,13 +222,14 @@ li{ margin:0.4em 0; }
   color:var(--white);
 }
 
-/* Optional chips (keep if used elsewhere) */
+/* Generic chips (keep if used elsewhere) */
 .chip-row{
   margin-top:14px;
   display:flex;
   flex-wrap:wrap;
   gap:8px;
 }
+
 .chip{
   border:1px solid rgba(0,112,243,0.25);
   background:rgba(0,112,243,0.06);
@@ -316,6 +317,29 @@ li{ margin:0.4em 0; }
 
 .project-list.compact{ margin-top:10px; }
 
+/* Project chips (softer, like certifications) */
+.project-chip-row{
+  margin-top:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.project-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:22px;
+  padding:0 10px;
+  border-radius:999px;
+  border:1px solid rgba(0,112,243,0.18);
+  background:rgba(0,112,243,0.05);
+  color:#0b3d91;
+  font-size:0.74rem;
+  font-weight:600;
+  letter-spacing:0;
+}
+
 /* =========================
    ARTICLES
    ========================= */
@@ -375,13 +399,12 @@ li{ margin:0.4em 0; }
   gap:16px;
 }
 
-/* cert cards should be left aligned */
+/* cert cards should be left aligned (your markup should use class="cert-group card cert-card") */
 .cert-card{
-  text-align:left;
+  text-align:left;              /* override .card center */
   padding:1.4rem 1.4rem;
 }
 
-/* section headers inside cards */
 .cert-card .cert-group-head h3{
   margin:0 0 10px 0;
   font-weight:700;
@@ -389,7 +412,7 @@ li{ margin:0.4em 0; }
   color:#111;
 }
 
-/* remove any extra chips in certifications */
+/* Remove extra chips (keep only date pills) */
 .cert-card .chip-row{ display:none !important; }
 
 /* Perfect alignment: fixed date column + content column */
@@ -419,10 +442,10 @@ li{ margin:0.4em 0; }
 
 /* date pill (single line, fixed width) */
 .cert-date{
-  width: var(--cert-date-col);
+  width:var(--cert-date-col);
   height:24px;
   padding:0;
-  white-space:nowrap;       /* stop Jan↵2026 wrapping */
+  white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
   display:flex;
@@ -437,7 +460,6 @@ li{ margin:0.4em 0; }
   margin-top:2px;
 }
 
-/* calmer titles */
 .cert-title{
   font-weight:600;
   font-size:0.98rem;
@@ -519,7 +541,7 @@ footer{
   section{ padding:5.2rem 1rem 2.2rem; }
   .btn{ width:100%; text-align:center; }
 
-  /* If chips are used elsewhere, keep them compact on phones */
+  /* If generic chips are used elsewhere */
   .chip{ font-size:0.82rem; padding:5px 9px; }
 
   /* Cert density on small screens */
@@ -532,43 +554,16 @@ footer{
   }
 
   .cert-date{
-    width: var(--cert-date-col-mobile);
+    width:var(--cert-date-col-mobile);
     font-size:0.72rem;
   }
 
   .cert-title{ font-size:0.96rem; }
   .cert-org{ font-size:0.86rem; }
+
+  /* Project chips */
+  .project-chip{
+    font-size:0.72rem;
+    padding:0 9px;
+  }
 }
-
-/* =========================
-   PROJECT CHIPS (softer, like certifications)
-   ========================= */
-
-/* Use this class in project chips container: <div class="project-chip-row"> ... */
-.project-chip-row{
-  margin-top: 10px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-
-/* Softer chip look (less strong font) */
-.project-chip{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-
-  height: 22px;
-  padding: 0 10px;
-
-  border-radius: 999px;
-  border: 1px solid rgba(0,112,243,0.18);
-  background: rgba(0,112,243,0.05);
-
-  color: #0b3d91;
-  font-size: 0.74rem;
-  font-weight: 600;        /* key change: less strong */
-  letter-spacing: 0;       /* avoid “badge shouting” */
-}
-
-
