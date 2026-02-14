@@ -1,42 +1,77 @@
 <!-- partials/project-knowbot.html -->
-<div class="project-item project-feature">
-  <h4 class="project-title">KnowBot – UniLibre RAG Chatbot on AWS Bedrock Knowledge Base</h4>
+<div class="project-item project-feature project-detail">
 
-  <p class="project-summary">
-    Built a Retrieval-Augmented Generation (RAG) chatbot using <strong>AWS Bedrock Knowledge Base</strong> with
-    <strong>Guardrails</strong> to answer questions using official UniLibre content.
-  </p>
+  <!-- Header -->
+  <div class="project-top">
+    <div>
+      <h4 class="project-title">KnowBot — UniLibre RAG Chatbot on AWS Bedrock Knowledge Base</h4>
+      <p class="project-one-liner">
+        Production RAG chatbot that delivers <strong>grounded answers</strong> using official UniLibre content, with
+        <strong>Bedrock Guardrails</strong> for safer responses.
+      </p>
+    </div>
 
-  <p class="project-summary">
-    The solution scrapes the official UniLibre website and ingests both the crawled content and an additional
-    <strong>FAQ dataset</strong> that is <strong>pre-chunked</strong> to keep strong control over chunking strategy.
-  </p>
+    <div class="project-actions">
+      <a class="btn btn-primary"
+         href="https://d33k680axta1aa.cloudfront.net/?v=2"
+         target="_blank" rel="noopener noreferrer">
+        Public Demo
+      </a>
+      <a class="btn"
+         href="#contact">
+        Contact
+      </a>
+    </div>
+  </div>
 
-  <p class="project-summary">
-    Uses <strong>Amazon Titan Embeddings v2</strong> to generate vector representations for semantic search and retrieval,
-    backed by <strong>Amazon OpenSearch</strong> as the vector database.
-  </p>
-  
-  <p class="project-summary">
-    Uses <strong>Claude 3.5</strong> as the foundation model on <strong>Amazon Bedrock</strong> to generate
-    grounded, natural-language answers based on retrieved knowledge.
-  </p>
+  <!-- Quick highlights -->
+  <div class="project-highlights">
+    <div class="highlight">
+      <div class="highlight-k">Grounding</div>
+      <div class="highlight-v">Official website + curated FAQs</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Retrieval</div>
+      <div class="highlight-v">Titan v2 + OpenSearch vector index</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Safety</div>
+      <div class="highlight-v">Bedrock Guardrails + controlled chunking</div>
+    </div>
+  </div>
 
-  <p class="project-summary">
-    <strong>Public demo:</strong>
-    <a href="https://d33k680axta1aa.cloudfront.net/?v=2" target="_blank" rel="noopener noreferrer">
-     https://knowbot.com
-    </a>
-  </p>
+  <!-- Keywords / chips -->
+  <div class="chip-row" aria-label="Project keywords">
+    <span class="chip">RAG</span>
+    <span class="chip">AWS Bedrock KB</span>
+    <span class="chip">Titan Embeddings v2</span>
+    <span class="chip">OpenSearch Vector DB</span>
+    <span class="chip">Claude 3.5</span>
+    <span class="chip">Guardrails</span>
+    <span class="chip">LangGraph</span>
+    <span class="chip">Serverless</span>
+  </div>
+
+  <!-- Summary (shorter + scannable) -->
+  <div class="project-summary-block">
+    <ul class="project-list compact">
+      <li><strong>Ingestion:</strong> Scrapes official UniLibre website + adds a <strong>pre-chunked FAQ dataset</strong>.</li>
+      <li><strong>Embeddings:</strong> Uses <strong>Amazon Titan Embeddings v2</strong> for documents and queries.</li>
+      <li><strong>Vector search:</strong> Retrieval backed by <strong>Amazon OpenSearch</strong>.</li>
+      <li><strong>Answering:</strong> Uses <strong>Claude 3.5</strong> on <strong>Amazon Bedrock</strong>.</li>
+      <li><strong>Orchestration:</strong> “Embed → Retrieve → Rerank → Answer” with <strong>LangGraph</strong>.</li>
+    </ul>
+  </div>
 
   <p class="project-meta">
     Related topics:
-    <a href="#projects">AI / Agentic Projects</a> ·
+    <a href="#ai-projects">AI / Agentic Projects</a> ·
     <a href="#articles">Technical Articles</a> ·
     <a href="#certifications">Generative AI</a>
   </p>
 
-  <details class="project-details">
+  <!-- Details (keep yours) -->
+  <details class="project-details" open>
     <summary><strong>Key Components</strong></summary>
     <ul class="project-list">
       <li><strong>Ingestion Pipeline</strong> – Scrapes the official UniLibre site and prepares documents for ingestion.</li>
@@ -53,33 +88,29 @@
 
   <details class="project-details">
     <summary><strong>Query Flow (Embed → Retrieve → Rerank → Answer)</strong></summary>
-   
+
     <p class="project-text">
-      <strong>1) Embed:</strong> The user question is embedded using <strong>Amazon Titan Embeddings v2</strong>, producing a vector
-      representation that captures semantic meaning beyond keywords.
+      <strong>1) Embed:</strong> The user question is embedded using <strong>Amazon Titan Embeddings v2</strong>.
     </p>
 
     <p class="project-text">
-      <strong>2) Retrieve:</strong> The vector is used to query the <strong>AWS Bedrock Knowledge Base</strong>, which performs
-      semantic retrieval against the indexed content stored in <strong>Amazon OpenSearch</strong> (vector index). The system returns
-      the top candidate chunks (web content + FAQ chunks) with metadata.
+      <strong>2) Retrieve:</strong> Query the <strong>AWS Bedrock Knowledge Base</strong>, retrieving from
+      <strong>Amazon OpenSearch</strong> (vector index). Returns top chunks with metadata.
     </p>
 
     <p class="project-text">
-      <strong>3) Rerank:</strong> The LangGraph workflow applies a lightweight reranking step to prioritize the most relevant chunks.
-      This step considers signals like similarity score, section priority (FAQ vs web), freshness, and basic heuristics (for example,
-      de-duplicating near-identical passages).
+      <strong>3) Rerank:</strong> Lightweight reranking prioritizes relevance (similarity, FAQ priority, freshness, de-duplication).
     </p>
 
     <p class="project-text">
-      Answer generation is performed using <strong>Claude 3.5</strong> as the foundation model on
-      <strong>Amazon Bedrock</strong>, combining retrieved context with controlled generation
-      and policy enforcement via Bedrock Guardrails.
+      <strong>4) Answer:</strong> <strong>Claude 3.5</strong> on <strong>Amazon Bedrock</strong> generates grounded responses,
+      with safety controls via <strong>Bedrock Guardrails</strong>.
     </p>
   </details>
 
   <details class="project-details">
     <summary><strong>Architecture Diagram</strong></summary>
+
     <pre class="mermaid">
 flowchart TD
   U["User (Web UI)"]
@@ -129,19 +160,19 @@ flowchart TD
     </p>
 
     <p class="project-text">
-      The retrieval layer relies on <strong>Amazon Titan Embeddings v2</strong> to embed both documents and user queries,
-      enabling accurate semantic matching during search. The system blends website content with a curated
-      <strong>pre-chunked FAQ dataset</strong> to keep more control over chunk boundaries, overlap, metadata, and retrieval behavior.
+      The system blends website content with a curated <strong>pre-chunked FAQ dataset</strong> to control chunk boundaries,
+      overlap, metadata, and retrieval behavior.
     </p>
 
     <p class="project-text">
-      The bot is exposed via <strong>Lambda + API Gateway</strong> and a Web UI. The end-to-end flow is orchestrated with
-      <strong>LangGraph</strong> to structure the steps like embedding, retrieval, reranking, generation, and policy checks.
+      The bot is exposed via <strong>Lambda + API Gateway</strong>. The end-to-end flow is orchestrated with
+      <strong>LangGraph</strong>.
     </p>
   </details>
 
   <p class="project-tech">
-    <strong>Tech stack:</strong> AWS Bedrock Knowledge Base, Amazon Titan Embeddings v2, Bedrock Guardrails, Anthropic Claude Model,
-    Amazon OpenSearch (Vector DB), LangGraph, AWS Lambda, API Gateway, S3, Web Scraper / Crawler, Pre-chunked FAQ ingestion
+    <strong>Tech stack:</strong> AWS Bedrock Knowledge Base, Titan Embeddings v2, Bedrock Guardrails, Claude 3.5,
+    OpenSearch (Vector DB), LangGraph, Lambda, API Gateway, S3, Web Scraper / Crawler, Pre-chunked FAQ ingestion
   </p>
+
 </div>
