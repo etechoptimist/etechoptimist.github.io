@@ -471,6 +471,34 @@ footer{
 /* =========================
    RESPONSIVE
    ========================= */
+/* Mobile polish for certs + chips + buttons */
+@media (max-width: 480px){
+  section{ padding: 5.2rem 1rem 2.2rem; } /* a bit tighter on phones */
+
+  .btn{
+    width: 100%;
+    text-align: center;
+  }
+
+  .cert-date{
+    min-width: 70px;       /* smaller pill */
+    font-size: 0.82rem;
+  }
+
+  .chip{
+    font-size: 0.82rem;    /* chips a bit smaller */
+    padding: 5px 9px;
+  }
+}
+
+/* Prevent long demo links / text from breaking layout */
+a{
+  word-break: break-word;
+}
+
+
+
+
 @media (max-width: 768px){
   .menu-toggle{ display:block; }
   .logo-img{ height:32px; }
