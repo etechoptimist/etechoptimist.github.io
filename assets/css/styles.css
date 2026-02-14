@@ -445,6 +445,22 @@ li{ margin:0.4em 0; }
   color: var(--muted);
 }
 
+/* Certifications: left aligned + cleaner */
+.cert-card{
+  text-align: left;              /* override .card center alignment */
+  padding: 1.6rem 1.6rem;        /* less “giant” than the hero card padding */
+}
+
+/* Tighten the group title */
+.cert-card .cert-group-head h3{
+  margin: 0 0 0.75rem 0;
+}
+
+/* Remove any remaining chip rows if they exist */
+.cert-card .chip-row{
+  display: none !important;
+}
+
 /* =========================
    FOOTER
    ========================= */
