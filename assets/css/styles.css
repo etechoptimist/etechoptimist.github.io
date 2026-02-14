@@ -640,3 +640,89 @@ footer {
   line-height: 1.4;
 }
 
+
+/* KnowBot / project detail improvements */
+.project-detail .project-top{
+  display:flex;
+  gap:14px;
+  align-items:flex-start;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+
+.project-one-liner{
+  margin:8px 0 0 0;
+  color:#444;
+  line-height:1.45;
+  max-width: 760px;
+}
+
+.project-actions{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.btn{
+  display:inline-block;
+  padding:10px 14px;
+  border-radius: 10px;
+  text-decoration:none;
+  border:1px solid #0070f3;
+  color:#0070f3;
+  font-weight:700;
+}
+
+.btn-primary{
+  background:#0070f3;
+  color:#fff;
+}
+
+.project-highlights{
+  margin-top:14px;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap:12px;
+}
+
+.highlight{
+  border:1px solid #eef2f7;
+  border-radius:14px;
+  padding:12px;
+  background:#fafafa;
+}
+
+.highlight-k{
+  font-size:0.85rem;
+  color:#666;
+  font-weight:800;
+}
+
+.highlight-v{
+  margin-top:6px;
+  color:#111;
+  font-weight:800;
+}
+
+.chip-row{
+  margin-top:14px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.chip{
+  border: 1px solid rgba(0,112,243,0.25);
+  background: rgba(0,112,243,0.06);
+  color: #0b3d91;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: .85rem;
+  font-weight: 800;
+}
+
+.project-list.compact{
+  margin-top:10px;
+}
+
+
