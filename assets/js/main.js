@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
       container.innerHTML = "";
 
       const items = Array.isArray(data.items) ? data.items : [];
-      const top = items.slice(0, 8);
+      const top = items.slice(0, 10);
 
       top.forEach((article) => {
         const el = document.createElement("div");
