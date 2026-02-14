@@ -343,6 +343,40 @@ li{ margin:0.4em 0; }
 }
 
 /* =========================
+   PROJECT CHIPS (dedicated, no conflicts)
+   ========================= */
+.project-chip-row{
+  margin-top:10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.project-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  height:22px;
+  padding:0 10px;
+
+  border-radius:999px;
+  border:1px solid rgba(0,112,243,0.18);
+  background:rgba(0,112,243,0.05);
+
+  color:#0b3d91;
+  font-size:0.74rem;
+  font-weight:600;     /* softer than before */
+  line-height:1;
+  white-space:nowrap;
+}
+
+@media (max-width: 480px){
+  .project-chip{ font-size:0.72rem; padding:0 9px; }
+}
+
+
+/* =========================
    ARTICLES
    ========================= */
 .article-card{
