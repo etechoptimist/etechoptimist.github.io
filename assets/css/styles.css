@@ -30,12 +30,6 @@
   /* Certifications alignment */
   --cert-date-col:92px;
   --cert-date-col-mobile:78px;
-
-  /* Type */
-  --w-regular:400;
-  --w-medium:500;
-  --w-semi:600;
-  --w-bold:700;
 }
 
 /* =========================
@@ -48,24 +42,11 @@ body{
   background-color:var(--bg);
   margin:0;
   color:var(--text);
-  text-rendering:optimizeLegibility;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
 }
 
 [id]{ scroll-margin-top:var(--nav-height-offset); }
 
-a{
-  word-break:break-word;
-  color:var(--brand);
-  text-decoration:none;
-  font-weight:var(--w-medium);
-}
-
-a:hover{
-  color:var(--brand-dark);
-  text-decoration:underline;
-}
+a{ word-break:break-word; }
 
 /* =========================
    NAVBAR
@@ -91,7 +72,7 @@ nav{
 .logo{
   display:flex;
   align-items:center;
-  font-weight:var(--w-bold);
+  font-weight:700;
   color:var(--brand);
   font-size:1.1rem;
   gap:0.45rem;
@@ -113,11 +94,11 @@ nav{
 
 nav a,
 .nav-links li a{
-  margin:0 0.8rem;
-  font-weight:var(--w-medium);
-  transition:color 0.2s;
-  text-decoration:none;
   color:var(--brand);
+  text-decoration:none;
+  margin:0 0.8rem;
+  font-weight:500;
+  transition:color 0.2s;
 }
 
 nav a:hover,
@@ -148,9 +129,8 @@ nav a:hover,
   color:var(--brand);
   padding:10px 14px;
   display:block;
-  font-weight:var(--w-medium);
+  font-weight:500;
   border-bottom:1px solid #f5f5f5;
-  text-decoration:none;
 }
 
 .dropdown-content a:last-child{ border-bottom:none; }
@@ -196,83 +176,33 @@ section{
 /* =========================
    TYPOGRAPHY
    ========================= */
-h1,h2,h3,h4{ color:#111; margin:0 0 10px 0; letter-spacing:-0.01em; }
+h1,h2,h3,h4{ color:#111; }
 
 h1{
-  font-size:2.05rem;
-  line-height:1.2;
-  font-weight:var(--w-bold);
-  margin-top:6px;
+  font-size:1.8rem;
+  margin:0.3em 0;
 }
 
 h2{
-  font-size:1.55rem;
+  font-size:1.4rem;
   border-bottom:2px solid var(--brand);
   display:inline-block;
   margin-bottom:1rem;
-  padding-bottom:6px;
-  font-weight:var(--w-bold);
 }
 
-h3{
-  margin-top:1.5rem;
-  font-weight:var(--w-bold);
-  font-size:1.15rem;
-}
-
-h4{
-  font-weight:var(--w-semi);
-  font-size:1.05rem;
-  line-height:1.25;
-}
+h3{ margin-top:1.5rem; }
 
 p{
-  line-height:1.7;
+  line-height:1.6;
   color:#444;
-  margin:0 0 14px 0;
 }
 
-/* Your home subtitle if you use it */
-.subtitle{
-  font-size:1.02rem;
-  font-weight:var(--w-medium);
-  color:#374151;
-  line-height:1.4;
-  margin-top:6px;
-}
-
-/* Lists (clean, with small marker) */
 ul{
-  list-style:none;
+  list-style-type:"▹ ";
   padding-left:0;
-  margin:0 0 14px 0;
 }
 
-li{
-  margin:0.5rem 0;
-  line-height:1.55;
-}
-
-ul li::before{
-  content:"▹";
-  color:var(--brand);
-  margin-right:10px;
-  font-weight:var(--w-bold);
-}
-
-/* For project lists inside details: use a calmer bullet */
-.project-list{
-  list-style:none;
-  padding-left:0;
-  margin:0;
-}
-.project-list li::before{
-  content:"•";
-  color:var(--muted);
-  margin-right:10px;
-  font-weight:var(--w-bold);
-}
-.project-list.compact{ margin-top:10px; }
+li{ margin:0.4em 0; }
 
 /* =========================
    BUTTONS
@@ -284,7 +214,7 @@ ul li::before{
   text-decoration:none;
   border:1px solid var(--brand);
   color:var(--brand);
-  font-weight:var(--w-semi);
+  font-weight:700;
 }
 
 .btn-primary{
@@ -293,8 +223,7 @@ ul li::before{
 }
 
 /* =========================
-   CHIPS (UNIFIED: used for BOTH certs and projects)
-   Use <div class="chip-row"><span class="chip">...</span></div>
+   CHIPS (single style reused everywhere)
    ========================= */
 .chip-row{
   margin-top:10px;
@@ -314,7 +243,7 @@ ul li::before{
   background:rgba(0,112,243,0.05);
   color:#0b3d91;
   font-size:0.74rem;
-  font-weight:var(--w-medium); /* softer (less strong) */
+  font-weight:600; /* softer than 800 */
   letter-spacing:0;
 }
 
@@ -335,16 +264,20 @@ ul li::before{
   box-shadow:0 4px 14px rgba(0,0,0,0.1);
 }
 
-.project-tech{
-  font-size:0.88rem;
-  color:var(--muted);
-  line-height:1.55;
+.project-item h4{
+  margin-top:0;
+  margin-bottom:0.5rem;
 }
 
-/* Project “detail” cards should be left aligned (your partials use this) */
+.project-tech{
+  font-size:0.85rem;
+  color:var(--muted);
+  line-height:1.4;
+}
+
+/* detail cards should be left aligned */
 .project-detail{ text-align:left; }
 
-/* Header row */
 .project-detail .project-top{
   display:flex;
   gap:14px;
@@ -353,18 +286,11 @@ ul li::before{
   flex-wrap:wrap;
 }
 
-.project-title{
-  font-weight:var(--w-semi);
-  font-size:1.08rem;
-  line-height:1.25;
-  margin:0 0 6px 0;
-}
-
 .project-one-liner{
-  margin:0;
+  margin:8px 0 0 0;
   color:#444;
-  line-height:1.65;
-  max-width:72ch;
+  line-height:1.45;
+  max-width:760px;
 }
 
 .project-actions{
@@ -373,7 +299,6 @@ ul li::before{
   align-items:center;
 }
 
-/* Highlights (calmer: fixes your “Grounding/Retrieval/Safety” being too strong) */
 .project-highlights{
   margin-top:14px;
   display:grid;
@@ -383,51 +308,38 @@ ul li::before{
 
 .highlight{
   border:1px solid var(--border-soft);
-  border-radius:12px;
-  padding:12px 14px;
+  border-radius:14px;
+  padding:12px;
   background:var(--bg);
-  transition:all 0.15s ease;
 }
 
-.highlight:hover{
-  background:rgba(0,112,243,0.04);
-  border-color:rgba(0,112,243,0.18);
-}
-
+/* calmer highlight typography (your “Grounding / Retrieval / Safety”) */
 .highlight-k{
   font-size:0.78rem;
   color:var(--muted);
-  font-weight:var(--w-medium);
-  letter-spacing:0.02em;
+  font-weight:600;
   text-transform:uppercase;
+  letter-spacing:0.02em;
 }
 
 .highlight-v{
-  margin-top:4px;
+  margin-top:6px;
   color:#111;
-  font-weight:var(--w-semi);
+  font-weight:600;
   font-size:0.95rem;
   line-height:1.35;
 }
 
-.project-meta{
-  margin-top:12px;
-  color:var(--muted);
-  font-size:0.92rem;
+.project-list.compact{ margin-top:10px; }
+
+/* ===== FIX: ensure project chips always show ===== */
+.project-detail .chip-row{
+  display:flex !important;
+  margin-top:10px;
 }
 
-/* Details */
-details summary{
-  cursor:pointer;
-  font-weight:var(--w-semi);
-  color:#111;
-  margin:10px 0;
-}
-
-.project-text{
-  margin:10px 0;
-  color:#444;
-  line-height:1.7;
+.project-detail .chip{
+  display:inline-flex !important;
 }
 
 /* =========================
@@ -445,7 +357,8 @@ details summary{
 .article-card:hover{ transform:translateY(-3px); }
 
 .article-card a{
-  font-weight:var(--w-semi);
+  color:var(--brand);
+  font-weight:600;
   text-decoration:none;
 }
 
@@ -457,8 +370,6 @@ details summary{
 
 /* =========================
    CERTIFICATIONS (perfectly aligned)
-   IMPORTANT: your cert cards should be:
-   <div class="cert-group card cert-card"> ... </div>
    ========================= */
 #certifications h2{
   display:block;
@@ -478,11 +389,10 @@ details summary{
 .cert-hero-sub{
   margin:0;
   color:#555;
-  line-height:1.55;
+  line-height:1.45;
   max-width:720px;
 }
 
-/* 2-col grid desktop */
 .cert-grid{
   max-width:var(--max-wide);
   margin:0 auto;
@@ -491,27 +401,26 @@ details summary{
   gap:16px;
 }
 
-/* override .card center */
+/* cert cards should be left aligned */
 .cert-card{
   text-align:left;
   padding:1.4rem 1.4rem;
 }
 
-/* group title inside card */
 .cert-card .cert-group-head h3{
   margin:0 0 10px 0;
-  font-weight:var(--w-bold);
+  font-weight:700;
   font-size:1.02rem;
   color:#111;
 }
 
-/* remove any tag chips under headers (you wanted ONLY date pills) */
+/* Hide header chips ONLY in cert cards */
 .cert-card .chip-row{ display:none !important; }
 
-/* Perfect alignment with fixed date column */
+/* Perfect alignment: fixed date column + content column */
 .cert-grid .cert-item{
   display:grid;
-  grid-template-columns:var(--cert-date-col) 1fr;
+  grid-template-columns: var(--cert-date-col) 1fr;
   gap:12px;
   align-items:start;
   padding:10px 0;
@@ -522,7 +431,6 @@ details summary{
 
 .cert-grid .cert-item:first-of-type{ border-top:none; }
 
-/* subtle hover */
 .cert-grid .cert-item:hover{
   background:rgba(0,112,243,0.04);
   border-radius:10px;
@@ -537,6 +445,7 @@ details summary{
 .cert-date{
   width:var(--cert-date-col);
   height:24px;
+  padding:0;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -547,14 +456,13 @@ details summary{
   border:1px solid rgba(0,112,243,0.18);
   background:rgba(0,112,243,0.05);
   color:#0b3d91;
-  font-weight:var(--w-semi);
+  font-weight:600;
   font-size:0.74rem;
   margin-top:2px;
 }
 
-/* calmer certification titles */
 .cert-title{
-  font-weight:var(--w-semi);
+  font-weight:600;
   font-size:0.98rem;
   line-height:1.32;
   color:#111;
@@ -570,12 +478,12 @@ details summary{
 .cert-main{ padding-top:1px; }
 
 /* =========================
-   EDUCATION (simple)
+   EDUCATION
    ========================= */
 .edu-item{ margin-bottom:0.9rem; }
-.edu-title{ line-height:1.6; }
+.edu-title{ line-height:1.5; }
 .edu-org{
-  font-size:0.92rem;
+  font-size:0.9rem;
   color:var(--muted);
 }
 
@@ -634,11 +542,10 @@ footer{
   section{ padding:5.2rem 1rem 2.2rem; }
   .btn{ width:100%; text-align:center; }
 
-  /* Cert density */
   .cert-card{ padding:1.15rem 1.1rem; }
 
   .cert-grid .cert-item{
-    grid-template-columns:var(--cert-date-col-mobile) 1fr;
+    grid-template-columns: var(--cert-date-col-mobile) 1fr;
     gap:10px;
     padding:9px 0;
   }
@@ -651,13 +558,8 @@ footer{
   .cert-title{ font-size:0.96rem; }
   .cert-org{ font-size:0.86rem; }
 
-  /* Chips compact */
   .chip{
     font-size:0.72rem;
     padding:0 9px;
   }
-
-  /* Slightly smaller hero title */
-  h1{ font-size:1.75rem; }
-  h2{ font-size:1.35rem; }
 }
