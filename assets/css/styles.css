@@ -4,14 +4,15 @@
 :root{
   --brand: #0070f3;
   --brand-dark: #0055cc;
+
   --text: #333;
-  --muted: #555;
+  --muted: #666;
+
   --bg: #fafafa;
   --white: #fff;
 
   --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
   --shadow-md: 0 6px 20px rgba(0,0,0,0.08);
-  --shadow-lg: 0 10px 26px rgba(0,0,0,0.06);
 
   --radius-sm: 0.8rem;
   --radius-md: 1rem;
@@ -30,7 +31,7 @@
 /* =========================
    GLOBAL
    ========================= */
-html{ scroll-behavior:smooth; }
+html{ scroll-behavior: smooth; }
 
 body{
   font-family: "Inter", system-ui, sans-serif;
@@ -39,8 +40,11 @@ body{
   color: var(--text);
 }
 
-/* Prevent anchors from being hidden under fixed navbar */
+/* Prevent anchors from hiding under fixed navbar */
 [id]{ scroll-margin-top: var(--nav-height-offset); }
+
+/* Prevent long demo links / text from breaking layout */
+a{ word-break: break-word; }
 
 /* =========================
    NAVBAR
@@ -259,7 +263,7 @@ li{ margin:0.4em 0; }
 
 .project-tech{
   font-size:0.85rem;
-  color:#666;
+  color: var(--muted);
   line-height:1.4;
 }
 
@@ -301,7 +305,7 @@ li{ margin:0.4em 0; }
 
 .highlight-k{
   font-size:0.85rem;
-  color:#666;
+  color: var(--muted);
   font-weight:800;
 }
 
@@ -341,106 +345,74 @@ li{ margin:0.4em 0; }
 
 /* =========================
    CERTIFICATIONS + EDUCATION
+   (clean / calm layout)
    ========================= */
 
-/* Your existing simple cert style (kept) */
-.cert-group{ margin-bottom: 2.5rem; }
-
-.cert-group h3{
-  color: var(--brand);
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
+/* Make Certifications title clean (avoid extra underline feel) */
+#certifications h2{
+  display:block;
+  margin-bottom: 0.75rem;
 }
 
-.cert-item{
-  margin-bottom: 0.6rem;
-  line-height: 1.5;
-}
-
-.cert-org{
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-/* Education uses same visual language */
-.edu-item{ margin-bottom: 0.9rem; }
-.edu-title{ line-height: 1.5; }
-.edu-org{
-  font-size: 0.9rem;
-  color: var(--muted);
-}
-
-/* Optional “premium” certifications layout (only applies if you use the new markup) */
+/* Hero */
 .cert-hero{
   max-width: var(--max-wide);
-  margin: 0 auto 18px auto;
+  margin: 0 auto 14px auto;
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  gap:16px;
+  gap:12px;
   flex-wrap:wrap;
-  align-items:flex-start;
 }
-
-.cert-hero h2{ margin:0; }
 
 .cert-hero-sub{
-  margin:8px 0 0 0;
-  color:#444;
-  max-width:720px;
+  margin:0;
+  color:#555;
   line-height:1.45;
+  max-width: 720px;
 }
 
-.cert-hero-right{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  align-items:flex-end;
-}
-
-.cert-hero-note{
-  color:#666;
-  font-size:0.92rem;
-  max-width:320px;
-  text-align:right;
-  line-height:1.35;
-}
-
+/* Grid */
 .cert-grid{
   max-width: var(--max-wide);
   margin: 0 auto;
   display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* stable 2-col desktop */
   gap:16px;
 }
 
-.card{
-  /* already defined above; reused for cert groups too */
-}
+.cert-group{ margin-bottom: 0; } /* grid controls spacing */
 
 .cert-group-head h3{
   margin:0;
   color:#111;
   font-weight:800;
+  font-size: 1.05rem;
 }
 
-.cert-item{
-  /* If you use premium markup, this will convert to row layout without breaking simple layout.
-     The following is safe: only applies when inside .cert-grid */
+.cert-group-head .chip-row{ margin-top: 8px; }
+
+.cert-group-head .chip{
+  font-size: 0.78rem;
+  padding: 4px 8px;
 }
 
+/* Rows */
 .cert-grid .cert-item{
   display:flex;
-  gap:12px;
+  align-items:flex-start;
+  gap:10px;
   padding: 12px 0;
   border-top: 1px solid var(--border-soft);
-  margin-bottom: 0;
+  margin-bottom: 0; /* remove old spacing */
+  line-height: 1.5;
 }
 
 .cert-grid .cert-item:first-of-type{ border-top:none; }
 
 .cert-date{
-  min-width:82px;
-  height:28px;
+  min-width: 64px;
+  height: 22px;
   display:flex;
   align-items:center;
   justify-content:center;
@@ -449,13 +421,28 @@ li{ margin:0.4em 0; }
   background: rgba(0,112,243,0.06);
   color: #0b3d91;
   font-weight:800;
-  font-size:0.88rem;
+  font-size:0.76rem;
+  margin-top: 2px;
 }
 
-.cert-main .cert-title{
+.cert-title{
   font-weight:800;
   color:#111;
   line-height:1.25;
+}
+
+.cert-org{
+  margin-top:6px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* Education (simple) */
+.edu-item{ margin-bottom: 0.9rem; }
+.edu-title{ line-height: 1.5; }
+.edu-org{
+  font-size: 0.9rem;
+  color: var(--muted);
 }
 
 /* =========================
@@ -471,33 +458,11 @@ footer{
 /* =========================
    RESPONSIVE
    ========================= */
-/* Mobile polish for certs + chips + buttons */
-@media (max-width: 480px){
-  section{ padding: 5.2rem 1rem 2.2rem; } /* a bit tighter on phones */
-
-  .btn{
-    width: 100%;
-    text-align: center;
-  }
-
-  .cert-date{
-    min-width: 70px;       /* smaller pill */
-    font-size: 0.82rem;
-  }
-
-  .chip{
-    font-size: 0.82rem;    /* chips a bit smaller */
-    padding: 5px 9px;
-  }
+@media (max-width: 900px){
+  .cert-grid{ grid-template-columns: 1fr; }
+  .cert-hero-right{ width:100%; }
+  .cert-hero-right .btn{ width:100%; text-align:center; }
 }
-
-/* Prevent long demo links / text from breaking layout */
-a{
-  word-break: break-word;
-}
-
-
-
 
 @media (max-width: 768px){
   .menu-toggle{ display:block; }
@@ -525,11 +490,19 @@ a{
     padding:0.8rem 0;
     border-bottom: 1px solid #f0f0f0;
   }
-
-  .cert-hero-right{ align-items:flex-start; }
-  .cert-hero-note{ text-align:left; }
 }
 
 @media (max-width: 600px){
   nav a{ margin: 0 0.6rem; }
+}
+
+@media (max-width: 480px){
+  section{ padding: 5.2rem 1rem 2.2rem; }
+
+  .btn{ width:100%; text-align:center; }
+
+  .chip{
+    font-size: 0.82rem;
+    padding: 5px 9px;
+  }
 }
