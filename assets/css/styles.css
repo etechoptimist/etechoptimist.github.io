@@ -539,3 +539,36 @@ footer{
   .cert-title{ font-size:0.96rem; }
   .cert-org{ font-size:0.86rem; }
 }
+
+/* =========================
+   PROJECT CHIPS (softer, like certifications)
+   ========================= */
+
+/* Use this class in project chips container: <div class="project-chip-row"> ... */
+.project-chip-row{
+  margin-top: 10px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+/* Softer chip look (less strong font) */
+.project-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  height: 22px;
+  padding: 0 10px;
+
+  border-radius: 999px;
+  border: 1px solid rgba(0,112,243,0.18);
+  background: rgba(0,112,243,0.05);
+
+  color: #0b3d91;
+  font-size: 0.74rem;
+  font-weight: 600;        /* key change: less strong */
+  letter-spacing: 0;       /* avoid “badge shouting” */
+}
+
+
