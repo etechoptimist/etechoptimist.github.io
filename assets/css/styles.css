@@ -197,20 +197,22 @@ p{
   color:#444;
 }
 
+/* ✅ FIX: remove weird ▹ bullets globally */
 ul{
-  list-style-type:"▹ ";
-  padding-left:0;
+  list-style: disc;
+  padding-left: 1.1rem;
+  margin: 0.6rem 0;
 }
 
-li{ margin:0.4em 0; }
+li{ margin:0.45em 0; }
 
 /* =========================
    BUTTONS
    ========================= */
 .btn{
   display:inline-block;
-  padding:10px 14px;
-  border-radius:10px;
+  padding:10px 16px;
+  border-radius:12px;
   text-decoration:none;
   border:1px solid var(--brand);
   color:var(--brand);
@@ -228,12 +230,13 @@ li{ margin:0.4em 0; }
 }
 
 /* =========================
-   CAPTION (single definition)
+   CAPTION
    ========================= */
 .caption{
   font-size:0.85rem;
   color:#777;
-  margin-top:4px;
+  margin-top:6px;
+  margin-bottom:14px;
   font-style:italic;
 }
 
@@ -265,44 +268,58 @@ li{ margin:0.4em 0; }
 }
 
 /* =========================
-   HOME (new styles for partial)
+   HOME (clean + simple)
    ========================= */
 .home-card{ text-align:center; }
 
-.home-title{ margin-bottom:6px; }
+.home-title{
+  margin: 0.2rem 0 0.35rem;
+}
 
-.home-subtitle{ margin-bottom:14px; }
+.home-subtitle{
+  color:#444;
+  font-size:0.98rem;
+  margin-bottom:12px;
+}
 
 .hero-actions{
   display:flex;
-  gap:10px;
+  gap:12px;
   justify-content:center;
   flex-wrap:wrap;
-  margin:14px 0 6px;
+  margin:12px 0 8px;
 }
 
 .home-bio{
   color:#444;
-  max-width:780px;
+  max-width:720px;
   margin:0 auto 14px;
+  line-height:1.65;
+  font-size:0.98rem;
+}
+
+.home-h3{
+  margin-top:18px;
+  font-size:1.05rem;
+}
+
+/* Focus list */
+.highlights{
+  text-align:left;
+  max-width:640px;
+  margin:10px auto 0;
+  padding-left:1.1rem;
   line-height:1.65;
 }
 
-.home-h3{ margin-top:18px; }
-
-.highlights{
-  text-align:left;
-  max-width:780px;
-  margin:10px auto 0;
-  padding-left:18px;
-  line-height:1.7;
-}
+.highlights li{ margin:0.35rem 0; }
 
 .mini-link{
   margin-left:8px;
   font-size:0.9rem;
   text-decoration:none;
   color:var(--brand);
+  font-weight:600;
 }
 
 .mini-link:hover{ text-decoration:underline; }
@@ -310,10 +327,12 @@ li{ margin:0.4em 0; }
 .home-quote{
   font-style:italic;
   color:#555;
-  margin:1.6rem auto;
+  max-width:720px;
+  background:rgba(0,112,243,0.04);
   border-left:4px solid var(--brand);
-  padding-left:1rem;
-  max-width:780px;
+  border-radius:12px;
+  padding:12px 14px;
+  margin:18px auto;
   text-align:left;
 }
 
@@ -634,4 +653,7 @@ footer{
     font-size:0.72rem;
     padding:0 9px;
   }
+
+  /* Make home list breathe on small screens */
+  .highlights{ max-width: 100%; }
 }
