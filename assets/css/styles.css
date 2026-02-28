@@ -222,6 +222,21 @@ li{ margin:0.4em 0; }
   color:var(--white);
 }
 
+.btn-secondary{
+  background:transparent;
+  color:var(--brand);
+}
+
+/* =========================
+   CAPTION (single definition)
+   ========================= */
+.caption{
+  font-size:0.85rem;
+  color:#777;
+  margin-top:4px;
+  font-style:italic;
+}
+
 /* =========================
    CHIPS (single style reused everywhere)
    ========================= */
@@ -243,9 +258,68 @@ li{ margin:0.4em 0; }
   background:rgba(0,112,243,0.05);
   color:#0b3d91;
   font-size:0.74rem;
-  font-weight:600; /* softer than 800 */
+  font-weight:600;
   letter-spacing:0;
+  line-height:1;
+  white-space:nowrap;
 }
+
+/* =========================
+   HOME (new styles for partial)
+   ========================= */
+.home-card{ text-align:center; }
+
+.home-title{ margin-bottom:6px; }
+
+.home-subtitle{ margin-bottom:14px; }
+
+.hero-actions{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin:14px 0 6px;
+}
+
+.home-bio{
+  color:#444;
+  max-width:780px;
+  margin:0 auto 14px;
+  line-height:1.65;
+}
+
+.home-h3{ margin-top:18px; }
+
+.highlights{
+  text-align:left;
+  max-width:780px;
+  margin:10px auto 0;
+  padding-left:18px;
+  line-height:1.7;
+}
+
+.mini-link{
+  margin-left:8px;
+  font-size:0.9rem;
+  text-decoration:none;
+  color:var(--brand);
+}
+
+.mini-link:hover{ text-decoration:underline; }
+
+.home-quote{
+  font-style:italic;
+  color:#555;
+  margin:1.6rem auto;
+  border-left:4px solid var(--brand);
+  padding-left:1rem;
+  max-width:780px;
+  text-align:left;
+}
+
+.home-links{ margin-top:1.2rem; }
+
+.dot{ margin:0 6px; color:#999; }
 
 /* =========================
    PROJECTS
@@ -313,7 +387,6 @@ li{ margin:0.4em 0; }
   background:var(--bg);
 }
 
-/* calmer highlight typography (your “Grounding / Retrieval / Safety”) */
 .highlight-k{
   font-size:0.78rem;
   color:var(--muted);
@@ -332,49 +405,12 @@ li{ margin:0.4em 0; }
 
 .project-list.compact{ margin-top:10px; }
 
-/* ===== FIX: ensure project chips always show ===== */
+/* Ensure chips always show on project detail */
 .project-detail .chip-row{
   display:flex !important;
   margin-top:10px;
 }
-
-.project-detail .chip{
-  display:inline-flex !important;
-}
-
-/* =========================
-   PROJECT CHIPS (dedicated, no conflicts)
-   ========================= */
-.project-chip-row{
-  margin-top:10px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-
-.project-chip{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-
-  height:22px;
-  padding:0 10px;
-
-  border-radius:999px;
-  border:1px solid rgba(0,112,243,0.18);
-  background:rgba(0,112,243,0.05);
-
-  color:#0b3d91;
-  font-size:0.74rem;
-  font-weight:600;     /* softer than before */
-  line-height:1;
-  white-space:nowrap;
-}
-
-@media (max-width: 480px){
-  .project-chip{ font-size:0.72rem; padding:0 9px; }
-}
-
+.project-detail .chip{ display:inline-flex !important; }
 
 /* =========================
    ARTICLES
@@ -454,7 +490,7 @@ li{ margin:0.4em 0; }
 /* Perfect alignment: fixed date column + content column */
 .cert-grid .cert-item{
   display:grid;
-  grid-template-columns: var(--cert-date-col) 1fr;
+  grid-template-columns:var(--cert-date-col) 1fr;
   gap:12px;
   align-items:start;
   padding:10px 0;
@@ -521,13 +557,6 @@ li{ margin:0.4em 0; }
   color:var(--muted);
 }
 
-.caption {
-  font-size: 0.85rem;
-  color: #777;
-  margin-top: 4px;
-  font-style: italic;
-}
-
 /* =========================
    FOOTER
    ========================= */
@@ -537,8 +566,6 @@ footer{
   font-size:0.9em;
   color:#777;
 }
-
-
 
 /* =========================
    RESPONSIVE
@@ -583,12 +610,14 @@ footer{
 
 @media (max-width: 480px){
   section{ padding:5.2rem 1rem 2.2rem; }
+
+  /* Buttons stack nicely on mobile */
   .btn{ width:100%; text-align:center; }
 
   .cert-card{ padding:1.15rem 1.1rem; }
 
   .cert-grid .cert-item{
-    grid-template-columns: var(--cert-date-col-mobile) 1fr;
+    grid-template-columns:var(--cert-date-col-mobile) 1fr;
     gap:10px;
     padding:9px 0;
   }
