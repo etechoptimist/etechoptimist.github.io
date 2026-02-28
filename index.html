@@ -7,31 +7,47 @@
   <!-- Google Search Console verification -->
   <meta name="google-site-verification" content="9SbMLuDI2LKl3xY2ycHRPMPLaN9eE1jLMvl1oBlJJT4" />
 
-  <!-- ✅ Reposition this page as a BLOG (not the main profile) -->
-  <title>Eduardo Toledo Blog | Machine Learning,  AI Engineer, and FinTech Engineering</title>
-  <meta name="description" content="Blog by Eduardo Toledo about Machine Learning, Agentic AI, and FinTech/RegTech engineering. For the official professional profile, visit LinkedIn." />
+  <!-- ✅ Title positioned as BLOG, not primary profile -->
+  <title>Tech Optimist Blog | Machine Learning & Agentic AI (Eduardo Toledo)</title>
+
+  <!-- ✅ Description clearly indicates LinkedIn is official profile -->
+  <meta name="description"
+        content="Tech Optimist is the blog and project portfolio of Eduardo Toledo, covering Machine Learning, Agentic AI, and FinTech engineering. Official professional profile available on LinkedIn." />
+
   <meta name="robots" content="index,follow" />
+
+  <!-- Canonical -->
   <link rel="canonical" href="https://etechoptimist.github.io/" />
 
-  <!-- ✅ Identity hint: LinkedIn is the primary profile -->
+  <!-- Identity hint: LinkedIn is primary profile -->
   <link rel="me" href="https://www.linkedin.com/in/etechoptimist/" />
 
-  <!-- ✅ Open Graph (use website/article style, NOT profile) -->
+  <!-- Open Graph: declare as website/blog -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Eduardo Toledo Blog | Machine Learning & AI Engineer" />
-  <meta property="og:description" content="Blog by Eduardo Toledo about ML, Agentic AI, and FinTech engineering. Official profile on LinkedIn." />
+  <meta property="og:title"
+        content="Tech Optimist Blog | Machine Learning & Agentic AI" />
+  <meta property="og:description"
+        content="Blog and project portfolio by Eduardo Toledo. Official professional profile on LinkedIn." />
   <meta property="og:url" content="https://etechoptimist.github.io/" />
-  <meta property="og:image" content="https://avatars.githubusercontent.com/u/57686793?v=4" />
-  <meta property="og:image:alt" content="Eduardo Toledo portrait" />
-  <meta property="og:site_name" content="Eduardo Toledo Blog" />
+  <meta property="og:image"
+        content="https://avatars.githubusercontent.com/u/57686793?v=4" />
+  <meta property="og:image:alt"
+        content="Eduardo Toledo portrait" />
+  <meta property="og:site_name"
+        content="Tech Optimist Blog" />
 
-  <!-- ✅ Twitter -->
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Eduardo Toledo Blog | Machine Learning & Agentic AI" />
-  <meta name="twitter:description" content="Blog by Eduardo Toledo. Official professional profile on LinkedIn." />
-  <meta name="twitter:image" content="https://avatars.githubusercontent.com/u/57686793?v=4" />
+  <meta name="twitter:title"
+        content="Tech Optimist Blog | Machine Learning & Agentic AI" />
+  <meta name="twitter:description"
+        content="Blog and project portfolio by Eduardo Toledo. Official professional profile on LinkedIn." />
+  <meta name="twitter:image"
+        content="https://avatars.githubusercontent.com/u/57686793?v=4" />
 
-  <!-- ✅ Schema: make LinkedIn the primary identity URL -->
+  <!-- =========================
+       PRIMARY IDENTITY: PERSON (LinkedIn is primary URL)
+       ========================= -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -54,17 +70,20 @@
       "https://x.com/ETechOptimist",
       "https://www.credly.com/users/etechoptimist/badges"
     ],
-    "description": "Machine Learning Scientist and Agentic AI Engineer specializing in FinTech/RegTech AI, anomaly detection, Generative AI, and agentic systems."
+    "description": "Machine Learning Scientist and Agentic AI Engineer specializing in FinTech, anomaly detection, Generative AI, and agentic systems."
   }
   </script>
 
-  <!-- ✅ Schema: declare THIS page as a blog / website whose mainEntity is you -->
+  <!-- =========================
+       WEBSITE SCHEMA (declares this site is blog/portfolio)
+       ========================= -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Eduardo Toledo Blog",
+    "name": "Tech Optimist Blog",
     "url": "https://etechoptimist.github.io/",
+    "description": "Blog and project portfolio by Eduardo Toledo.",
     "publisher": {
       "@type": "Person",
       "@id": "https://www.linkedin.com/in/etechoptimist/#person"
@@ -72,25 +91,33 @@
   }
   </script>
 
-  <!-- ✅ Optional: explicitly signal "official profile is LinkedIn" -->
+  <!-- =========================
+       WEBPAGE SCHEMA (explicitly blog page, not main identity profile)
+       ========================= -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    "mainEntity": {
+    "@type": "WebPage",
+    "name": "Tech Optimist Blog",
+    "url": "https://etechoptimist.github.io/",
+    "isPartOf": {
+      "@type": "WebSite",
+      "url": "https://etechoptimist.github.io/"
+    },
+    "about": {
       "@type": "Person",
-      "@id": "https://www.linkedin.com/in/etechoptimist/#person",
-      "url": "https://www.linkedin.com/in/etechoptimist/"
-    }
+      "@id": "https://www.linkedin.com/in/etechoptimist/#person"
+    },
+    "description": "Blog and project portfolio by Eduardo Toledo. Official professional profile is on LinkedIn."
   }
   </script>
 
-  <!-- ✅ Favicon + CSS -->
+  <!-- Favicon and CSS -->
   <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
   <link rel="apple-touch-icon" href="/assets/favicon.png" />
   <link rel="stylesheet" href="/assets/css/styles.css" />
-</head>
 
+</head>
 <body>
   <!-- Mermaid (keep in body for cleaner HTML) -->
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
