@@ -44,6 +44,30 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+
+    /**
+   * ==========================================
+   * Home partial injection
+   * ==========================================
+   */
+  async function injectHomeSection() {
+    const container = document.getElementById("home-container");
+    if (!container) return;
+  
+    try {
+      const res = await fetch("partials/home.html", { cache: "no-store" });
+  
+      if (!res.ok) {
+        container.innerHTML = `⚠️ Unable to load home section (${res.status}).`;
+        return;
+      }
+  
+      container.innerHTML = await res.text();
+  
+    } catch (e) {
+      container.innerHTML = "⚠️ Unable to load home section.";
+    }
+  }
   /**
    * ==========================================
    * 2) Education partial injection
@@ -244,6 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
    * 4) Load Medium feed into #articles-list
    */
   (async () => {
+    await injectHomeSection();
     await injectEducationSection();
     await injectCertificationsSection();
     await injectKnowBotProject();
