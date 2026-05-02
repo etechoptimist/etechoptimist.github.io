@@ -129,44 +129,41 @@
 
     <pre class="mermaid">
 flowchart TD
-  U["Patient / Caregiver (Web UI)\nVite + MUI · Mobile-first · WCAG 2.1 AA"]
-  APIGW["API Gateway + Amazon Cognito\n(MFA · RBAC · JWT)"]
-  API["FastAPI Backend\n(Lambda dev · ECS Fargate prod)"]
+  U([User / Caregiver])
+  API[FastAPI + API Gateway]
+  COG[Amazon Cognito]
 
-  subgraph INGEST["Ingestion Pipeline"]
-    S3["Amazon S3\n(KMS encrypted)"]
-    OCR["OCR Pipeline\n(LangGraph · Textract)"]
-    EXTRACT["Extraction Pipeline\n(LangGraph · Comprehend Medical\n+ Claude Haiku 4.5 fallback)"]
-    RECON["Reconciliation Engine\n(LangGraph · dedup · merge · HITL)"]
+  subgraph INGEST["Document Ingestion"]
+    direction TB
+    S3[(S3)]
+    OCR[Textract OCR]
+    EXT[Comprehend Medical\n+ LLM fallback]
+    REC[Reconciliation Engine]
   end
 
-  subgraph QA["Q&A Pipeline"]
-    ORCH["Agentic Orchestrator\n(LangGraph)"]
-    SAFETY["Safety Agent\n(LangChain structured output)"]
-    ANSWER["Answer Agent\n(create_tool_calling_agent · Bedrock)"]
-    RETRIEVE["Retrieval Pipeline\n(EnsembleRetriever · pgvector + tsvector)"]
-    GR["Bedrock Guardrails"]
+  subgraph QA["Grounded Q&A"]
+    direction TB
+    SAF{Safety Agent}
+    ANS[Answer Agent]
+    RET[Hybrid Retrieval\npgvector + tsvector]
+    GRD[Bedrock Guardrails]
   end
 
-  AURORA["Aurora PostgreSQL\n(pgvector · tsvector · app data · checkpoints)"]
-  HL["Amazon HealthLake\n(FHIR R4)"]
-  AUDIT["Audit Log\n(CloudWatch + S3 Object Lock)"]
-  REVIEW["Human Review Queue\n(LangGraph interrupt · Trusted Reviewer)"]
+  DB[(Aurora PostgreSQL)]
+  REVIEW([Human Review Queue])
+  HL[(HealthLake\nFHIR R4)]
 
-  U --> APIGW --> API
-  API --> S3
-  S3 --> OCR --> EXTRACT --> RECON --> AURORA
-  RECON -.->|low confidence| REVIEW
+  U --> API
+  API --> COG
+  API --> S3 --> OCR --> EXT --> REC --> DB
+  REC -.->|low confidence| REVIEW
 
-  API --> ORCH
-  ORCH --> SAFETY
-  SAFETY -->|allowed| ANSWER
-  SAFETY -->|not_allowed| ORCH
-  ANSWER --> RETRIEVE --> AURORA
-  ANSWER --> GR --> ORCH --> API --> U
+  API --> SAF
+  SAF -->|allowed| ANS
+  ANS --> RET --> DB
+  ANS --> GRD --> API --> U
 
-  API -->|FHIR export| HL
-  API --> AUDIT
+  API -.->|export| HL
     </pre>
   </details>
 
