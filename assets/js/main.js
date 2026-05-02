@@ -259,6 +259,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /**
+   * ==========================================
+   * Inject Health Intelligence Project
+   * ==========================================
+   */
+
+  async function injectHealthIntelligenceProject() {
+    const container = document.getElementById("project-health-intelligence-container");
+    if (!container) return;
+
+    try {
+      const res = await fetch("partials/project-health-intelligence.html", { cache: "no-store" });
+      if (!res.ok) {
+        container.innerHTML = `⚠️ Unable to load Health Intelligence project (${res.status}).`;
+        return;
+      }
+      container.innerHTML = await res.text();
+
+      if (window.mermaid) {
+        mermaid.init(undefined, container.querySelectorAll(".mermaid"));
+      }
+    } catch (e) {
+      container.innerHTML = "⚠️ Unable to load Health Intelligence project.";
+    }
+  }
+
+
+  /**
    * =========================
    * Boot sequence
    * =========================
@@ -271,6 +298,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await injectHomeSection();
     await injectEducationSection();
     await injectCertificationsSection();
+    await injectHealthIntelligenceProject();
     await injectKnowBotProject();
     await injectFinancialCoachingProject();
     await injectArticlesSection();

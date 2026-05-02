@@ -1,0 +1,245 @@
+<!-- partials/project-health-intelligence.html -->
+<div class="project-item project-feature project-detail">
+
+  <!-- Header -->
+  <div class="project-top">
+    <div>
+      <h4 class="project-title">Health Intelligence for Elderly Population — Health Record Intelligence Platform</h4>
+      <p class="project-one-liner">
+        HIPAA-aligned platform on AWS that converts unstructured medical documents into a
+        <strong>structured patient timeline</strong> and <strong>grounded Q&amp;A</strong>
+        for elderly patients and family caregivers, with full provenance and safety controls.
+      </p>
+    </div>
+  </div>
+
+  <!-- Quick highlights -->
+  <div class="project-highlights">
+    <div class="highlight">
+      <div class="highlight-k">Compliance</div>
+      <div class="highlight-v">HIPAA-aligned · KMS CMKs · Bedrock Guardrails · Immutable audit log</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Extraction</div>
+      <div class="highlight-v">Textract OCR → Comprehend Medical → LLM fallback · RxNorm / ICD-10 / SNOMED CT</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Grounded Q&amp;A</div>
+      <div class="highlight-v">Hybrid retrieval (pgvector + tsvector) · Safety Agent · Provenance citations</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Trust &amp; Scale</div>
+      <div class="highlight-v">Delegated caregiver consent · FHIR R4 export · WCAG 2.1 AA · en / es / pt</div>
+    </div>
+  </div>
+
+  <!-- Keywords / chips -->
+  <div class="project-chip-row" aria-label="Project keywords">
+    <span class="project-chip">RAG</span>
+    <span class="project-chip">LangGraph</span>
+    <span class="project-chip">LangChain</span>
+    <span class="project-chip">Amazon Bedrock</span>
+    <span class="project-chip">Claude Haiku 4.5</span>
+    <span class="project-chip">Amazon Textract</span>
+    <span class="project-chip">Comprehend Medical</span>
+    <span class="project-chip">Aurora PostgreSQL pgvector</span>
+    <span class="project-chip">HealthLake FHIR R4</span>
+    <span class="project-chip">FastAPI</span>
+    <span class="project-chip">Amazon Cognito</span>
+    <span class="project-chip">HIPAA-aligned</span>
+    <span class="project-chip">CDK</span>
+    <span class="project-chip">Elderly-first UX</span>
+  </div>
+
+  <!-- Summary -->
+  <div class="project-summary-block">
+    <ul class="project-list compact">
+      <li><strong>Ingestion:</strong> Patients upload PDF / JPEG / PNG / TIFF documents → <strong>Amazon Textract</strong> extracts text → <strong>Comprehend Medical</strong> identifies medications, conditions, procedures, labs, and allergies with ontology linking (RxNorm, ICD-10-CM, SNOMED CT).</li>
+      <li><strong>Multilingual extraction:</strong> Spanish and Portuguese documents bypass translation and are processed directly by <strong>Claude Haiku 4.5 on Amazon Bedrock</strong>, producing the same structured ClinicalFact output with ontology codes.</li>
+      <li><strong>Timeline:</strong> A <strong>LangGraph Reconciliation Engine</strong> deduplicates and merges ClinicalFacts across documents; low-confidence extractions are routed to a human review queue for Trusted Reviewers.</li>
+      <li><strong>Grounded Q&amp;A:</strong> Hybrid retrieval (pgvector semantic + tsvector lexical) feeds a <strong>Safety Agent</strong> and an <strong>Answer Agent</strong> (LangChain tool-calling), with every claim cited back to its source document and page.</li>
+      <li><strong>Trust &amp; Scale:</strong> Delegated caregiver consent, FHIR R4 export via HealthLake, <strong>WCAG 2.1 AA</strong> elderly-first interface, and full multilingual support (English, Spanish, Portuguese).</li>
+    </ul>
+  </div>
+
+  <p class="project-meta">
+    Related topics:
+    <a href="#ai-projects">AI / Agentic Projects</a> ·
+    <a href="#articles">Technical Articles</a> ·
+    <a href="#certifications">Generative AI</a>
+  </p>
+
+  <!-- Key Components -->
+  <details class="project-details" open>
+    <summary><strong>Key Components</strong></summary>
+    <ul class="project-list">
+      <li><strong>OCR Pipeline (LangGraph)</strong> – Invokes Amazon Textract, evaluates page-level confidence, stores output, and routes low-confidence documents (&lt; 0.70) to the human review queue.</li>
+      <li><strong>Extraction Pipeline (LangGraph)</strong> – Runs Comprehend Medical for English documents; invokes Claude Haiku 4.5 on Bedrock directly for Spanish / Portuguese documents. Links entities to RxNorm, ICD-10-CM, and SNOMED CT ontologies.</li>
+      <li><strong>Reconciliation Engine (LangGraph)</strong> – Detects duplicate ClinicalFacts (same type + normalized value within a 7-day window), merges canonical records, flags conflicts for human review, and builds a longitudinal medication history.</li>
+      <li><strong>Retrieval Pipeline (LangChain EnsembleRetriever)</strong> – Combines pgvector semantic search, PostgreSQL tsvector lexical search, and structured ClinicalFact lookup. Patient-scoped: patient_id filter is always applied first.</li>
+      <li><strong>Safety Agent (LangGraph conditional node)</strong> – Classifies every query as <em>allowed</em>, <em>allowed_with_caution</em>, or <em>not_allowed</em> using a LangChain structured-output chain. Routes to the Answer Agent or a safe-refusal node.</li>
+      <li><strong>Answer Agent (LangChain create_tool_calling_agent)</strong> – Generates grounded, cited answers using three tools: <code>retrieve_evidence</code>, <code>lookup_clinical_facts</code>, and <code>cite_source</code>. Conversation context persisted via LangGraph PostgreSQL checkpointer.</li>
+      <li><strong>Bedrock Guardrails</strong> – Applied to both input and output to block PHI leakage, prompt injection, and prescriptive medical advice.</li>
+      <li><strong>Human Review Queue</strong> – LangGraph <code>interrupt</code> mechanism pauses the pipeline for Trusted Reviewer corrections; resumes from checkpointed state after resolution.</li>
+      <li><strong>Caregiver Consent</strong> – Patient-initiated invitation by email; delegated read-only or read-write access with optional expiration; revocation takes effect within 60 seconds.</li>
+      <li><strong>FHIR R4 Export</strong> – Exports MedicationStatement, Condition, Procedure, Observation, AllergyIntolerance, and Encounter resources via Amazon HealthLake Patient/$everything.</li>
+      <li><strong>Audit Log</strong> – Immutable, append-only log delivered to S3 with Object Lock; retained for six years per HIPAA requirements.</li>
+    </ul>
+  </details>
+
+  <!-- Delivery Waves -->
+  <details class="project-details">
+    <summary><strong>Delivery Waves</strong></summary>
+    <table class="project-table">
+      <thead>
+        <tr>
+          <th>Wave</th>
+          <th>Focus</th>
+          <th>Key deliverables</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Wave 1 — Foundation</strong></td>
+          <td>Infrastructure &amp; Security</td>
+          <td>HIPAA-eligible AWS account, KMS CMKs, Cognito MFA + RBAC, document upload, Textract OCR pipeline, immutable audit log, two-tier CDK (dev/staging Free Tier vs. prod Fargate + Aurora Serverless v2)</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 2 — Clinical Extraction</strong></td>
+          <td>Medical NLP</td>
+          <td>Comprehend Medical entity extraction, LLM fallback for Spanish/Portuguese, RxNorm / ICD-10-CM / SNOMED CT linking, document classification, Reconciliation Engine, patient Timeline, human review queue</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 3 — Grounded Q&amp;A</strong></td>
+          <td>Agentic RAG</td>
+          <td>Hybrid retrieval (pgvector + tsvector), Agentic Orchestrator (LangGraph), Safety Agent, Answer Agent with tool calling, provenance UI, Bedrock Guardrails, Bedrock Prompt Management, conversation memory (PostgreSQL checkpointer)</td>
+        </tr>
+        <tr>
+          <td><strong>Wave 4 — Trust &amp; Scale</strong></td>
+          <td>Compliance &amp; UX</td>
+          <td>Delegated caregiver consent, Trusted Reviewer HITL, FHIR R4 export via HealthLake, KPI analytics dashboard, WCAG 2.1 AA elderly-first design, multilingual support (en / es / pt), data retention &amp; deletion</td>
+        </tr>
+      </tbody>
+    </table>
+  </details>
+
+  <!-- Architecture Diagram -->
+  <details class="project-details">
+    <summary><strong>Architecture Diagram</strong></summary>
+
+    <pre class="mermaid">
+flowchart TD
+  U["Patient / Caregiver (Web UI)\nVite + MUI · Mobile-first · WCAG 2.1 AA"]
+  APIGW["API Gateway + Amazon Cognito\n(MFA · RBAC · JWT)"]
+  API["FastAPI Backend\n(Lambda dev · ECS Fargate prod)"]
+
+  subgraph INGEST["Ingestion Pipeline"]
+    S3["Amazon S3\n(KMS encrypted)"]
+    OCR["OCR Pipeline\n(LangGraph · Textract)"]
+    EXTRACT["Extraction Pipeline\n(LangGraph · Comprehend Medical\n+ Claude Haiku 4.5 fallback)"]
+    RECON["Reconciliation Engine\n(LangGraph · dedup · merge · HITL)"]
+  end
+
+  subgraph QA["Q&A Pipeline"]
+    ORCH["Agentic Orchestrator\n(LangGraph)"]
+    SAFETY["Safety Agent\n(LangChain structured output)"]
+    ANSWER["Answer Agent\n(create_tool_calling_agent · Bedrock)"]
+    RETRIEVE["Retrieval Pipeline\n(EnsembleRetriever · pgvector + tsvector)"]
+    GR["Bedrock Guardrails"]
+  end
+
+  AURORA["Aurora PostgreSQL\n(pgvector · tsvector · app data · checkpoints)"]
+  HL["Amazon HealthLake\n(FHIR R4)"]
+  AUDIT["Audit Log\n(CloudWatch + S3 Object Lock)"]
+  REVIEW["Human Review Queue\n(LangGraph interrupt · Trusted Reviewer)"]
+
+  U --> APIGW --> API
+  API --> S3
+  S3 --> OCR --> EXTRACT --> RECON --> AURORA
+  RECON -.->|low confidence| REVIEW
+
+  API --> ORCH
+  ORCH --> SAFETY
+  SAFETY -->|allowed| ANSWER
+  SAFETY -->|not_allowed| ORCH
+  ANSWER --> RETRIEVE --> AURORA
+  ANSWER --> GR --> ORCH --> API --> U
+
+  API -->|FHIR export| HL
+  API --> AUDIT
+    </pre>
+  </details>
+
+  <!-- Query Flow -->
+  <details class="project-details">
+    <summary><strong>Q&amp;A Flow (Safety → Retrieve → Answer → Cite)</strong></summary>
+
+    <p class="project-text">
+      <strong>1) Safety check:</strong> The <strong>Safety Agent</strong> classifies the query as
+      <em>allowed</em>, <em>allowed_with_caution</em>, or <em>not_allowed</em>. Prescriptive advice
+      (dosage changes, diagnoses, treatment selection) is refused; the agent returns what the documents
+      say and suggests clinician questions instead.
+    </p>
+
+    <p class="project-text">
+      <strong>2) Retrieve:</strong> The <strong>Retrieval Pipeline</strong> applies a patient_id filter first,
+      then runs hybrid search combining pgvector semantic similarity and PostgreSQL tsvector lexical match.
+      Structured ClinicalFact records are also included when the query matches a known entity type.
+    </p>
+
+    <p class="project-text">
+      <strong>3) Answer:</strong> The <strong>Answer Agent</strong> (LangChain <code>create_tool_calling_agent</code>
+      backed by Claude on Amazon Bedrock) generates a plain-language response using only the retrieved evidence.
+      Every claim is cited using the <code>cite_source</code> tool (document, page, text span).
+    </p>
+
+    <p class="project-text">
+      <strong>4) Guardrails:</strong> <strong>Bedrock Guardrails</strong> scan the output for PHI leakage,
+      prompt injection, and unsafe medical content before the response is returned to the user.
+    </p>
+
+    <p class="project-text">
+      <strong>5) Memory:</strong> Conversation state is persisted via a <strong>LangGraph PostgreSQL checkpointer</strong>,
+      enabling follow-up questions and resumable sessions across devices without the patient repeating context.
+    </p>
+  </details>
+
+  <!-- Description -->
+  <details class="project-details">
+    <summary><strong>Description</strong></summary>
+
+    <p class="project-text">
+      The Health Record Intelligence Platform is a HIPAA-aligned system on AWS designed for elderly patients
+      and their family caregivers. It ingests unstructured medical documents — prescriptions, lab reports,
+      discharge summaries, imaging results — and converts them into a structured, chronological health timeline
+      with a grounded Q&amp;A interface that cites every answer back to its source document.
+    </p>
+
+    <p class="project-text">
+      The platform is built for a Spanish-speaking elderly audience from day one: Spanish and Portuguese
+      documents are processed directly by <strong>Claude Haiku 4.5 on Amazon Bedrock</strong> without
+      translation, and the entire UI and Q&amp;A system is fully multilingual (English, Spanish, Portuguese).
+    </p>
+
+    <p class="project-text">
+      The agentic layer is orchestrated with <strong>LangGraph</strong>: a Safety Agent classifies every
+      query before the Answer Agent is invoked, ensuring the system never acts as a prescriber or diagnostician.
+      Human-in-the-loop interruption points allow Trusted Reviewers to correct uncertain extractions before
+      they reach the Timeline or retrieval index.
+    </p>
+
+    <p class="project-text">
+      Infrastructure uses a two-tier CDK approach: dev/staging targets AWS Free Tier (Lambda + RDS PostgreSQL,
+      simplified VPC), while production deploys ECS Fargate + Aurora Serverless v2 with full VPC isolation,
+      KMS CMKs, AWS Config rules, and immutable CloudTrail logging.
+    </p>
+  </details>
+
+  <p class="project-tech">
+    <strong>Tech stack:</strong> Amazon Bedrock (Claude Haiku 4.5), Amazon Textract, Amazon Comprehend Medical,
+    LangGraph, LangChain, Aurora PostgreSQL (pgvector + tsvector), Amazon HealthLake (FHIR R4), FastAPI,
+    Amazon Cognito, Bedrock Guardrails, Bedrock Prompt Management, AWS CDK, Vite + TypeScript + MUI,
+    ECS Fargate, Lambda, S3, KMS, CloudTrail, CloudWatch
+  </p>
+
+</div>
