@@ -34,6 +34,10 @@
       <div class="highlight-k">Safety</div>
       <div class="highlight-v">Bedrock Guardrails + controlled chunking</div>
     </div>
+    <div class="highlight">
+      <div class="highlight-k">Evaluation</div>
+      <div class="highlight-v">RAGAS — Faithfulness, Answer Relevancy, Context Precision &amp; Recall</div>
+    </div>
   </div>
 
   <!-- Keywords / chips (NEW styling) -->
@@ -45,6 +49,7 @@
     <span class="project-chip">Claude 3.5</span>
     <span class="project-chip">Guardrails</span>
     <span class="project-chip">LangGraph</span>
+    <span class="project-chip">RAGAS</span>
     <span class="project-chip">Serverless</span>
   </div>
 
@@ -79,6 +84,7 @@
       <li><strong>Guardrails</strong> – Applies safety and policy controls to improve reliability.</li>
       <li><strong>LangGraph Flow</strong> – Orchestrates the “embed → retrieve → rerank → answer” workflow.</li>
       <li><strong>API Layer</strong> – Lambda + API Gateway exposes a REST endpoint for the Web UI.</li>
+      <li><strong>RAGAS Evaluation</strong> – Offline evaluation suite measuring <em>Faithfulness</em>, <em>Answer Relevancy</em>, <em>Context Precision</em>, and <em>Context Recall</em> against a curated golden-question set.</li>
     </ul>
   </details>
 
@@ -105,6 +111,113 @@
   </details>
 
   <details class="project-details">
+    <summary><strong>RAGAS Evaluation</strong></summary>
+
+    <p class="project-text">
+      An offline evaluation pipeline measures retrieval and generation quality against a curated set of
+      golden question–answer pairs derived from the UniLibre knowledge base.
+    </p>
+
+    <table class="project-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>What it measures</th>
+          <th>Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Faithfulness</strong></td>
+          <td>Claims in the answer are supported by retrieved context</td>
+          <td>≥ 0.85</td>
+        </tr>
+        <tr>
+          <td><strong>Answer Relevancy</strong></td>
+          <td>Answer addresses the actual question asked</td>
+          <td>≥ 0.80</td>
+        </tr>
+        <tr>
+          <td><strong>Context Precision</strong></td>
+          <td>Signal-to-noise ratio of retrieved chunks</td>
+          <td>≥ 0.75</td>
+        </tr>
+        <tr>
+          <td><strong>Context Recall</strong></td>
+          <td>Ground-truth information covered by retrieved chunks</td>
+          <td>≥ 0.80</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="project-text">
+      Each evaluation run produces a scored dataset that is logged and compared against the previous
+      baseline, so regressions in retrieval or generation quality are caught before any model or
+      knowledge-base update is promoted to production.
+    </p>
+  </details>
+
+  <details class="project-details">
+    <summary><strong>Improving RAGAS Scores</strong></summary>
+
+    <p class="project-text">
+      When a metric falls below its target, the remediation strategy depends on which part of the pipeline
+      is responsible — retrieval, generation, or chunking.
+    </p>
+
+    <table class="project-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Root cause</th>
+          <th>Remediation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Faithfulness</strong></td>
+          <td>Model generates claims beyond the retrieved context</td>
+          <td>
+            Tighten the system prompt to enforce context-only answers;
+            reduce top-k to lower noise; strengthen Bedrock Guardrails grounding policy
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Answer Relevancy</strong></td>
+          <td>Answer drifts from the actual question</td>
+          <td>
+            Add a query-rewriting step before embedding;
+            introduce intent classification to detect vague questions and ask for clarification
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Context Precision</strong></td>
+          <td>Retrieved chunks contain too much irrelevant content</td>
+          <td>
+            Raise the reranking score threshold; use smaller, more focused chunks;
+            apply metadata filters (topic, section) to narrow retrieval before vector search
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Context Recall</strong></td>
+          <td>Ground-truth information missing from retrieved chunks</td>
+          <td>
+            Increase top-k; review FAQ chunk splits to avoid cutting relevant content across boundaries;
+            enrich domain-specific terms before embedding if Titan v2 struggles with UniLibre vocabulary
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="project-text">
+      <strong>Cross-cutting:</strong> Run RAGAS per topic category (admissions, academic calendar, fees)
+      to pinpoint which areas underperform rather than relying on the global average alone.
+      Expand the golden Q&amp;A set for more representative signal, and always compare a full eval run
+      before and after any change to avoid improving one metric while regressing another.
+    </p>
+  </details>
+
+  <details class="project-details">
     <summary><strong>Architecture Diagram</strong></summary>
 
     <pre class="mermaid">
@@ -126,6 +239,9 @@ flowchart TD
   FAQ["Pre-chunked FAQ Pack"]
   S3["Amazon S3 (Documents)"]
 
+  RAGAS["RAGAS Evaluation\n(Faithfulness · Relevancy\nPrecision · Recall)"]
+  GOLDEN["Golden Q&A Set"]
+
   %% Runtime query flow
   U --> APIGW --> L --> LG
   LG --> EM
@@ -142,6 +258,10 @@ flowchart TD
   CRAWL --> S3
   FAQ --> S3
   S3 --> KB
+
+  %% Offline evaluation flow
+  GOLDEN --> RAGAS
+  LG -.->|"eval traces"| RAGAS
 </pre>
 
   </details>
@@ -168,7 +288,8 @@ flowchart TD
 
   <p class="project-tech">
     <strong>Tech stack:</strong> AWS Bedrock Knowledge Base, Titan Embeddings v2, Bedrock Guardrails, Claude 3.5,
-    OpenSearch (Vector DB), LangGraph, Lambda, API Gateway, S3, Web Scraper / Crawler, Pre-chunked FAQ ingestion
+    OpenSearch (Vector DB), LangGraph, Lambda, API Gateway, S3, Web Scraper / Crawler, Pre-chunked FAQ ingestion,
+    RAGAS (Faithfulness · Answer Relevancy · Context Precision · Context Recall)
   </p>
 
 </div>
