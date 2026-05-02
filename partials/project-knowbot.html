@@ -77,7 +77,7 @@
       <li><strong>Guardrails</strong> – Applies safety and policy controls to improve reliability.</li>
       <li><strong>LangGraph Flow</strong> – Orchestrates the “embed → retrieve → rerank → answer” workflow.</li>
       <li><strong>API Layer</strong> – Lambda + API Gateway exposes a REST endpoint for the Web UI.</li>
-      <li><strong>RAGAS Evaluation</strong> – Batch evaluation pipeline (separate from the production path) measuring <em>Faithfulness</em>, <em>Answer Relevancy</em>, <em>Context Precision</em>, and <em>Context Recall</em> against a curated golden-question set; LLM-as-judge metrics use live Claude API calls.</li>
+      <li><strong>RAGAS Evaluation</strong> – Batch evaluation pipeline (separate from the production path) measuring <em>Faithfulness</em>, <em>Answer Relevancy</em>, <em>Context Precision</em>, and <em>Context Recall</em> against a curated golden-question set; LLM-as-judge metrics use <strong>Amazon Nova Pro</strong> (separate from the answer model) for unbiased scoring.</li>
     </ul>
   </details>
 
@@ -110,7 +110,7 @@
       A batch evaluation pipeline — running separately from the production query path — measures retrieval
       and generation quality against a curated set of golden question–answer pairs derived from the UniLibre
       knowledge base. Metrics like <em>Faithfulness</em> and <em>Answer Relevancy</em> use an
-      <strong>LLM-as-judge</strong> (Claude on Amazon Bedrock) and require live model API calls;
+      <strong>LLM-as-judge</strong> (<strong>Amazon Nova Pro</strong> on Amazon Bedrock) and require live model API calls;
       <em>Context Precision</em> and <em>Context Recall</em> are computed via embedding similarity.
     </p>
 
