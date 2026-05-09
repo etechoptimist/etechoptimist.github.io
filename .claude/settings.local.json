@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:\\\\Users\\\\HP\\\\OneDrive\\\\Documents\\\\Eduardo Toledo\\\\ASAI\\\\etechoptimist.github.io\" add partials/home.html)",
+      "Bash(git -C 'C:\\\\Users\\\\HP\\\\OneDrive\\\\Documents\\\\Eduardo Toledo\\\\ASAI\\\\etechoptimist.github.io' commit -m ' *)",
+      "Bash(git -C \"C:\\\\Users\\\\HP\\\\OneDrive\\\\Documents\\\\Eduardo Toledo\\\\ASAI\\\\etechoptimist.github.io\" push origin main)"
+    ]
+  }
+}
