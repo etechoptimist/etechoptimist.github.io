@@ -1,0 +1,449 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--rp-red:#C0392B;--rp-dark:#1A2744;--rp-gold:#F0A500}
+body{font-family:var(--font-sans)}
+.app{background:var(--color-background-tertiary);min-height:600px;border-radius:var(--border-radius-lg);overflow:hidden;border:0.5px solid var(--color-border-tertiary)}
+.topbar{background:var(--rp-dark);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.topbar-logo{display:flex;align-items:center;gap:10px}
+.logo-dot{width:10px;height:10px;background:var(--rp-red);border-radius:50%}
+.logo-text{color:#fff;font-size:15px;font-weight:500;letter-spacing:0.5px}
+.logo-tag{font-size:11px;color:#8899AA;margin-left:4px}
+.tabs{display:flex;gap:4px;padding:0 20px;background:var(--rp-dark);border-bottom:2px solid var(--rp-red)}
+.tab{padding:10px 16px;font-size:13px;color:#8899AA;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .2s;white-space:nowrap;border-radius:0}
+.tab:hover{color:#ccc}
+.tab.active{color:#fff;border-bottom:2px solid var(--rp-gold)}
+.tab i{margin-right:6px;font-size:14px}
+.panel{display:none;padding:20px}
+.panel.active{display:block}
+
+/* ── CHATBOT ── */
+.chat-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chat-phone{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);overflow:hidden}
+.chat-header{background:#128C7E;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.chat-avatar{width:34px;height:34px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center}
+.chat-avatar i{color:#fff;font-size:18px}
+.chat-name{color:#fff;font-size:13px;font-weight:500}
+.chat-status{color:#a5d6a7;font-size:11px}
+.chat-msgs{padding:12px;display:flex;flex-direction:column;gap:8px;min-height:260px;background:#E5DDD5}
+.msg{max-width:78%;padding:8px 10px;border-radius:8px;font-size:12px;line-height:1.5}
+.msg.in{background:#fff;align-self:flex-start;color:#111;border-radius:0 8px 8px 8px}
+.msg.out{background:#DCF8C6;align-self:flex-end;color:#111;border-radius:8px 0 8px 8px}
+.msg .time{font-size:10px;color:#888;text-align:right;margin-top:3px}
+.msg .check{color:#34B7F1}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chip{background:var(--rp-dark);color:#fff;font-size:11px;padding:4px 10px;border-radius:12px;cursor:pointer;border:none;transition:background .2s}
+.chip:hover{background:var(--rp-red)}
+.chat-input-row{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#F0F0F0;border-top:0.5px solid #ddd}
+.chat-input-row input{flex:1;border:none;background:#fff;border-radius:20px;padding:6px 12px;font-size:12px;outline:none}
+.chat-send{background:#128C7E;border:none;border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.chat-send i{color:#fff;font-size:14px}
+.chat-info{display:flex;flex-direction:column;gap:12px}
+.info-card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:14px}
+.info-card h3{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.info-card h3 i{color:var(--rp-red);font-size:16px}
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px}
+.stat-val{font-size:20px;font-weight:500;color:var(--rp-dark)}
+.stat-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.feature-list{display:flex;flex-direction:column;gap:6px}
+.feature-item{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:var(--color-text-secondary)}
+.feature-item i{color:#25D366;font-size:14px;margin-top:1px;flex-shrink:0}
+
+/* ── BUSCADOR ── */
+.search-wrap{display:flex;flex-direction:column;gap:16px}
+.search-top{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:16px}
+.search-top h3{font-size:13px;color:var(--color-text-secondary);margin-bottom:10px;font-weight:400}
+.search-bar{display:flex;gap:8px;align-items:center}
+.search-bar input{flex:1;border:1.5px solid var(--rp-dark);border-radius:var(--border-radius-md);padding:9px 14px;font-size:13px;outline:none;background:var(--color-background-primary);color:var(--color-text-primary)}
+.search-btn{background:var(--rp-red);color:#fff;border:none;border-radius:var(--border-radius-md);padding:9px 16px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.search-btn i{font-size:15px}
+.examples{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.ex-pill{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:12px;padding:4px 10px;font-size:11px;color:var(--color-text-secondary);cursor:pointer;transition:border-color .2s}
+.ex-pill:hover{border-color:var(--rp-red);color:var(--rp-red)}
+.results-grid{display:flex;flex-direction:column;gap:10px}
+.result-card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:14px;display:grid;grid-template-columns:1fr auto;gap:8px;align-items:start}
+.result-card.top{border:1.5px solid var(--rp-gold)}
+.res-ref{font-size:11px;color:var(--color-text-secondary);margin-bottom:2px}
+.res-name{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.res-compat{font-size:11px;color:var(--color-text-secondary);margin-top:3px;display:flex;gap:4px;flex-wrap:wrap}
+.compat-tag{background:var(--color-background-secondary);padding:2px 6px;border-radius:6px;font-size:10px}
+.res-right{text-align:right}
+.res-price{font-size:15px;font-weight:500;color:var(--rp-dark)}
+.stock-badge{font-size:11px;padding:3px 8px;border-radius:6px;margin-top:4px;display:inline-block}
+.stock-ok{background:#e8f5e9;color:#2e7d32}
+.stock-low{background:#fff8e1;color:#f57f17}
+.match-score{font-size:10px;color:var(--color-text-secondary);margin-top:4px}
+.best-badge{background:var(--rp-gold);color:#7a4f00;font-size:10px;padding:2px 8px;border-radius:6px;display:inline-block;margin-bottom:4px}
+
+/* ── VISION ── */
+.vision-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.upload-zone{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:1.5px dashed var(--color-border-secondary);padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s;min-height:200px;gap:10px}
+.upload-zone:hover{border-color:var(--rp-red)}
+.upload-zone i{font-size:36px;color:var(--color-text-secondary)}
+.upload-zone p{font-size:12px;color:var(--color-text-secondary);text-align:center}
+.upload-zone .btn-up{background:var(--rp-red);color:#fff;border:none;border-radius:var(--border-radius-md);padding:8px 16px;font-size:12px;cursor:pointer;margin-top:6px}
+.vision-preview{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);overflow:hidden;display:none}
+.preview-img{width:100%;height:150px;background:var(--color-background-secondary);display:flex;align-items:center;justify-content:center;position:relative}
+.preview-img i{font-size:48px;color:var(--color-text-secondary)}
+.preview-badge{position:absolute;top:8px;right:8px;background:var(--rp-dark);color:#fff;font-size:10px;padding:3px 8px;border-radius:6px}
+.analysis-result{padding:14px;display:flex;flex-direction:column;gap:10px}
+.result-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:6px 0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.result-row:last-child{border-bottom:none}
+.result-row .lbl{color:var(--color-text-secondary)}
+.result-row .val{font-weight:500;color:var(--color-text-primary)}
+.conf-bar{height:4px;background:var(--color-background-secondary);border-radius:2px;width:80px;overflow:hidden}
+.conf-fill{height:100%;background:#25D366;border-radius:2px}
+.conf-row{display:flex;align-items:center;gap:8px}
+.vision-info{display:flex;flex-direction:column;gap:12px}
+.how-it-works{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:14px}
+.how-it-works h3{font-size:13px;font-weight:500;margin-bottom:10px;color:var(--color-text-primary);display:flex;align-items:center;gap:8px}
+.how-it-works h3 i{color:var(--rp-red)}
+.step-list{display:flex;flex-direction:column;gap:8px}
+.step{display:flex;align-items:flex-start;gap:10px}
+.step-num{width:20px;height:20px;border-radius:50%;background:var(--rp-dark);color:#fff;font-size:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step p{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+
+/* ── PREDICCIÓN ── */
+.pred-wrap{display:flex;flex-direction:column;gap:16px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.kpi{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:12px}
+.kpi-val{font-size:22px;font-weight:500;color:var(--rp-dark)}
+.kpi-lbl{font-size:11px;color:var(--color-text-secondary);margin-top:2px}
+.kpi-delta{font-size:11px;margin-top:4px}
+.kpi-delta.pos{color:#2e7d32}
+.kpi-delta.neg{color:#c62828}
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart-card{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:14px}
+.chart-card h3{font-size:12px;color:var(--color-text-secondary);font-weight:400;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.chart-card h3 .pill{background:var(--color-background-secondary);padding:2px 8px;border-radius:10px;font-size:10px}
+canvas{display:block;width:100%!important}
+.alert-list{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);padding:14px}
+.alert-list h3{font-size:12px;color:var(--color-text-secondary);font-weight:400;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.alert-list h3 i{color:var(--rp-red)}
+.alert-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:12px}
+.alert-row:last-child{border-bottom:none}
+.alert-icon{width:28px;height:28px;border-radius:var(--border-radius-md);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.alert-icon.red{background:#FCEBEB}
+.alert-icon.red i{color:#A32D2D}
+.alert-icon.amber{background:#FAEEDA}
+.alert-icon.amber i{color:#854F0B}
+.alert-icon.green{background:#EAF3DE}
+.alert-icon.green i{color:#3B6D11}
+.alert-body{flex:1}
+.alert-ref{font-weight:500;color:var(--color-text-primary)}
+.alert-desc{color:var(--color-text-secondary);font-size:11px;margin-top:1px}
+.alert-action{font-size:11px;color:var(--rp-red);cursor:pointer;white-space:nowrap}
+</style>
+
+<h2 class="sr-only">RedPartes AI solutions mockup — tabs for Chatbot, Semantic search, Computer vision, and Demand prediction</h2>
+
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-logo">
+      <div class="logo-dot"></div>
+      <span class="logo-text">RedPartes</span>
+      <span class="logo-tag">· Portal AI</span>
+    </div>
+    <span style="font-size:11px;color:#8899AA">Beta — Demo</span>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('chat')" id="t-chat"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i>Agente 24/7</div>
+    <div class="tab" onclick="showTab('search')" id="t-search"><i class="ti ti-search" aria-hidden="true"></i>Buscador semántico</div>
+    <div class="tab" onclick="showTab('vision')" id="t-vision"><i class="ti ti-camera" aria-hidden="true"></i>Visión artificial</div>
+    <div class="tab" onclick="showTab('pred')" id="t-pred"><i class="ti ti-chart-line" aria-hidden="true"></i>Predicción de demanda</div>
+  </div>
+
+  <!-- ── TAB 1: CHATBOT ── -->
+  <div class="panel active" id="p-chat">
+    <div class="chat-wrap">
+      <div class="chat-phone">
+        <div class="chat-header">
+          <div class="chat-avatar"><i class="ti ti-brand-whatsapp" aria-hidden="true"></i></div>
+          <div><div class="chat-name">RedPartes Asistente</div><div class="chat-status">En línea · responde al instante</div></div>
+        </div>
+        <div class="chat-msgs" id="chat-msgs">
+          <div class="msg in">¡Hola! Soy el asistente de RedPartes. ¿En qué te ayudo hoy?
+            <div class="chip-row">
+              <button class="chip" onclick="runDemo('stock')">Consultar stock</button>
+              <button class="chip" onclick="runDemo('compat')">Compatibilidad</button>
+              <button class="chip" onclick="runDemo('pedido')">Hacer pedido</button>
+            </div>
+            <div class="time">09:14 <span class="check">✓✓</span></div>
+          </div>
+        </div>
+        <div class="chat-input-row">
+          <input type="text" id="chat-in" placeholder="Escribe tu consulta..." onkeydown="if(event.key==='Enter')sendChat()"/>
+          <button class="chat-send" onclick="sendChat()"><i class="ti ti-send" aria-hidden="true"></i></button>
+        </div>
+      </div>
+      <div class="chat-info">
+        <div class="info-card">
+          <h3><i class="ti ti-bolt" aria-hidden="true"></i>Impacto en operaciones</h3>
+          <div class="stat-row">
+            <div class="stat"><div class="stat-val" style="color:var(--rp-red)">−70%</div><div class="stat-lbl">llamadas al call center</div></div>
+            <div class="stat"><div class="stat-val" style="color:var(--rp-red)">24/7</div><div class="stat-lbl">atención sin costo adicional</div></div>
+            <div class="stat"><div class="stat-val" style="color:var(--rp-red)">&lt;5s</div><div class="stat-lbl">tiempo de respuesta</div></div>
+            <div class="stat"><div class="stat-val" style="color:var(--rp-red)">+30%</div><div class="stat-lbl">pedidos fuera de horario</div></div>
+          </div>
+        </div>
+        <div class="info-card">
+          <h3><i class="ti ti-settings" aria-hidden="true"></i>Capacidades del agente</h3>
+          <div class="feature-list">
+            <div class="feature-item"><i class="ti ti-check" aria-hidden="true"></i>Consulta stock en tiempo real vía API del ERP</div>
+            <div class="feature-item"><i class="ti ti-check" aria-hidden="true"></i>Responde preguntas de compatibilidad por modelo</div>
+            <div class="feature-item"><i class="ti ti-check" aria-hidden="true"></i>Recibe y confirma pedidos directamente</div>
+            <div class="feature-item"><i class="ti ti-check" aria-hidden="true"></i>Escala a asesor humano cuando es necesario</div>
+            <div class="feature-item"><i class="ti ti-check" aria-hidden="true"></i>Disponible en WhatsApp Business y portal web</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB 2: BUSCADOR ── -->
+  <div class="panel" id="p-search">
+    <div class="search-wrap">
+      <div class="search-top">
+        <h3>Busca repuestos en lenguaje natural — sin necesitar la referencia exacta</h3>
+        <div class="search-bar">
+          <input type="text" id="search-in" placeholder='Ej: "filtro de aceite para Kia Picanto 2020"' value="bomba de agua para Renault Sandero 2021"/>
+          <button class="search-btn" onclick="runSearch()"><i class="ti ti-search" aria-hidden="true"></i>Buscar</button>
+        </div>
+        <div class="examples">
+          <span style="font-size:11px;color:var(--color-text-secondary);margin-right:4px">Prueba:</span>
+          <span class="ex-pill" onclick="setSearch('pastillas de freno Chevrolet Spark 2019')">pastillas de freno Chevrolet Spark 2019</span>
+          <span class="ex-pill" onclick="setSearch('amortiguador trasero Hyundai Accent')">amortiguador trasero Hyundai Accent</span>
+          <span class="ex-pill" onclick="setSearch('filtro aire Mazda 3 2018')">filtro aire Mazda 3 2018</span>
+        </div>
+      </div>
+      <div class="results-grid" id="search-results"></div>
+    </div>
+  </div>
+
+  <!-- ── TAB 3: VISIÓN ── -->
+  <div class="panel" id="p-vision">
+    <div class="vision-wrap">
+      <div>
+        <div class="upload-zone" id="upload-zone" onclick="simulateUpload()">
+          <i class="ti ti-camera-plus" aria-hidden="true"></i>
+          <p>Toma o sube una foto del repuesto</p>
+          <p style="font-size:10px">JPG, PNG · hasta 10MB</p>
+          <button class="btn-up">Seleccionar imagen</button>
+        </div>
+        <div class="vision-preview" id="vision-result">
+          <div class="preview-img">
+            <i class="ti ti-engine" aria-hidden="true"></i>
+            <div class="preview-badge">Analizando... ✓</div>
+          </div>
+          <div class="analysis-result">
+            <div style="font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px">Resultado del análisis</div>
+            <div class="result-row"><span class="lbl">Componente detectado</span><span class="val">Bomba de agua</span></div>
+            <div class="result-row"><span class="lbl">Referencia sugerida</span><span class="val" style="color:var(--rp-red)">RPW-8821-RS</span></div>
+            <div class="result-row"><span class="lbl">Compatible con</span><span class="val">Renault Sandero / Logan</span></div>
+            <div class="result-row"><span class="lbl">Stock disponible</span><span class="val" style="color:#2e7d32">14 unidades ✓</span></div>
+            <div class="result-row">
+              <span class="lbl">Confianza del modelo</span>
+              <div class="conf-row"><div class="conf-bar"><div class="conf-fill" style="width:94%"></div></div><span class="val">94%</span></div>
+            </div>
+            <button onclick="simulateReset()" style="margin-top:8px;background:var(--rp-red);color:#fff;border:none;border-radius:var(--border-radius-md);padding:7px 14px;font-size:12px;cursor:pointer;width:100%">Analizar otra foto</button>
+          </div>
+        </div>
+      </div>
+      <div class="vision-info">
+        <div class="how-it-works">
+          <h3><i class="ti ti-cpu" aria-hidden="true"></i>¿Cómo funciona?</h3>
+          <div class="step-list">
+            <div class="step"><div class="step-num">1</div><p>El taller o distribuidor toma una foto del repuesto con su celular</p></div>
+            <div class="step"><div class="step-num">2</div><p>El modelo de visión artificial identifica el componente y su estado</p></div>
+            <div class="step"><div class="step-num">3</div><p>El sistema mapea al catálogo de RedPartes y muestra referencias compatibles</p></div>
+            <div class="step"><div class="step-num">4</div><p>El cliente ve stock en tiempo real y puede pedir desde el mismo flujo</p></div>
+          </div>
+        </div>
+        <div class="info-card">
+          <h3><i class="ti ti-bolt" aria-hidden="true"></i>Casos de uso</h3>
+          <div class="feature-list">
+            <div class="feature-item"><i class="ti ti-check" aria-hidden="true"></i>Talleres que no conocen la referencia exacta</div>
+            <div class="feature-item"><i class="ti ti-check" aria-hidden="true"></i>Verificación de repuestos recibidos en bodega</div>
+            <div class="feature-item"><i class="ti ti-check" aria-hidden="true"></i>Soporte postventa a distribuidores remotos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TAB 4: PREDICCIÓN ── -->
+  <div class="panel" id="p-pred">
+    <div class="pred-wrap">
+      <div class="kpi-row">
+        <div class="kpi"><div class="kpi-val">1,284</div><div class="kpi-lbl">referencias activas</div><div class="kpi-delta pos"><i class="ti ti-trending-up" style="font-size:11px" aria-hidden="true"></i> +34 vs mes anterior</div></div>
+        <div class="kpi"><div class="kpi-val">8.2%</div><div class="kpi-lbl">tasa de quiebre actual</div><div class="kpi-delta neg"><i class="ti ti-trending-down" style="font-size:11px" aria-hidden="true"></i> −3.1pp con IA</div></div>
+        <div class="kpi"><div class="kpi-val">$12.4M</div><div class="kpi-lbl">valor inventario (COP M)</div><div class="kpi-delta pos"><i class="ti ti-trending-up" style="font-size:11px" aria-hidden="true"></i> capital optimizado</div></div>
+        <div class="kpi"><div class="kpi-val">94%</div><div class="kpi-lbl">precisión del modelo</div><div class="kpi-delta pos"><i class="ti ti-check" style="font-size:11px" aria-hidden="true"></i> validado últimos 90 días</div></div>
+      </div>
+      <div class="charts-row">
+        <div class="chart-card">
+          <h3>Demanda proyectada — próximos 6 meses <span class="pill">Top 5 marcas</span></h3>
+          <canvas id="chart-demand" height="180"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Quiebres de stock: sin IA vs con IA <span class="pill">% mensual</span></h3>
+          <canvas id="chart-stock" height="180"></canvas>
+        </div>
+      </div>
+      <div class="alert-list">
+        <h3><i class="ti ti-alert-triangle" aria-hidden="true"></i>Alertas de reposición inteligente</h3>
+        <div class="alert-row">
+          <div class="alert-icon red"><i class="ti ti-alert-circle" aria-hidden="true"></i></div>
+          <div class="alert-body"><div class="alert-ref">Filtro aceite OL-4421-CH · Chevrolet</div><div class="alert-desc">Stock crítico: 3 unds · Demanda proyectada: 48 unds (próx. 30 días)</div></div>
+          <span class="alert-action">Ordenar ahora →</span>
+        </div>
+        <div class="alert-row">
+          <div class="alert-icon amber"><i class="ti ti-clock" aria-hidden="true"></i></div>
+          <div class="alert-body"><div class="alert-ref">Amortiguador KIA-AM-9910 · Kia</div><div class="alert-desc">Reposición recomendada en 12 días · Pico estacional detectado</div></div>
+          <span class="alert-action">Programar →</span>
+        </div>
+        <div class="alert-row">
+          <div class="alert-icon amber"><i class="ti ti-clock" aria-hidden="true"></i></div>
+          <div class="alert-body"><div class="alert-ref">Pastillas freno REN-PB-0034 · Renault</div><div class="alert-desc">Tendencia al alza en región Antioquia · +22% vs año anterior</div></div>
+          <span class="alert-action">Ver análisis →</span>
+        </div>
+        <div class="alert-row">
+          <div class="alert-icon green"><i class="ti ti-check" aria-hidden="true"></i></div>
+          <div class="alert-body"><div class="alert-ref">Bomba agua HYU-BW-1122 · Hyundai</div><div class="alert-desc">Inventario óptimo · Próxima revisión en 18 días</div></div>
+          <span class="alert-action">Detalles →</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+function showTab(id){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('t-'+id).classList.add('active');
+  document.getElementById('p-'+id).classList.add('active');
+  if(id==='pred') setTimeout(buildCharts,50);
+}
+
+const chatScripts={
+  stock:{q:'¿Tienen filtros de aceite para Kia Picanto 2020?',a:'Sí, tenemos 3 referencias disponibles para el Kia Picanto 2020 1.2L:\n\n• OL-4421-KP — BestParts (stock: 28 unds)\n• OL-9910-GN — Genuino Kia (stock: 7 unds)\n\n¿Cuál prefieres? Puedo procesarte el pedido ahora mismo.'},
+  compat:{q:'¿El filtro OL-4421 sirve para Hyundai Accent también?',a:'¡Sí! El OL-4421 es compatible con:\n\n✓ Kia Picanto 1.0 / 1.2 (2017–2023)\n✓ Hyundai i10 1.2 (2015–2021)\n✓ Hyundai Grand i10 (2017–2022)\n\nStock actual: 28 unidades disponibles. ¿Quieres agregar al pedido?'},
+  pedido:{q:'Quiero pedir 5 unidades del OL-4421-KP',a:'Perfecto. Confirmando tu pedido:\n\n• 5× OL-4421-KP @ $28.500 c/u\n• Total: $142.500 COP\n• Despacho estimado: 24–48 horas\n\nEnviaré la confirmación a tu correo registrado. ¿Algo más?'}
+};
+
+function addMsg(txt,dir,delay){
+  return new Promise(r=>{
+    setTimeout(()=>{
+      const c=document.getElementById('chat-msgs');
+      const d=document.createElement('div');
+      d.className='msg '+dir;
+      d.innerHTML=txt.replace(/\n/g,'<br>')+'<div class="time">'+new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})+' <span class="check">✓✓</span></div>';
+      c.appendChild(d);
+      c.scrollTop=c.scrollHeight;
+      r();
+    },delay||0);
+  });
+}
+
+function runDemo(type){
+  const s=chatScripts[type];
+  addMsg(s.q,'out',0).then(()=>addMsg('<i class="ti ti-dots" aria-hidden="true"></i> Procesando...','in',400)).then(()=>{
+    const msgs=document.getElementById('chat-msgs');
+    const last=msgs.lastChild;
+    setTimeout(()=>{last.remove();addMsg(s.a,'in',0);},900);
+  });
+}
+
+function sendChat(){
+  const inp=document.getElementById('chat-in');
+  const v=inp.value.trim();
+  if(!v)return;
+  inp.value='';
+  addMsg(v,'out',0).then(()=>addMsg('<i class="ti ti-dots" aria-hidden="true"></i> Procesando...','in',500)).then(()=>{
+    const msgs=document.getElementById('chat-msgs');
+    const last=msgs.lastChild;
+    setTimeout(()=>{last.remove();addMsg('Entendido. Déjame consultar eso en nuestro inventario...\n\nEncuentro coincidencias. Te recomiendo usar el buscador semántico del portal para ver opciones completas con precios y stock.','in',0);},1000);
+  });
+}
+
+const searchData=[
+  {ref:'RPW-8821-RS',name:'Bomba de agua — motor K9K',compat:['Renault Sandero','Renault Logan','Dacia Duster'],price:'$89.000',stock:14,stockType:'ok',score:97,top:true},
+  {ref:'RPW-8820-RS',name:'Bomba de agua — motor D4F',compat:['Renault Sandero 1.2','Renault Twingo'],price:'$74.500',stock:5,stockType:'low',score:82,top:false},
+  {ref:'RPW-9010-GN',name:'Bomba de agua genuina Renault',compat:['Renault Sandero','Renault Symbol'],price:'$142.000',stock:3,stockType:'low',score:78,top:false},
+];
+
+function setSearch(txt){document.getElementById('search-in').value=txt;runSearch();}
+
+function runSearch(){
+  const el=document.getElementById('search-results');
+  el.innerHTML='<div style="font-size:12px;color:var(--color-text-secondary);padding:8px 0">Analizando consulta...</div>';
+  setTimeout(()=>{
+    el.innerHTML='<div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:4px">3 resultados para "<b>'+document.getElementById('search-in').value+'</b>"</div>';
+    searchData.forEach(r=>{
+      const card=document.createElement('div');
+      card.className='result-card'+(r.top?' top':'');
+      card.innerHTML=(r.top?'<div><div class="best-badge">Mejor coincidencia</div>':'<div>')+
+        '<div class="res-ref">Ref. '+r.ref+'</div>'+
+        '<div class="res-name">'+r.name+'</div>'+
+        '<div class="res-compat">'+r.compat.map(c=>'<span class="compat-tag">'+c+'</span>').join('')+'</div>'+
+        '<div class="match-score">Coincidencia semántica: '+r.score+'%</div></div>'+
+        '<div class="res-right">'+
+        '<div class="res-price">'+r.price+'</div>'+
+        '<div class="stock-badge stock-'+r.stockType+'">'+(r.stockType==='ok'?'✓ ':r.stock+' unds · ')+r.stock+' en stock</div>'+
+        '</div>';
+      el.appendChild(card);
+    });
+  },600);
+}
+
+function simulateUpload(){
+  document.getElementById('upload-zone').style.display='none';
+  document.getElementById('vision-result').style.display='block';
+}
+function simulateReset(){
+  document.getElementById('upload-zone').style.display='flex';
+  document.getElementById('vision-result').style.display='none';
+}
+
+let chartsBuilt=false;
+function buildCharts(){
+  if(chartsBuilt)return;
+  chartsBuilt=true;
+  const isDark=document.documentElement.classList.contains('dark');
+  const labelColor=isDark?'#8899AA':'#888780';
+  const gridColor=isDark?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
+
+  new Chart(document.getElementById('chart-demand'),{
+    type:'line',
+    data:{
+      labels:['Jun','Jul','Ago','Sep','Oct','Nov'],
+      datasets:[
+        {label:'Chevrolet',data:[420,440,480,510,495,530],borderColor:'#C0392B',tension:0.3,pointRadius:3,fill:false},
+        {label:'Renault',data:[310,330,350,370,360,385],borderColor:'#F0A500',tension:0.3,pointRadius:3,fill:false},
+        {label:'Kia',data:[280,295,320,310,340,355],borderColor:'#1A2744',tension:0.3,pointRadius:3,fill:false},
+        {label:'Hyundai',data:[240,255,265,280,270,295],borderColor:'#2196F3',tension:0.3,pointRadius:3,fill:false},
+        {label:'Mazda',data:[120,130,125,140,150,145],borderColor:'#4CAF50',tension:0.3,pointRadius:3,fill:false},
+      ]
+    },
+    options:{responsive:true,plugins:{legend:{labels:{color:labelColor,font:{size:10},boxWidth:12}}},scales:{x:{ticks:{color:labelColor,font:{size:10}},grid:{color:gridColor}},y:{ticks:{color:labelColor,font:{size:10}},grid:{color:gridColor}}}}
+  });
+
+  new Chart(document.getElementById('chart-stock'),{
+    type:'bar',
+    data:{
+      labels:['Ene','Feb','Mar','Abr','May','Jun'],
+      datasets:[
+        {label:'Sin IA',data:[18,22,25,20,21,23],backgroundColor:'#8899AA'},
+        {label:'Con IA',data:[10,9,11,8,9,8],backgroundColor:'#C0392B'},
+      ]
+    },
+    options:{responsive:true,plugins:{legend:{labels:{color:labelColor,font:{size:10},boxWidth:12}}},scales:{x:{ticks:{color:labelColor,font:{size:10}},grid:{color:gridColor}},y:{ticks:{color:labelColor,font:{size:10},callback:v=>v+'%'},grid:{color:gridColor}}}}
+  });
+}
+
+runSearch();
+</script>
