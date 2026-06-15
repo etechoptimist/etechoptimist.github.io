@@ -323,10 +323,10 @@ document.addEventListener("DOMContentLoaded", () => {
     await injectHomeSection();
     await injectEducationSection();
     await injectCertificationsSection();
+    await injectConvatecAgentProject();
     await injectHealthIntelligenceProject();
     await injectKnowBotProject();
     await injectFinancialCoachingProject();
-    await injectConvatecAgentProject();
     await injectArticlesSection();
     await loadMediumArticles();
   })();
