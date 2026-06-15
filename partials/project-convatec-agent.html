@@ -1,0 +1,272 @@
+<!-- partials/project-convatec-agent.html -->
+<div class="project-item project-feature project-detail">
+
+  <!-- Header -->
+  <div class="project-top">
+    <div>
+      <h4 class="project-title">ConvaCare Agent — Adaptive RAG &amp; Appointment Assistant for Medical Products</h4>
+      <p class="project-one-liner">
+        Production-grade LangGraph agent for Convatec Colombia that autonomously routes patient requests
+        between a <strong>RAG product-guide tool</strong> and an <strong>MCP slot-booking tool</strong>,
+        built on the AWS Well-Architected GenAI Lens with circuit breaker, hexagonal architecture, and
+        full observability.
+      </p>
+    </div>
+  </div>
+
+  <!-- Quick highlights -->
+  <div class="project-highlights">
+    <div class="highlight">
+      <div class="highlight-k">GenAI Architecture</div>
+      <div class="highlight-v">AWS Well-Architected GenAI Lens · 6 pillars · Serverless-first · Production-grade</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Reliability</div>
+      <div class="highlight-v">Circuit Breaker (CLOSED → OPEN → HALF_OPEN) · Graceful degradation · Spanish fallback &lt; 500ms</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Adaptive Config</div>
+      <div class="highlight-v">Runtime model / prompt / param tuning via AppConfig · Zero redeployments · A/B testing</div>
+    </div>
+    <div class="highlight">
+      <div class="highlight-k">Observability</div>
+      <div class="highlight-v">Per-request answer relevancy scoring · Weekly RAGAS batch eval · CloudWatch dashboards</div>
+    </div>
+  </div>
+
+  <!-- Keywords / chips -->
+  <div class="project-chip-row" aria-label="Project keywords">
+    <span class="project-chip">LangGraph</span>
+    <span class="project-chip">LangChain</span>
+    <span class="project-chip">FastAPI</span>
+    <span class="project-chip">Claude Haiku 4.5</span>
+    <span class="project-chip">Amazon Bedrock</span>
+    <span class="project-chip">Bedrock Knowledge Bases</span>
+    <span class="project-chip">S3 Vectors</span>
+    <span class="project-chip">DynamoDB</span>
+    <span class="project-chip">AWS AppConfig</span>
+    <span class="project-chip">FastMCP</span>
+    <span class="project-chip">CloudWatch</span>
+    <span class="project-chip">RAGAS</span>
+    <span class="project-chip">Circuit Breaker</span>
+    <span class="project-chip">Hexagonal Architecture</span>
+    <span class="project-chip">Amazon Titan Embeddings v2</span>
+  </div>
+
+  <!-- Summary -->
+  <div class="project-summary-block">
+    <ul class="project-list compact">
+      <li><strong>Agentic Routing:</strong> LangGraph ReAct agent autonomously decides between the RAG tool (product Q&amp;A) and the MCP slot-booking tool (appointment scheduling) based on patient intent.</li>
+      <li><strong>Adaptive RAG:</strong> Bedrock Knowledge Bases with hierarchical chunking (parent 1500 / child 500 tokens) and Foundation Model PDF parsing for diagram-heavy InService documents. Model, prompt, temperature, and retrieval parameters all hot-swappable via AppConfig with no redeployment.</li>
+      <li><strong>Circuit Breaker:</strong> Three-state FSM (CLOSED → OPEN → HALF_OPEN) protects patients from 60-second timeout failures; serves a Spanish static fallback in &lt; 500ms when Bedrock KB is degraded.</li>
+      <li><strong>Hexagonal Architecture:</strong> Python Protocol ports decouple the orchestrator from AWS adapters (<code>BedrockKBAdapter</code>, <code>DynamoDBAdapter</code>), enabling full unit testing with moto mocks and future backend swaps without touching business logic.</li>
+      <li><strong>Observability:</strong> Per-request CloudWatch metrics (latency p50/p90/p99, answer relevancy score, circuit state); weekly EventBridge-triggered RAGAS batch evaluation (Faithfulness, Relevancy, Precision, Recall) stored in S3 and visualised in dashboards.</li>
+    </ul>
+  </div>
+
+  <p class="project-meta">
+    Related topics:
+    <a href="#ai-projects">AI / Agentic Projects</a> ·
+    <a href="#articles">Technical Articles</a> ·
+    <a href="#certifications">Generative AI &amp; AWS</a>
+  </p>
+
+  <!-- Key Components -->
+  <details class="project-details" open>
+    <summary><strong>Key Components</strong></summary>
+    <ul class="project-list">
+      <li><strong>RAG Lambda Orchestrator</strong> – Python 3.12 Lambda that receives patient queries, polls AppConfig for live parameters, invokes the Circuit Breaker, queries the Bedrock Knowledge Base, scores answer relevancy online, and publishes CloudWatch metrics per request.</li>
+      <li><strong>Agentic System (FastAPI + LangGraph)</strong> – FastAPI server on AWS Lightsail hosting a LangGraph ReAct agent. Exposes a <code>/chat</code> endpoint; the agent reasons over tool results across multiple iterations (bounded by AppConfig <code>agent_max_iterations</code>).</li>
+      <li><strong>RAG Tool (<code>rag_search</code>)</strong> – LangChain tool that the agent calls to retrieve and synthesise answers from the Bedrock Knowledge Base. Returns grounded answers with source attribution and relevancy scores.</li>
+      <li><strong>MCP Server (FastMCP stdio)</strong> – FastMCP process launched as a stdio subprocess by the agent at startup. Exposes the <code>assign_slot</code> tool via the Model Context Protocol; bridges into DynamoDB with conditional writes to prevent double-booking.</li>
+      <li><strong>AppConfig Client (token-based polling)</strong> – Polls AWS AppConfig on each Lambda cold start and every 30 seconds thereafter using a deployment token. Implements a three-tier fallback chain: new valid config → cached config → hardcoded defaults, so the system never fails from a missing config.</li>
+      <li><strong>Circuit Breaker FSM</strong> – Tracks consecutive Bedrock KB failures; opens after 5 failures; enters HALF_OPEN after 30s to test recovery with 2 probe requests; closes on 2 consecutive successes. All thresholds tunable via AppConfig.</li>
+      <li><strong>Hexagonal Ports / Adapters</strong> – <code>RetrievalPort</code>, <code>EmbeddingPort</code>, <code>KnowledgeBasePort</code>, and <code>SlotRepositoryPort</code> are Python Protocol interfaces. Concrete adapters (<code>BedrockKBAdapter</code>, <code>TitanEmbeddingAdapter</code>, <code>DynamoDBAdapter</code>) are injected at runtime; mock adapters are injected in tests.</li>
+      <li><strong>Evaluation Pipeline</strong> – EventBridge weekly schedule invokes an evaluator Lambda that runs a RAGAS test suite (Faithfulness, Answer Relevancy, Context Precision, Context Recall) against a curated golden-set of Q&amp;A pairs. Results are written to S3 and surfaced in a CloudWatch dashboard.</li>
+      <li><strong>CloudWatch Metrics Layer</strong> – Custom namespace <code>ConvatecRAG</code> / <code>AgenticSlotBooking</code>; records query latency (p50, p90, p99), relevancy score, circuit breaker state, model ID used, and error rates. Billing alarm at $25/month.</li>
+    </ul>
+  </details>
+
+  <!-- Architecture Patterns -->
+  <details class="project-details">
+    <summary><strong>Architecture Patterns</strong></summary>
+
+    <p class="project-text">
+      <strong>1) Adaptive Configuration via AWS AppConfig</strong><br>
+      All runtime decisions — model ID, temperature, max tokens, system prompt, retrieval top-k, search type,
+      circuit breaker thresholds, and feature flags — are stored in AppConfig and polled with a token-based
+      mechanism. A configuration change takes effect within seconds across all running Lambda instances with
+      zero code deployment. This enables A/B testing of prompts, emergency model downgrade during traffic
+      spikes, and maintenance-mode toggles via a single JSON update.
+    </p>
+
+    <p class="project-text">
+      <strong>2) Circuit Breaker (Three-State FSM)</strong><br>
+      When the Bedrock Knowledge Base returns consecutive errors (default threshold: 5), the circuit breaker
+      transitions from <strong>CLOSED</strong> to <strong>OPEN</strong>. In the OPEN state, all incoming
+      requests are fast-failed with a friendly Spanish fallback message in &lt; 500ms — no Bedrock calls,
+      no patient-visible 60-second timeouts, no unnecessary billing. After a configurable recovery window
+      (30s), the circuit enters <strong>HALF_OPEN</strong> and allows 2 probe requests. If both succeed,
+      the circuit closes and normal operation resumes automatically.
+    </p>
+
+    <p class="project-text">
+      <strong>3) Hexagonal Architecture / Ports &amp; Adapters</strong><br>
+      The orchestrator depends only on abstract Python Protocol interfaces (ports), never on AWS SDK
+      classes directly. Concrete adapters implement those ports and are injected at startup. This means
+      the entire business logic layer can be unit-tested with <code>moto</code> mocks without hitting
+      real AWS services, and the retrieval backend can be swapped from Bedrock KB to OpenSearch, Pinecone,
+      or a local FAISS index without changing a single line of orchestration code.
+    </p>
+
+    <p class="project-text">
+      <strong>4) Hierarchical PDF Chunking</strong><br>
+      Convatec InService documents are presentation-style PDFs with product diagrams, multi-column layouts,
+      and mixed-language content. Standard PDF text extraction produces garbled output from diagrams.
+      The ingestion pipeline uses Foundation Model parsing (Claude reads each page and converts diagrams
+      to structured text descriptions), then applies parent chunks (1500 tokens) for full-section context
+      and child chunks (500 tokens, 100-token overlap) for retrieval precision. This strategy produces
+      dramatically better answers for image-heavy medical documentation.
+    </p>
+
+    <p class="project-text">
+      <strong>5) Graceful Degradation Modes</strong><br>
+      The agentic system supports three degraded modes in addition to full operation:
+      <strong>RAG-only</strong> (MCP server crashed — product Q&amp;A still works),
+      <strong>Slot-only</strong> (Bedrock KB unavailable — appointment booking still works),
+      and <strong>Static fallback</strong> (both services down — circuit breaker OPEN serves a
+      pre-written Spanish response instantly). Patients always receive a response, never an error page.
+    </p>
+  </details>
+
+  <!-- Architecture Diagram -->
+  <details class="project-details">
+    <summary><strong>Architecture Diagram</strong></summary>
+
+    <pre class="mermaid">
+flowchart TD
+  U([Patient / User])
+  API[FastAPI + API Gateway]
+
+  subgraph AGENT["LangGraph ReAct Agent"]
+    direction TB
+    ROUTER{Intent Router}
+    RAG_T[RAG Tool\nrag_search]
+    MCP_T[Slot Booking Tool\nassign_slot]
+  end
+
+  subgraph KNOWLEDGE["Knowledge Retrieval"]
+    direction TB
+    KB[Bedrock Knowledge Base]
+    VEC[(S3 Vectors)]
+  end
+
+  subgraph BOOKING["Slot Management"]
+    direction TB
+    MCP[FastMCP Server\nstdio subprocess]
+    DDB[(DynamoDB\nConditional Writes)]
+  end
+
+  CFG[AWS AppConfig\nmodel · prompts · params]
+  CB{Circuit Breaker\nCLOSED / OPEN / HALF_OPEN}
+  CW[CloudWatch\nMetrics · RAGAS · Dashboards]
+
+  U --> API --> ROUTER
+  ROUTER -->|product question| RAG_T --> CB --> KB --> VEC
+  ROUTER -->|book appointment| MCP_T --> MCP --> DDB
+
+  CFG -.->|hot-swap config| AGENT
+  CB -.->|fast-fail fallback| API
+  KB -.-> CW
+  MCP -.-> CW
+    </pre>
+  </details>
+
+  <!-- Agentic Flow -->
+  <details class="project-details">
+    <summary><strong>Agentic Flow (Request to Response)</strong></summary>
+
+    <p class="project-text">
+      <strong>1) Receive &amp; validate:</strong> The patient sends a Spanish-language message to the
+      <code>/chat</code> FastAPI endpoint. The request is validated (length, injection detection) and
+      assigned a UUID for tracing. The LangGraph ReAct agent is invoked with the message and any prior
+      conversation state.
+    </p>
+
+    <p class="project-text">
+      <strong>2) ReAct reasoning &amp; tool selection:</strong> The agent (Claude Haiku 4.5 via Bedrock)
+      reasons about the user intent and selects one of two tools: <code>rag_search</code> for product
+      questions ("¿Cómo se usa el catéter?") or <code>assign_slot</code> for appointment requests
+      ("Quiero reservar una cita"). The agent may iterate across multiple reasoning steps (bounded by
+      <code>agent_max_iterations</code> from AppConfig) to refine its answer.
+    </p>
+
+    <p class="project-text">
+      <strong>3a) RAG path:</strong> <code>rag_search</code> calls the Lambda orchestrator, which checks
+      the circuit breaker state. If CLOSED, it queries the Bedrock Knowledge Base (hybrid semantic +
+      keyword search over S3 Vectors). Retrieved chunks are passed back to Claude for grounded answer
+      generation. The answer is scored for relevancy (cosine similarity between query and answer
+      embeddings via Amazon Titan Embeddings v2) and the score is published to CloudWatch.
+    </p>
+
+    <p class="project-text">
+      <strong>3b) Booking path:</strong> <code>assign_slot</code> calls the FastMCP stdio subprocess,
+      which writes a new slot to DynamoDB using a conditional expression
+      (<code>attribute_not_exists(slot_id)</code>) to guarantee atomicity and prevent double-booking.
+      The MCP server returns confirmation or a conflict message back to the agent.
+    </p>
+
+    <p class="project-text">
+      <strong>4) Config &amp; observability:</strong> Every parameter used in steps 2–3 — model ID,
+      temperature, retrieval top-k, max iterations — was pulled from AppConfig at agent startup and
+      can be changed between requests without redeployment. Every invocation publishes latency,
+      circuit state, model used, and relevancy score to CloudWatch. Weekly, an EventBridge rule
+      triggers a RAGAS evaluation against a golden Q&amp;A set and stores results in S3.
+    </p>
+  </details>
+
+  <!-- Description -->
+  <details class="project-details">
+    <summary><strong>Description</strong></summary>
+
+    <p class="project-text">
+      ConvaCare Agent is a proof-of-concept agentic assistant built for Convatec Colombia, a medical
+      device company providing products for wound care, ostomy management, and continence care. Patients
+      using these products often have specific, nuanced questions about usage, compatibility, and
+      follow-up appointments — questions that require both accurate product knowledge and a frictionless
+      scheduling experience.
+    </p>
+
+    <p class="project-text">
+      The system combines two tools under a single LangGraph ReAct agent: a RAG tool that retrieves
+      grounded answers from official InService product documentation, and an MCP-based slot-booking tool
+      that reserves care appointments atomically in DynamoDB. The agent decides autonomously which tool
+      to invoke (or both in sequence) based on the patient's message.
+    </p>
+
+    <p class="project-text">
+      The architecture is explicitly aligned to the <strong>AWS Well-Architected Generative AI Lens</strong>
+      across all six pillars. Reliability is addressed through a circuit breaker FSM and multi-mode
+      graceful degradation. Operational excellence is achieved through AppConfig-driven runtime
+      configuration and structured JSON logging. Performance is optimised by defaulting to Claude Haiku 4.5
+      (fast, cost-efficient) with on-demand escalation to Sonnet. Cost is minimised by using S3 Vectors
+      (90% cheaper than OpenSearch), serverless Lambda for RAG, and Lightsail nano ($3.50/month) for the
+      agentic layer. Sustainability and security round out the six pillars with 100% serverless compute
+      and IAM least-privilege policies throughout.
+    </p>
+
+    <p class="project-text">
+      The entire system is Spanish-first: system prompts, fallback messages, and the patient interface
+      are all in Spanish. The RAG pipeline uses Foundation Model parsing to handle diagram-heavy PDF
+      documents that defeat standard OCR-based extraction.
+    </p>
+  </details>
+
+  <p class="project-tech">
+    <strong>Tech stack:</strong> Amazon Bedrock (Claude Haiku 4.5, Claude 3.5 Sonnet), LangGraph, LangChain,
+    FastAPI, FastMCP, langchain-mcp-adapters, Bedrock Knowledge Bases, Amazon Titan Embeddings v2,
+    S3 Vectors, AWS AppConfig, DynamoDB, AWS Lambda, Amazon Lightsail, CloudWatch, EventBridge,
+    AWS SAM, Python 3.12
+  </p>
+
+</div>

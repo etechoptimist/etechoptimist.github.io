@@ -286,6 +286,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /**
+   * ==========================================
+   * Inject ConvaCare Agent Project
+   * ==========================================
+   */
+  async function injectConvatecAgentProject() {
+    const container = document.getElementById("project-convatec-agent-container");
+    if (!container) return;
+
+    try {
+      const res = await fetch("partials/project-convatec-agent.html", { cache: "no-store" });
+      if (!res.ok) {
+        container.innerHTML = `⚠️ Unable to load ConvaCare Agent project (${res.status}).`;
+        return;
+      }
+      container.innerHTML = await res.text();
+
+      if (window.mermaid) {
+        mermaid.init(undefined, container.querySelectorAll(".mermaid"));
+      }
+    } catch (e) {
+      container.innerHTML = "⚠️ Unable to load ConvaCare Agent project.";
+    }
+  }
+
+  /**
    * =========================
    * Boot sequence
    * =========================
@@ -301,6 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await injectHealthIntelligenceProject();
     await injectKnowBotProject();
     await injectFinancialCoachingProject();
+    await injectConvatecAgentProject();
     await injectArticlesSection();
     await loadMediumArticles();
   })();
